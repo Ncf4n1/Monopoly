@@ -4,6 +4,6 @@ public class FreeParking extends Space
 {
 	public FreeParking()
 	{
-		super("Free Parking");
+		super("FreeParking");
 	}
 }

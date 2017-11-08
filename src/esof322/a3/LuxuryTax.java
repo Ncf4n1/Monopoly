@@ -6,7 +6,7 @@ public class LuxuryTax extends Space
 	
 	public LuxuryTax(int amount)
 	{
-		super("Luxury Tax");
+		super("LuxuryTax");
 		taxAmount = amount;
 	}
 	
