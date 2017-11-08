@@ -15,5 +15,4 @@ public class Utility extends Deed
 		owner = null;
 		mortgageVal = 75;
 	}
-	
 }

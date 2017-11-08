@@ -5,7 +5,7 @@ public class GoToJail extends Space
 
 	public GoToJail()
 	{
-		super("Go To Jail");
+		super("GoToJail");
 	}
 	
 	public void sendToJail(Player player)
