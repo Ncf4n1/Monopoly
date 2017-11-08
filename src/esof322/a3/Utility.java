@@ -9,9 +9,10 @@ public class Utility extends Deed
 	
 	public Utility(String name)
 	{
+		super(name, 150, 75);
 		this.name = name;
 		price = 150;
-		//owner = Bank
+		owner = null;
 		mortgageVal = 75;
 	}
 	

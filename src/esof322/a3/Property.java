@@ -14,13 +14,14 @@ public class Property extends Deed
 	
 	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal)
 	{
+		super(name, price, mortgageVal);
 		this.name = name;
 		this.price = price;
 		this.rentRates = rentRates;
 		this.houseCost = houseCost;
 		this.mortgageVal = mortgageVal;
 		
-		//owner  = Bank;
+		owner  = null;
 		numHouses = 0;
 		//Determine numOfMonopolyParts
 	}
@@ -29,6 +30,11 @@ public class Property extends Deed
 	public int getNumberOfMonopolyParts()
 	{
 		return numberOfMonopolyParts;
+	}
+	
+	public int getRent()
+	{
+		return rentRates[numHouses];
 	}
 	
 	public void sellHouse()
