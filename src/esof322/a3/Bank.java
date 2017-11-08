@@ -22,9 +22,10 @@ public class Bank {
 		
 	}
 	
-	public void giveMoney(Player player) {
+	//give player money
+	public void giveMoney(Player player, int money) {
 		
-		
+		player.takePayment(money);
 		
 	}
 
