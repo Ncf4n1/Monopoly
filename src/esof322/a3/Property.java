@@ -12,23 +12,28 @@ public class Property extends Deed
 	private int mortgageVal;			// Money gained from mortgaging property
 	private int numberOfMonopolyParts;	// Number of parts needed for monopoly ???
 	
-	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal)
+	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int numberOfMonopolyParts)
 	{
+		super(name, price, mortgageVal);
 		this.name = name;
 		this.price = price;
 		this.rentRates = rentRates;
 		this.houseCost = houseCost;
 		this.mortgageVal = mortgageVal;
+		this.numberOfMonopolyParts = numberOfMonopolyParts;
 		
-		//owner  = Bank;
+		owner = null;
 		numHouses = 0;
-		//Determine numOfMonopolyParts
 	}
 	
-	// ?????
 	public int getNumberOfMonopolyParts()
 	{
 		return numberOfMonopolyParts;
+	}
+	
+	public int getRent()
+	{
+		return rentRates[numHouses];
 	}
 	
 	public void sellHouse()

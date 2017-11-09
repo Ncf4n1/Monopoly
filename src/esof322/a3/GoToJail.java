@@ -1,8 +1,15 @@
 package esof322.a3;
 
-public class GoToJail extends Space{
+public class GoToJail extends Space
+{
 
-	public GoToJail(){
-		
+	public GoToJail()
+	{
+		super("GoToJail");
+	}
+	
+	public void sendToJail(Player player)
+	{
+		player.setJailedStat(true);
 	}
 }

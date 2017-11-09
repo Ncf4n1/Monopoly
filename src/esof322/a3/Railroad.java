@@ -10,12 +10,16 @@ public class Railroad extends Deed
 	
 	public Railroad(String name)
 	{
+		super(name, 200, 100);
 		this.name = name;
 		price = 200;
-		//owner = Bank
+		owner = null;
 		rentRates = new int[]{25, 50, 100, 200};
 		mortgageVal = 100;
 	}
-
 	
+	public int getRent(int numOwned)
+	{
+		return rentRates[numOwned-1];
+	}
 }
