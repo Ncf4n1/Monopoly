@@ -26,8 +26,8 @@ public class Auction
 		}
 	}
 	
-	public void awardWinner()
+	public void awardWinner(Player player)
 	{
-		// give currentWinningPlayer the auctioned property
+		
 	}
 }

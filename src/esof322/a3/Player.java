@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Player {
 	public String playerName;
-	public Token token;
+	public String token;
 	private int money;
 	private ArrayList<Deed> property = new ArrayList<>();
 	private int location;
@@ -13,7 +13,7 @@ public class Player {
 	private int turnsInJail;
 	private int railroadsOwned;
 	
-	public Player(String name, Token seclectedToken){
+	public Player(String name, String seclectedToken){
 		playerName = name;
 		token = seclectedToken;
 		money = 1500;
