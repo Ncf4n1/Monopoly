@@ -10,7 +10,7 @@ public class Bank {
 	}
 	
 	//deduct 1 from the number  of houses
-	public void sellHouse(Property property, Player player) {
+	public void sellHouse() {
 		
 		houses--;
 		
@@ -24,14 +24,14 @@ public class Bank {
 	}
 	
 	//add 1 to the number  of houses
-	public void buybackHouse(Property property, Player player) {
+	public void buybackHouse() {
 			
 		houses++;
 			
 	}
 		
 	//add 1 to the number of hotels
-	public void buybacHotel() {
+	public void buybackHotel() {
 			
 		hotels++;
 		
