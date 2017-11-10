@@ -26,6 +26,16 @@ public class Property extends Deed
 		numHouses = 0;
 	}
 	
+	public Player getOwner()
+	{
+		return owner;
+	}
+	
+	public int getNumberOfHouses()
+	{
+		return numHouses;
+	}
+	
 	public int getNumberOfMonopolyParts()
 	{
 		return numberOfMonopolyParts;
