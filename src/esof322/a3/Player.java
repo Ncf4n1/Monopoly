@@ -14,8 +14,7 @@ public class Player {
 	private boolean jailed;
 	private int doublesRolled;
 	private int turnsInJail;
-	private int railroadsOwned = railroads.size();
-	private int utilitiesOwned = utilities.size();
+
 
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -126,7 +125,7 @@ public class Player {
 
 	public boolean checkForMonopoly(Property prop){
 		//count that indicates player owns property
-		int count = 1;
+		int count = 0;
 
 		//for loop to iterate through property arraylist
 		for(int i = 0; i < property.size(); i++){
@@ -142,16 +141,11 @@ public class Player {
 
 	//returns the number of railroads owned
 	public int getRailroadOwnedCount(){
-		return railroadsOwned;
+		return railroads.size();
 	}
 
-	//adds current bought railroad to count
-	public int addRailroad(){
-		railroadsOwned++;
-	}
-
-	//removes railroad from count
-	public int removeRailroad(){
-		railroadsOwned--;
+	//returns the number of utilities owned
+	public int getUtilitysOwned(){
+		return utilities.size();
 	}
 }
