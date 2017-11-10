@@ -80,11 +80,56 @@ public class MonopolyTests {
 	{
 		Board board = new Board();
 		
-		assertEquals("TennesseeAvenue", board.getSpace(18).getName());
-		assertEquals("PennsylvaniaRailroad", board.getSpace(15).getName());
-		assertEquals("ElectricCompany", board.getSpace(12).getName());
+		assertEquals("Check for initialization of properties", "TennesseeAvenue", board.getSpace(18).getName());
+		assertEquals("Check for initialization of Railroads", "PennsylvaniaRailroad", board.getSpace(15).getName());
+		assertEquals("Check for initialization of utilities", "ElectricCompany", board.getSpace(12).getName());
 	}
-
+	
+	//DEED
+	
+	Deed deed = new Deed ("TestName", 500, 250, 10, 20);
+	
+	@Test
+	public void testDeedName ()
+	{
+		assertEquals("TestName", deed.getName());
+	}
+	
+	@Test
+	public void testDeedPrice ()
+	{
+		assertEquals(500, deed.getPrice());
+	}
+	
+	@Test
+	public void testDeedOwnerInitial ()
+	{
+		assertNull(deed.getOwner());
+	}
+	
+	@Test
+	public void testDeedOwnerChanged ()
+	{
+		Player player = new Player("Test", "Test";)
+		assertEquals("Test", deed.getOwner().getName());
+	}
+	
+	@Test
+	public void testDeedMortVal ()
+	{
+		assertEquals( 250, deed.getMortgageVal());
+	}
+	
+	@Test
+	public void testDeed ()
+	{
+		assertFalse(deed.getMortgageStat());
+		
+		deed.mortgage();
+		
+		assertTrue(deed.getMortgageStat());
+	}
+	
 	@Test
 	public void testFalseCheckForMonopoly() {
 		Player player = new Player("Test", "Test");
