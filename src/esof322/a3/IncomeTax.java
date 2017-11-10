@@ -14,4 +14,9 @@ public class IncomeTax extends Space
 	{
 		player.makePayment(taxAmount);
 	}
+	
+	public int getTaxAmount()
+	{
+		return taxAmount;
+	}
 }
