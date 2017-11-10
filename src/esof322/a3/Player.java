@@ -65,24 +65,6 @@ public class Player {
 		return location;
 	}
 
-	//RollTwoDice() is used for rollForTurnOrder() and move()
-	public int rollTwoDice(){
-		int die1 = rollDie();
-		int die2 = rollDie();
-
-    if (checkIfDoubles(die1, die2)){
-			if (doublesRolled < 3){
-				//setnextplayer if doubles
-			}
-			else{
-				//send player to jail
-			}
-		}
-
-		int total = die1 + die2;
-		return total;
-	}
-
 	//check for doubles
 	public boolean checkIfDoubles(int die1, int die2){
 		if(die1 == die2){
@@ -93,7 +75,7 @@ public class Player {
 			return false;
 	}
 
-	//roll to leave jail
+	/*//roll to leave jail
 	public void rollToGetOutOfJail(){
 		int die1 = rollDie();
 		int die2 = rollDie();
@@ -121,7 +103,7 @@ public class Player {
 		setJailedStat(false);
 		turnsInJail = 0;
 		moveToken(rollTwoDice());
-	}
+	}*/
 
 	//add property to ArrayList, then make payment
 	public void buyProperty(Deed obj){
@@ -171,12 +153,5 @@ public class Player {
 	//removes railroad from count
 	public int removeRailroad(){
 		railroadsOwned--;
-	}
-
-	//rollDie() will get a single instance of a die
-	public int rollDie(){
-		Die roll1 = new Die();
-		int die = roll1.getDie();
-		return die;
 	}
 }

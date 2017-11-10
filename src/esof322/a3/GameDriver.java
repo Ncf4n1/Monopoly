@@ -7,6 +7,7 @@ public class GameDriver
 	private static String[] playernames;
 	private static Player[] players;
 	private static long timeLimit;
+	private static boolean buyProperty = true;
 
 	public static void main(String[] args) 
 	{
@@ -17,13 +18,17 @@ public class GameDriver
 		int previousPlayerLocation = 0;
 		int currentPlayerLocation = 0;
 		Property currentLandedProperty = null;
-		boolean buyProperty = true;
+		Die die1 = new Die();
+		Die die2 = new Die();
+		int doublesInARow = 0;
 		
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 		while (System.currentTimeMillis() < endTime)
 		{
 			previousPlayerLocation = players[currentPlayer].getLocation();
-			rollTotal = players[currentPlayer].rollTwoDice();
+			die1.rollDie();
+			die2.rollDie();
+			rollTotal = die1.getDie() + die2.getDie();
 			currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 			
 			if ( (previousPlayerLocation <= 39) && (currentPlayerLocation >= 0) )
@@ -58,29 +63,31 @@ public class GameDriver
 							 {
 								 players[currentPlayer].buyProperty(currentLandedProperty);
 							 }
-							 else
-							 {
-								Auction auction = new Auction(currentLandedProperty);
-								boolean bought = false;
-								while (!bought)
-								{
-									
-								}
-							 }
 						 }
 			
 			}
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			if (die1.getDie() != die2.getDie())
+			{
+				doublesInARow = 0;
+				if (currentPlayer == players.length-1)
+				{
+					currentPlayer = 0;
+				}
+				else
+				{
+					currentPlayer++;
+				}
+			}
+			else
+			{
+				doublesInARow++;
+				
+				if (doublesInARow == 3)
+				{
+					// Handle going to jail
+				}
+			}
 		}
 		
 	}
@@ -106,4 +113,10 @@ public class GameDriver
 	{
 		GameDriver.timeLimit = timeLimit;
 	}
+	
+	public static void setBuyProperty(boolean decision)
+	{
+		GameDriver.buyProperty = decision;
+	}
+	
 }

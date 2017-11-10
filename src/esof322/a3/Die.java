@@ -7,11 +7,15 @@ public class Die {
 	private int die;
 	
 	public Die() {
-		Random rand = new Random();
-		die = rand.nextInt(6);
 	}
 	
 	public int getDie(){
 		return die+1;
+	}
+	
+	public void rollDie()
+	{
+		Random rand = new Random();
+		die = rand.nextInt(6);
 	}
 }
