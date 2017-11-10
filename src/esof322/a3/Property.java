@@ -11,8 +11,9 @@ public class Property extends Deed
 	private int numHouses;				// Number of houses built on property
 	private int mortgageVal;			// Money gained from mortgaging property
 	private int numberOfMonopolyParts;	// Number of parts needed for monopoly ???
+	private int monoColor;
 	
-	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int numberOfMonopolyParts, int x, int y)
+	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int numberOfMonopolyParts, int x, int y, int monoColor)
 	{
 		super(name, price, mortgageVal, x, y);
 		this.name = name;
@@ -21,6 +22,7 @@ public class Property extends Deed
 		this.houseCost = houseCost;
 		this.mortgageVal = mortgageVal;
 		this.numberOfMonopolyParts = numberOfMonopolyParts;
+		this.monoColor = monoColor;
 		
 		owner = null;
 		numHouses = 0;
@@ -39,5 +41,9 @@ public class Property extends Deed
 	public void sellHouse()
 	{
 		numHouses--;
+	}
+	
+	public int getMonoColor(){
+		return monoColor;
 	}
 }

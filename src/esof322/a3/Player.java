@@ -6,12 +6,16 @@ public class Player {
 	public String playerName;
 	public String token;
 	private int money;
+	//private ArrayList<Deed> property = new ArrayList<>();
 	private ArrayList<Deed> property = new ArrayList<>();
+	private ArrayList<Deed> railroads = new ArrayList<>();
+	private ArrayList<Deed> utilities = new ArrayList<>();
 	private int location;
 	private boolean jailed;
 	private int doublesRolled;
 	private int turnsInJail;
-	private int railroadsOwned;
+	private int railroadsOwned = railroads.size();
+	private int utilitiesOwned = utilities.size();
 
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -44,8 +48,7 @@ public class Player {
 	public void moveToken(int spacesMoved){
 		location = location + spacesMoved;
 		//reset so as to stay in sync with board, and not have values go past possible
-		if (location > 39)
-		{
+		if (location > 39){
 			location = location - 39 - 1;
 		}
 	}
@@ -86,7 +89,7 @@ public class Player {
 		//checks if the die are doubles
 		if (checkIfDoubles(die1, die2)){
 			setJailedStat(false);
-			movetoken((die1+die2));
+			moveToken((die1+die2));
 		}
 		//else iterates turns in jail or forces payment
 		else{
@@ -102,16 +105,24 @@ public class Player {
 
 	//pay to leave jail
 	public void payToLeaveJail(){
-		makepayment(50);
+		makePayment(50);
 		setJailedStat(false);
 		turnsInJail = 0;
-		movetoken(rollTwoDice);
+		moveToken(rollTwoDice());
 	}
 
 	//add property to ArrayList, then make payment
-	public void buyProperty(Deed deed){
-		property.add(deed);
-		makepayment(deed.getPrice());
+	public void buyProperty(Deed obj){
+		if (obj instanceof Property){
+			property.add(obj);
+		}
+		else if (obj instanceof Railroad){
+			railroads.add(obj);
+		}
+		else if (obj instanceof Utility){
+			utilities.add(obj);
+		}
+		makePayment(obj.getPrice());
 	}
 
 	public int mortgage (Deed deed){
@@ -129,7 +140,7 @@ public class Player {
 		//for loop to iterate through property arraylist
 		for(int i = 0; i < property.size(); i++){
 			//check if property in arraylist has the same code as property being checked
-			if(property.get(i).getMonopolyCode() == prop.getMonopolyCode())
+			if(property.get(i).getMonoColor() == prop.getMonoColor())
 				count++;
 			//break out of loop and return true if count = numOfMonopolyParts
 			if (count == prop.getNumberOfMonopolyParts())
