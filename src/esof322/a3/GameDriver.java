@@ -16,6 +16,7 @@ public class GameDriver
 		int rollTotal = 0;
 		int previousPlayerLocation = 0;
 		int currentPlayerLocation = 0;
+		Property currentLandedProperty = null;
 		
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 		while (System.currentTimeMillis() < endTime)
@@ -35,6 +36,27 @@ public class GameDriver
 			
 				case 4: players[currentPlayer].makePayment(200);
 				case 38: players[currentPlayer].makePayment(100);
+				
+				default: currentLandedProperty = (Property) board.getSpace(currentPlayerLocation);
+						 if (currentLandedProperty.getOwner() != null)
+						 {
+							 if ( (currentLandedProperty.getOwner().checkForMonopoly(currentLandedProperty)) && (currentLandedProperty.getNumberOfHouses() == 0) )
+							 {
+								 players[currentPlayer].makePayment(2*currentLandedProperty.getRent());
+								 currentLandedProperty.getOwner().takePayment(2*currentLandedProperty.getRent());
+							 }
+							 else
+							 {
+								 players[currentPlayer].makePayment(currentLandedProperty.getRent());
+								 currentLandedProperty.getOwner().takePayment(currentLandedProperty.getRent());
+							 }
+						 }
+						 else
+						 {
+							 
+							 
+							 
+						 }
 			
 			}
 			
