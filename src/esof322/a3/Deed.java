@@ -7,9 +7,9 @@ public class Deed extends Space
 	private int price;
 	private Player owner;
 	private int mortgageVal;
+	private boolean mortgaged = false;
 	
-	public Deed(String name, int price, int mortgageVal, int x, int y)
-	{
+	public Deed(String name, int price, int mortgageVal, int x, int y){
 		super(name, x, y);
 		this.name = name;
 		this.price = price;
@@ -17,18 +17,28 @@ public class Deed extends Space
 		this.mortgageVal = mortgageVal;
 	}
 
-	public int getPrice()
-	{
+	public String getName(){
+		return name;
+	}
+	
+	public int getPrice(){
 		return price;
 	}
 	
-	public Player getOwner()
-	{
+	public Player getOwner(){
 		return owner;
 	}
 	
-	public int getMortgageVal()
-	{
+	public int getMortgageVal(){
 		return mortgageVal;
 	}
+	
+	public void mortgage(){
+		mortgaged = true;
+	}
+	
+	public boolean getMortgageStat(){
+		return mortgaged;
+	}
+	
 }
