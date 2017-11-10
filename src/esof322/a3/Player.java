@@ -131,8 +131,6 @@ public class Player {
 		//deed.setMortgage(true);
 	}
 
-
-
 	public boolean checkForMonopoly(Property prop){
 		//count that indicates player owns property
 		int count = 1;
@@ -140,13 +138,12 @@ public class Player {
 		//for loop to iterate through property arraylist
 		for(int i = 0; i < property.size(); i++){
 			//check if property in arraylist has the same code as property being checked
-			if(property.get(i).getMonoColor() == prop.getMonoColor())
+			if(((Property) property.get(i)).getMonoColor() == prop.getMonoColor())
 				count++;
 			//break out of loop and return true if count = numOfMonopolyParts
 			if (count == prop.getNumberOfMonopolyParts())
 				return true;
 		}
-
 		return false;
 	}
 
