@@ -25,6 +25,10 @@ public class Deed extends Space
 		return price;
 	}
 	
+	public void setOwner(Player player){
+		owner = player;
+	}
+	
 	public Player getOwner(){
 		return owner;
 	}
@@ -35,6 +39,10 @@ public class Deed extends Space
 	
 	public void mortgage(){
 		mortgaged = true;
+	}
+	
+	public void unMortgage(){
+		mortgaged = false;
 	}
 	
 	public boolean getMortgageStat(){

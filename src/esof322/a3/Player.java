@@ -113,7 +113,6 @@ public class Player {
 		}
 	}
 
-
 	//pay to leave jail
 	public void payToLeaveJail(){
 		makePayment(50);
@@ -134,6 +133,7 @@ public class Player {
 			utilities.add(obj);
 		}
 		makePayment(obj.getPrice());
+		obj.setOwner(this);
 	}
 
 	public void mortgage(Deed deed){
