@@ -3,9 +3,9 @@ package esof322.a3;
 public class Go extends Space
 {
 	
-	public Go()
+	public Go(int x, int y)
 	{
-		super("Go");
+		super("Go", x, y);
 	}
 	
 	public void collectPassingGo(Player player)

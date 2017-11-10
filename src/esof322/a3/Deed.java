@@ -8,9 +8,9 @@ public class Deed extends Space
 	private Player owner;
 	private int mortgageVal;
 	
-	public Deed(String name, int price, int mortgageVal)
+	public Deed(String name, int price, int mortgageVal, int x, int y)
 	{
-		super(name);
+		super(name, x, y);
 		this.name = name;
 		this.price = price;
 		owner = null;
