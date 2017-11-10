@@ -3,6 +3,8 @@ package esof322.a3;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.*;
 
 public class Gui extends JFrame{
 
@@ -46,7 +48,7 @@ public class Gui extends JFrame{
     centerPanel.add(close);
     menu();
     add(centerPanel, BorderLayout.CENTER);
-    setSize(500, 500);
+    setSize(500, 1000);
     setVisible(true);
   }
   /**
@@ -55,19 +57,21 @@ public class Gui extends JFrame{
   * takes in the current panel as a parameter
   */
   public void addOptionsPanel(JPanel oldPanel) {
-    JPanel optionsPanel = new JPanel();
-    JLabel plabel = new JLabel("Number of Players");
-    optionsPanel.add(plabel);
+    JPanel playerPanel = new JPanel();
+    JLabel plabel = new JLabel("Number of Players    ");
+    playerPanel.add(plabel);
     Integer[] numplayers = new Integer[] {1,2,3,4};
     //options to choose number of players
     JComboBox<Integer> players = new JComboBox<Integer>(numplayers);
-    optionsPanel.add(players);
-    JLabel tlabel = new JLabel("Time Limit (minutes)");
-    optionsPanel.add(tlabel);
+    playerPanel.add(players);
+    JPanel timePanel = new JPanel();
+    timePanel.setLayout(new BoxLayout(timePanel,BoxLayout.LINE_AXIS));
+    JLabel tlabel = new JLabel("Time Limit (minutes)    ");
+    timePanel.add(tlabel);
     Integer[] times = new Integer[] {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
     //options to choose time limit for game
     JComboBox<Integer> timeLimit = new JComboBox<Integer>(times);
-    optionsPanel.add(timeLimit);
+    timePanel.add(timeLimit);
     //button to start new game with selected options
     JButton start = new JButton("Start");
     start.addActionListener(new ActionListener() {
@@ -89,12 +93,20 @@ public class Gui extends JFrame{
             	GameDriver.setPlayers(players);
             	GameDriver.setTimeLimit((long)timeLimit.getSelectedItem());
               //start new game
+              addBoard(timePanel, playerPanel);
             }
         });
-    optionsPanel.add(start);
+    timePanel.add(start);
     //hide current panel to replace it
     oldPanel.setVisible(false);
-    add(optionsPanel, FlowLayout.CENTER);
+    add(timePanel);
+    timePanel.add(playerPanel);
+  }
+
+  public void addBoard(JPanel oldPanel1, JPanel oldPanel2){
+    oldPanel1.setVisible(false);
+    oldPanel2.setVisible(false);
+
   }
   /**
   * method to add the menu to the monopoly gui
@@ -120,10 +132,10 @@ public class Gui extends JFrame{
   * method to create a new panel in the monopoly gui
   * returns a JPanel
   */
-  public JPanel createPanel() {
+  public JPanel createPanel(int x ,int y) {
     JPanel newpanel = new JPanel();
     newpanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-    setSize(500,500);
+    setSize(x,y);
     setVisible(true);
     return newpanel;
   }
