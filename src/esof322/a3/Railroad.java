@@ -8,9 +8,9 @@ public class Railroad extends Deed
 	private int[] rentRates;
 	private int mortgageVal;
 	
-	public Railroad(String name)
+	public Railroad(String name, int x, int y)
 	{
-		super(name, 200, 100);
+		super(name, 200, 100, x, y);
 		this.name = name;
 		price = 200;
 		owner = null;
