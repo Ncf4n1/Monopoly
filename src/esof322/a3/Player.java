@@ -24,6 +24,10 @@ public class Player {
 		location = 0;
 		jailed = false;
 	}
+	
+	public String getName(){
+		return playerName;
+	}
 
 	public boolean getJailedStat(){
 		return jailed;
@@ -125,10 +129,9 @@ public class Player {
 		makePayment(obj.getPrice());
 	}
 
-	public int mortgage (Deed deed){
+	public void mortgage(Deed deed){
 		takePayment(property.get(property.indexOf(deed)).getMortgageVal());
-		//set deed as mortgaged
-		//deed.setMortgage(true);
+		deed.mortgage();
 	}
 
 	public boolean checkForMonopoly(Property prop){
