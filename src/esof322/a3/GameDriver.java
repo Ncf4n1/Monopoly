@@ -17,6 +17,7 @@ public class GameDriver
 		int previousPlayerLocation = 0;
 		int currentPlayerLocation = 0;
 		Property currentLandedProperty = null;
+		boolean buyProperty = true;
 		
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 		while (System.currentTimeMillis() < endTime)
@@ -53,9 +54,19 @@ public class GameDriver
 						 }
 						 else
 						 {
-							 
-							 
-							 
+							 if (buyProperty)
+							 {
+								 players[currentPlayer].buyProperty(currentLandedProperty);
+							 }
+							 else
+							 {
+								Auction auction = new Auction(currentLandedProperty);
+								boolean bought = false;
+								while (!bought)
+								{
+									
+								}
+							 }
 						 }
 			
 			}
