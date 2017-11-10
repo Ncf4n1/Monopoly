@@ -5,7 +5,7 @@ public class Board
 	static Space [] board = new Space [40];
 	
 	public Board(){
-		board[0] = new Go();
+		board[0] = new Go(1400, 1400);
 		board[1] = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425);
 		board[2] = new CommunityChest(1119, 1425);
 		board[3] = new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425);
