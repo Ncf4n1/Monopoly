@@ -20,6 +20,11 @@ public class Player {
 		location = 0;
 		jailed = false;
 	}
+	
+	public int getLocation()
+	{
+		return location;
+	}
 
 	public boolean getJailedStat(){
 		return jailed;
@@ -41,13 +46,15 @@ public class Player {
 		money = money + amount;
 	}
 
-	public void moveToken(int spacesMoved){
+	public int moveToken(int spacesMoved){
 		location = location + spacesMoved;
 		//reset so as to stay in sync with board, and not have values go past possible
 		if (location > 39)
 		{
 			location = location - 39 - 1;
 		}
+		
+		return location;
 	}
 
 	//RollTwoDice() is used for rollForTurnOrder() and move()

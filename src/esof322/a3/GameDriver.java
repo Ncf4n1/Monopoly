@@ -13,11 +13,33 @@ public class GameDriver
 		Gui gui = new Gui();
 		Board board = new Board();
 		int currentPlayer = 0;
+		int rollTotal = 0;
+		int previousPlayerLocation = 0;
+		int currentPlayerLocation = 0;
 		
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 		while (System.currentTimeMillis() < endTime)
 		{
-			players[currentPlayer].rollTwoDice();
+			previousPlayerLocation = players[currentPlayer].getLocation();
+			rollTotal = players[currentPlayer].rollTwoDice();
+			currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
+			
+			if ( (previousPlayerLocation <= 39) && (currentPlayerLocation >= 0) )
+			{
+				players[currentPlayer].takePayment(200);
+			}
+			
+			switch (currentPlayerLocation)
+			{
+				case 2: case 7: case 10: case 17: case 20: case 22: case 30: case 33: case 36: break;
+			
+				case 4: players[currentPlayer].makePayment(200);
+				case 38: players[currentPlayer].makePayment(100);
+			
+			}
+			
+			
+			
 			
 			
 			
