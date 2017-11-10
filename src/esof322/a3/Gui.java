@@ -82,11 +82,12 @@ public class Gui extends JFrame{
             	String[] possibilities = {"Scottish Terrier", "Battleship", "Automobile", "Top Hat", "Penguin", "T-Rex", "Cat", "Rubber Duck"};
             	for (int i = 0; i < numplayers.length; i++)
             	{
-            		playername = JOptionPane.showInputDialog("Please Input a Name for Player " + numplayers[i]);
+            		playername = (String) JOptionPane.showInputDialog("Please Input a Name for Player " + numplayers[i]);
             		token = (String) JOptionPane.showInputDialog(null, "Please Select a Token", "Token Selection", JOptionPane.PLAIN_MESSAGE, null, possibilities, possibilities[0]);
             		players[i] = new Player(playername, token);
             	}
             	GameDriver.setPlayers(players);
+            	GameDriver.setTimeLimit((long)timeLimit.getSelectedItem());
               //start new game
             }
         });
