@@ -7,9 +7,9 @@ public class Utility extends Deed
 	private Player owner;
 	private int mortgageVal;
 	
-	public Utility(String name)
+	public Utility(String name, int x, int y)
 	{
-		super(name, 150, 75);
+		super(name, 150, 75, x , y);
 		this.name = name;
 		price = 150;
 		owner = null;
