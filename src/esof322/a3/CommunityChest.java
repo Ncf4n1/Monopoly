@@ -2,8 +2,8 @@ package esof322.a3;
 
 public class CommunityChest extends Space{
 
-	public CommunityChest()
+	public CommunityChest(int x, int y)
 	{
-		super("CommunityChest");
+		super("CommunityChest", x, y);
 	}
 }

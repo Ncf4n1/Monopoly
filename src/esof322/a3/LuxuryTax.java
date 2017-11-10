@@ -4,9 +4,9 @@ public class LuxuryTax extends Space
 {
 	private int taxAmount;
 	
-	public LuxuryTax(int amount)
+	public LuxuryTax(int amount, int x, int y)
 	{
-		super("LuxuryTax");
+		super("LuxuryTax", x, y);
 		taxAmount = amount;
 	}
 	

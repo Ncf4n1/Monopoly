@@ -4,9 +4,9 @@ public class IncomeTax extends Space
 {
 	private int taxAmount;
 	
-	public IncomeTax(int amount)
+	public IncomeTax(int amount, int x, int y)
 	{
-		super("IncomeTax");
+		super("IncomeTax", x, y);
 		taxAmount = amount;
 	}
 	

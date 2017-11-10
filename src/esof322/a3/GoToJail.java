@@ -3,9 +3,9 @@ package esof322.a3;
 public class GoToJail extends Space
 {
 
-	public GoToJail()
+	public GoToJail(int x, int y)
 	{
-		super("GoToJail");
+		super("GoToJail", x, y);
 	}
 	
 	public void sendToJail(Player player)

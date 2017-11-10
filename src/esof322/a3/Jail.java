@@ -2,8 +2,8 @@ package esof322.a3;
 
 public class Jail extends Space
 {
-	public Jail()
+	public Jail(int x, int y)
 	{
-		super("Jail");
+		super("Jail", x ,y);
 	}
 }
