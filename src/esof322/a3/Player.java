@@ -14,8 +14,7 @@ public class Player {
 	private boolean jailed;
 	private int doublesRolled;
 	private int turnsInJail;
-	private int railroadsOwned = railroads.size();
-	private int utilitiesOwned = utilities.size();
+
 
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -160,17 +159,12 @@ public class Player {
 
 	//returns the number of railroads owned
 	public int getRailroadOwnedCount(){
-		return railroadsOwned;
+		return railroads.size();
 	}
 
-	//adds current bought railroad to count
-	public int addRailroad(){
-		railroadsOwned++;
-	}
-
-	//removes railroad from count
-	public int removeRailroad(){
-		railroadsOwned--;
+	//returns the number of utilities owned
+	public int getUtilitysOwned(){
+		return utilities.size();
 	}
 
 	//rollDie() will get a single instance of a die
