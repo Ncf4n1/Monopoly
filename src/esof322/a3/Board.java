@@ -56,7 +56,7 @@ public class Board
 		board[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7);
 	}
 
-	public static Space getSpace(int location) {
+	public Space getSpace(int location) {
 		return board[location];
 	}
 }
