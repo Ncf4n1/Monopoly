@@ -144,7 +144,7 @@ public class Player {
 
 	public boolean checkForMonopoly(Property prop){
 		//count that indicates player owns property
-		int count = 1;
+		int count = 0;
 
 		//for loop to iterate through property arraylist
 		for(int i = 0; i < property.size(); i++){
