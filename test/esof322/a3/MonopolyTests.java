@@ -16,6 +16,8 @@ public class MonopolyTests {
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
+	//BANK
+	
 	@Test 
 	public void testBankSellHouse()
 	{
@@ -69,6 +71,18 @@ public class MonopolyTests {
 		bank.giveMoney(player, 500);
 		
 		assertEquals(2000, player.getMoneyTotal());
+	}
+	
+	//BOARD
+	
+	@Test
+	public void testBoard ()
+	{
+		Board board = new Board();
+		
+		assertEquals("TennesseeAvenue", board.getSpace(18).getName());
+		assertEquals("PennsylvaniaRailroad", board.getSpace(15).getName());
+		assertEquals("ElectricCompany", board.getSpace(12).getName());
 	}
 
 	@Test
