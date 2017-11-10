@@ -8,10 +8,10 @@ public class Die {
 	
 	public Die() {
 		Random rand = new Random();
-		die = rand.nextInt(7);
+		die = rand.nextInt(6);
 	}
 	
 	public int getDie(){
-		return die;
+		return die+1;
 	}
 }

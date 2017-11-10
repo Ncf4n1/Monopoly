@@ -80,18 +80,14 @@ public class Gui extends JFrame{
             public void actionPerformed(ActionEvent e) {
               //create players
             	GameDriver.setNumPlayers(numplayers.length);
-            	Player[] players = new Player[numplayers.length];
+            	GameDriver.setTimeLimit((long)timeLimit.getSelectedItem());
+            	String[] playernames = new String[numplayers.length];
             	
-            	String playername, token = "";
-            	String[] possibilities = {"Scottish Terrier", "Battleship", "Automobile", "Top Hat", "Penguin", "T-Rex", "Cat", "Rubber Duck"};
             	for (int i = 0; i < numplayers.length; i++)
             	{
-            		playername = (String) JOptionPane.showInputDialog("Please Input a Name for Player " + numplayers[i]);
-            		token = (String) JOptionPane.showInputDialog(null, "Please Select a Token", "Token Selection", JOptionPane.PLAIN_MESSAGE, null, possibilities, possibilities[0]);
-            		players[i] = new Player(playername, token);
+            		playernames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Player " + numplayers[i]);
             	}
-            	GameDriver.setPlayers(players);
-            	GameDriver.setTimeLimit((long)timeLimit.getSelectedItem());
+            	GameDriver.setPlayerNames(playernames);
               //start new game
               addBoard(timePanel, playerPanel);
             }
