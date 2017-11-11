@@ -10,8 +10,8 @@ public class Property extends Deed
 	private int houseCost;				// Cost of purchasing a house / hotel
 	private int numHouses;				// Number of houses built on property
 	private int mortgageVal;			// Money gained from mortgaging property
-	private int numberOfMonopolyParts;	// Number of parts needed for monopoly ???
-	private int monoColor;
+	private int numberOfMonopolyParts;	// Number of parts needed for monopoly
+	private int monoColor;				// Manages which properties go together to make a monopoly
 	
 	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int numberOfMonopolyParts, int x, int y, int monoColor)
 	{
@@ -46,6 +46,11 @@ public class Property extends Deed
 	public int getRent()
 	{
 		return rentRates[numHouses];
+	}
+	
+	public void buildHouse()
+	{
+		numHouses++;
 	}
 	
 	public void sellHouse()
