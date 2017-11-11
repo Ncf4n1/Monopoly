@@ -111,6 +111,9 @@ public class MonopolyTests {
 	public void testDeedOwnerChanged ()
 	{
 		Player player = new Player("Test", "Test");
+		
+		deed.setOwner(player);
+		
 		assertEquals("Test", deed.getOwner().getName());
 	}
 	
@@ -121,13 +124,115 @@ public class MonopolyTests {
 	}
 	
 	@Test
-	public void testDeed ()
+	public void testDeedSetMortgage ()
 	{
 		assertFalse(deed.getMortgageStat());
 		
 		deed.mortgage();
 		
 		assertTrue(deed.getMortgageStat());
+		
+		deed.unMortgage();
+		
+		assertFalse(deed.getMortgageStat());
+	}
+	
+	//GO
+		
+	@Test
+	public void testGo ()
+	{
+		Player player = new Player("Test", "Test");
+		Go go = new Go (0, 0);
+		
+		go.collectPassingGo(player);
+		
+		assertEquals(1700, player.getMoneyTotal());
+	}
+	
+	//PROPERTY
+	
+	Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
+	
+	@Test
+	public void testPropertyInitOwner ()
+	{
+		assertNull(prop.getOwner());
+	}
+	
+	@Test
+	public void testPropertyInitRent ()
+	{
+		assertEquals(2, prop.getRent());
+	}
+	
+	@Test
+	public void testPropertyInitHouses ()
+	{
+		assertNull(prop.getOwner());
+	}
+	
+	@Test
+	public void testPropertyAddHouses ()
+	{
+		//prop.buildHouse();
+		
+		//assertEquals(1, prop.getNumberOfHouses());
+	}
+	
+	@Test
+	public void testPropertySellHouse ()
+	{
+		//prop.sellHouse();
+		
+		//assertEquals(0, prop.getNumberOfHouses());
+	}
+	
+	@Test
+	public void testPropertyHouseRent ()
+	{
+		//prop.buildHouse();
+		//prop.buildHouse();
+		
+		//assertEquals(30, prop.getRent());
+	}
+	
+	@Test
+	public void testPropertyNumofMonopolyParts ()
+	{
+		assertEquals(2, prop.getNumberOfMonopolyParts());
+	}
+	
+	//RAILROAD
+	
+	@Test
+	public void testRailroad ()
+	{
+		Railroad railroad = new Railroad("Test", 0, 0);
+		Player player = new Player("Test", "Test");
+		
+		player.buyProperty(railroad);
+		
+		assertEquals(25, railroad.getRent(player.getRailroadOwnedCount()));
+	}
+	
+	//SPACE
+	
+	@Test
+	public void testSpace ()
+	{
+		Space space = new Space ("Test", 0, 0);
+		
+		assertEquals("Test" , space.getName());
+	}
+	
+	//UTILITY
+	
+	@Test
+	public void testUtility ()
+	{
+		Utility util = new Utility ("Test", 0, 0);
+		assertEquals("Test", util.getName());
 	}
 	
 	@Test

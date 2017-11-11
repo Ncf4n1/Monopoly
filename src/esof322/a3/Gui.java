@@ -5,6 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.*;
 
 public class Gui extends JFrame{
 
@@ -16,7 +18,6 @@ public class Gui extends JFrame{
 
   public Gui() {
     startWindow();
-
   }
   /**
   * method to open starting window for monopoly gui
@@ -25,6 +26,9 @@ public class Gui extends JFrame{
   public void startWindow() {
     setTitle("Monopoly");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    menu();
+    setSize(1500, 1500);
+    setVisible(true);
     JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
     //button to begin a new game
     JButton newgame = new JButton("New Game");
@@ -35,7 +39,8 @@ public class Gui extends JFrame{
               //hides current panel and replaces it with panel presenting options
               //to start a new game
 
-              addOptionsPanel(centerPanel);
+              OptionsFrame optionsFrame = new OptionsFrame();
+              dispose();
             }
         });
     centerPanel.add(newgame);
@@ -50,83 +55,105 @@ public class Gui extends JFrame{
             }
         });
     centerPanel.add(close);
-    menu();
     add(centerPanel, BorderLayout.CENTER);
-    setSize(500, 1000);
-    setVisible(true);
+  }
+  /* class for new JFrame that contains the game set up options
+   * user selects number of players and a time limit
+   */
+  private class OptionsFrame extends JFrame{
+    public OptionsFrame(){
+      setTitle("Monopoly");
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      menu();
+      setSize(1500, 1500);
+      setVisible(true);
+      JPanel playerPanel = new JPanel();
+      playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
+      //get human players
+      JLabel hplabel = new JLabel("Number of Human Players");
+      playerPanel.add(hplabel);
+      Integer[] humanPlayerOptions = new Integer[] {2,3,4};
+      Integer[] computerPlayerOptions = new Integer[] {0,1,2,3};
+      //options to choose number of players
+      JComboBox<Integer> humanPlayers = new JComboBox<Integer>(humanPlayerOptions);
+      playerPanel.add(humanPlayers);
+      //get computer players
+      JLabel cplabel = new JLabel("Number of Computer Players");
+      //playerPanel.add(cplabel);
+      JComboBox<Integer> computerPlayers = new JComboBox<Integer>(computerPlayerOptions);
+      //playerPanel.add(computerPlayers);
+      //get time limit
+      JLabel tlabel = new JLabel("Time Limit (minutes)");
+      playerPanel.add(tlabel);
+      Integer[] times = new Integer[] {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
+      //options to choose time limit for game
+      JComboBox<Integer> timeLimit = new JComboBox<Integer>(times);
+      playerPanel.add(timeLimit);
+      //button to start new game with selected options
+      JButton start = new JButton("Start");
+      start.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                //create players
+
+                int humans = (int)humanPlayers.getSelectedItem();
+                String[] humanNames = new String[humans];
+                //for when we implement AI Players
+                /*int computers = (int)computerPlayers.getSelectedItem();
+                String[] computerNames = new String[computers]; */
+                	for (int i = 0; i < humans; i++)
+                	{
+                		humanNames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
+                	}
+                  //for when we implement AI Players
+                  /*for(int j = 0; j < computers; j++){
+                    computerNames[j] = (String) JOptionPane.showInputDialog("Please Input a Name for Computer Player " + (j+1));
+                  }*/
+                  //driver.setNumPlayers(humans)
+                  //driver.setPlayerNames(playernames);
+                  int time = (int)timeLimit.getSelectedItem();
+                	//driver.setTimeLimit((long)timeLimit.getSelectedItem());
+                  BoardFrame boardFrame = new BoardFrame();
+                  dispose();
+                  //for when we implement AI Players
+              /*  else{
+                  JDialog error = new JOptionPane("Number of players must be between 2 and 8.", JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION).createDialog("Error");
+                  error.setAlwaysOnTop(true);
+                  error.setVisible(true);
+                  error.dispose();
+                  }*/
+                }
+          });
+      playerPanel.add(start);
+      add(playerPanel);
+    }
   }
   /**
-  * method to add a new JPanel to the monopoly gui
-  * user enters number of players and time limit for the game
-  * takes in the current panel as a parameter
+  * class for a new JFrame that contains the board
   */
-  public void addOptionsPanel(JPanel oldPanel) {
-    JPanel playerPanel = new JPanel();
-    playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
-    //get human players
-    JLabel hplabel = new JLabel("Number of Human Players    ");
-    playerPanel.add(hplabel);
-    Integer[] numPlayers = new Integer[] {0,1,2,3,4,5,6,7,8};
-    //options to choose number of players
-    JComboBox<Integer> humanPlayers = new JComboBox<Integer>(numPlayers);
-    playerPanel.add(humanPlayers);
-    //get computer players
-    JLabel cplabel = new JLabel("Number of Computer Players    ");
-    playerPanel.add(cplabel);
-    JComboBox<Integer> computerPlayers = new JComboBox<Integer>(numPlayers);
-    playerPanel.add(computerPlayers);
-    //get time limit
-    JLabel tlabel = new JLabel("Time Limit (minutes)    ");
-    playerPanel.add(tlabel);
-    Integer[] times = new Integer[] {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
-    //options to choose time limit for game
-    JComboBox<Integer> timeLimit = new JComboBox<Integer>(times);
-    playerPanel.add(timeLimit);
-    //button to start new game with selected options
-    JButton start = new JButton("Start");
-    start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              //create players
-
-              int humans = (int)humanPlayers.getSelectedItem();
-              String[] humanNames = new String[humans];
-              int computers = (int)computerPlayers.getSelectedItem();
-              String[] computerNames = new String[computers];
-              if(humans + computers < 9 && humans + computers > 0){
-              	for (int i = 0; i < humans; i++)
-              	{
-              		humanNames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
-              	}
-                for(int j = 0; j < computers; j++){
-                  computerNames[j] = (String) JOptionPane.showInputDialog("Please Input a Name for Computer Player " + (j+1));
-                }
-            	  //driver.setPlayerNames(playernames);
-                //start new game
-                int time = (int)timeLimit.getSelectedItem();
-                //driver.setHumanPlayers(humans, humanNames);
-                //driver.setComputerPlayers(computers, computerNames);
-              	//driver.setTimeLimit((long)timeLimit.getSelectedItem());
-                addBoard(playerPanel);
-              }
-              else{
-                JDialog error = new JOptionPane("Number of players must be between 1 and 8.", JOptionPane.ERROR_MESSAGE, JOptionPane.DEFAULT_OPTION).createDialog("Error");
-                error.setAlwaysOnTop(true);
-                error.setVisible(true);
-                error.dispose();
-              }
-            }
-        });
-    playerPanel.add(start);
-    //hide current panel to replace it
-    oldPanel.setVisible(false);
-    //add(timePanel);
-    add(playerPanel);
+  private class BoardFrame extends JFrame{
+    void BoardFrame(){
+      setTitle("Monopoly");
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      menu();
+      setSize(1500, 1500);
+      setVisible(true);
+      JPanel boardPanel = new JPanel();
+      boardPanel.setLayout(new BoxLayout(boardPanel, BoxLayout.Y_AXIS));
+      try{
+        File boardFile = new File("Board.png");
+        BufferedImage boardImage = ImageIO.read(boardFile);
+        JLabel picLabel = new JLabel(new ImageIcon(boardImage));
+        boardPanel.add(picLabel);
+      }
+      catch(IOException e){
+        System.out.println(e);
+      }
+      boardPanel.setVisible(true);
+      add(boardPanel);
+    }
   }
 
-  public void addBoard(JPanel oldPanel1){
-    oldPanel1.setVisible(false);
-  }
   /**
   * method to add the menu to the monopoly gui
   * presents option to exit the gui
@@ -158,4 +185,5 @@ public class Gui extends JFrame{
     setVisible(true);
     return newpanel;
   }
+
 }
