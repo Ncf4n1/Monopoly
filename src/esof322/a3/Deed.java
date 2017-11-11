@@ -2,12 +2,12 @@ package esof322.a3;
 
 public class Deed extends Space
 {
-	
-	private String name;
-	private int price;
-	private Player owner;
-	private int mortgageVal;
-	private boolean mortgaged = false;
+
+	private String name;				// Name of the deed
+	private int price;					// Purchase price of the deed
+	private Player owner;				// Current owner of the deed
+	private int mortgageVal;			// Money gained from mortgaging the deed
+	private boolean mortgaged = false;	// Flag for if the property is mortgaged or not
 	
 	public Deed(String name, int price, int mortgageVal, int x, int y){
 		super(name, x, y);
