@@ -18,6 +18,8 @@ public class GameDriver
 		int previousPlayerLocation = 0;
 		int currentPlayerLocation = 0;
 		Property currentLandedProperty = null;
+		Railroad currentLandedRailroad = null;
+		Utility currentLandedUtility = null;
 		Die die1 = new Die();
 		Die die2 = new Die();
 		int doublesInARow = 0;
@@ -41,10 +43,39 @@ public class GameDriver
 				case 2: case 7: case 10: case 17: case 20: case 22: case 30: case 33: case 36: break;
 			
 				case 4: players[currentPlayer].makePayment(200);
+						break;
 				case 38: players[currentPlayer].makePayment(100);
+						break;
 				
+				case 5: case 15: case 25: case 35: currentLandedRailroad = (Railroad) board.getSpace(currentPlayerLocation);
+						if ( (currentLandedRailroad.getOwner() != null) && (!currentLandedRailroad.getMortgageStat()))
+						{
+							players[currentPlayer].makePayment(currentLandedRailroad.getRent(currentLandedRailroad.getOwner().getRailroadOwnedCount()));
+						}
+						else
+						{
+							if (buyProperty)
+							{
+								players[currentPlayer].buyProperty(currentLandedRailroad);
+							}
+						}
+						break;
+						
+				case 12: case 28: currentLandedUtility = (Utility) board.getSpace(currentPlayerLocation);
+								  if ( (currentLandedUtility.getOwner() != null) && (!currentLandedUtility.getMortgageStat()))
+								  {
+									  if (currentLandedUtility.getOwner().getUtilitysOwned() == 1)
+									  {
+										  players[currentPlayer].makePayment(4*rollTotal);
+									  }
+									  else if (currentLandedUtility.getOwner().getUtilitysOwned() == 2)
+									  {
+										  players[currentPlayer].makePayment(10*rollTotal);
+									  }
+								  }
+								  
 				default: currentLandedProperty = (Property) board.getSpace(currentPlayerLocation);
-						 if (currentLandedProperty.getOwner() != null)
+						 if ( (currentLandedProperty.getOwner() != null) && (currentLandedProperty.getMortgageStat()))
 						 {
 							 if ( (currentLandedProperty.getOwner().checkForMonopoly(currentLandedProperty)) && (currentLandedProperty.getNumberOfHouses() == 0) )
 							 {
@@ -87,6 +118,19 @@ public class GameDriver
 				{
 					// Handle going to jail
 				}
+			}
+		}
+		
+		Player winner = players[0];
+		for (int i = 1; i < players.length; i++)
+		{
+			if (players[i].getMoneyTotal() > winner.getMoneyTotal())
+			{
+				winner = players[i];
+			}
+			else if (players[i].getMoneyTotal() == winner.getMoneyTotal())
+			{
+				
 			}
 		}
 		

@@ -110,7 +110,7 @@ public class MonopolyTests {
 	@Test
 	public void testDeedOwnerChanged ()
 	{
-		Player player = new Player("Test", "Test";)
+		Player player = new Player("Test", "Test");
 		assertEquals("Test", deed.getOwner().getName());
 	}
 	

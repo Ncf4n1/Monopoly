@@ -148,4 +148,9 @@ public class Player {
 	public int getUtilitysOwned(){
 		return utilities.size();
 	}
+	
+	//returns the number of properties owned
+	public int getPropertiesOwned() {
+		return property.size();
+	}
 }
