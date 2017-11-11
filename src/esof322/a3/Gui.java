@@ -8,12 +8,15 @@ import java.io.*;
 
 public class Gui extends JFrame{
 
+  //private esof322.a3.GameDriver driver = new esof322.a3.GameDriver();
+
   public static void main(String[] args){
     new Gui();
   }
 
   public Gui() {
     startWindow();
+
   }
   /**
   * method to open starting window for monopoly gui
@@ -60,7 +63,7 @@ public class Gui extends JFrame{
     JPanel playerPanel = new JPanel();
     JLabel plabel = new JLabel("Number of Players    ");
     playerPanel.add(plabel);
-    Integer[] numplayers = new Integer[] {1,2,3,4};
+    Integer[] numplayers = new Integer[] {1,2,3,4,5,6,7,8};
     //options to choose number of players
     JComboBox<Integer> players = new JComboBox<Integer>(numplayers);
     playerPanel.add(players);
@@ -79,15 +82,17 @@ public class Gui extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
               //create players
-            	GameDriver.setNumPlayers(numplayers.length);
-            	GameDriver.setTimeLimit((long)timeLimit.getSelectedItem());
-            	String[] playernames = new String[numplayers.length];
-            	
-            	for (int i = 0; i < numplayers.length; i++)
+
+            	//driver.setNumPlayers(numplayers.length);
+            	//driver.setTimeLimit((long)timeLimit.getSelectedItem());
+              int playerSelection = (int)players.getSelectedItem();
+              String[] playernames = new String[playerSelection];
+
+            	for (int i = 0; i < playerSelection; i++)
             	{
-            		playernames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Player " + numplayers[i]);
+            		playernames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Player " + (i+1));
             	}
-            	GameDriver.setPlayerNames(playernames);
+            	//driver.setPlayerNames(playernames);
               //start new game
               addBoard(timePanel, playerPanel);
             }
@@ -102,6 +107,7 @@ public class Gui extends JFrame{
   public void addBoard(JPanel oldPanel1, JPanel oldPanel2){
     oldPanel1.setVisible(false);
     oldPanel2.setVisible(false);
+
 
   }
   /**
