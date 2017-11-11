@@ -24,16 +24,14 @@ public class GameDriver
 		Die die1 = new Die();
 		Die die2 = new Die();
 		int doublesInARow = 0;					// Number of times doubles has been rolled in a row
-		ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
+		//ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
 		
 		// Conversion of the time limit into milliseconds then stored as a long
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 		
 		// Loop for a player taking a turn while within the time limit
 		while (System.currentTimeMillis() < endTime)
-		{
-			propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
-			
+		{			
 			previousPlayerLocation = players[currentPlayer].getLocation();
 			die1.rollDie();
 			die2.rollDie();
