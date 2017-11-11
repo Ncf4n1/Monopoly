@@ -128,14 +128,18 @@ public class Gui extends JFrame{
 
   public void addBoard(JPanel oldPanel1){
     oldPanel1.setVisible(false);
+    JPanel boardPanel = new JPanel();
     try{
       BufferedImage boardImage = ImageIO.read(new File("../../../images/Board.png"));
       JLabel picLabel = new JLabel(new ImageIcon(boardImage));
-      add(picLabel);
+      boardPanel.add(picLabel);
     }
     catch(IOException e){
       System.out.println(e);
     }
+    boardPanel.setVisible(true);
+    add(boardPanel);
+
   }
   /**
   * method to add the menu to the monopoly gui
