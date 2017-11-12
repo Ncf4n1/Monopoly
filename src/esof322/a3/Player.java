@@ -181,6 +181,10 @@ public class Player {
 	}
 	
 	public void buildHouse(Property prop){
+		int currentHouses = prop.getNumHouses();
+		if (currentHouses == 4){
+			prop.buildHotel();
+		}
 		makePayment(prop.getHouseCost());
 		prop.buildHouse();
 	}
