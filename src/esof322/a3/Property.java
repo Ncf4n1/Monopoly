@@ -43,7 +43,7 @@ public class Property extends Deed
 	}
 	
 	public int getNumOfParts(){
-		return numOfParts
+		return numOfParts;
 	}
 	
 	public int getRent()
