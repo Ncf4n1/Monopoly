@@ -7,13 +7,12 @@ public class Player {
 	public String playerName;									// Name of the player
 	public String token;										// Token the player is using
 	private int money;											// Amount of money the player has
-	private ArrayList<Property> property = new ArrayList<>();	// List of currently owned properties
+	private static Object [][] property = new Object [7][4];	// 2D array containing Objects of type booleans and property
 	private ArrayList<Railroad> railroads = new ArrayList<>();	// List of currently owned railroad
 	private ArrayList<Utility> utilities = new ArrayList<>();	// List of currently owned utilites
 	private int location;										// Current location on the board
 	private boolean jailed;										// Jailed status of player (future implementation)
-	private int turnsInJail;									// Number of turns the player has been in jail
-
+	//private int turnsInJail;									// Number of turns the player has been in jail
 
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -25,10 +24,9 @@ public class Player {
 	
 	public String getName(){
 		return playerName;
-  }
+	}
   
-	public int getLocation()
-	{
+	public int getLocation(){
 		return location;
 
 	}
@@ -97,7 +95,12 @@ public class Player {
 	//add property to ArrayList, then make payment
 	public void buyProperty(Deed obj){
 		if (obj instanceof Property){
-			property.add((Property) obj);
+			//property.add((Property) obj);
+			Property prop = (Property) obj;
+			int color = prop.getMonoColor();
+			int part = prop.getPartNumber();
+			property [color][part] = obj;
+			checkAndChangeMonopolyStat(prop, color);
 		}
 		else if (obj instanceof Railroad){
 			railroads.add((Railroad) obj);
@@ -110,41 +113,62 @@ public class Player {
 	}
 
 	public void mortgage(Deed deed){
-		takePayment(property.get(property.indexOf(deed)).getMortgageVal());
+		takePayment(deed.getMortgageVal());
 		deed.mortgage();
 	}
 	
-	// Checks if the given property is part of a monopoly
-	public boolean checkForMonopoly(Property prop){
-		//count that indicates player owns property
-		int count = 0;
-
-		//for loop to iterate through property arraylist
-		for(int i = 0; i < property.size(); i++){
-			//check if property in arraylist has the same code as property being checked
-			if(((Property) property.get(i)).getMonoColor() == prop.getMonoColor())
-				count++;
-			//break out of loop and return true if count = numOfMonopolyParts
-			if (count == prop.getNumberOfMonopolyParts())
-				return true;
-		}
-		return false;
-	}
-	
-	public List<Property> propertiesAvailableToBuild()
-	{
-		ArrayList<Property> buildProperties = new ArrayList<>();
-		
-		for (int i = 0; i < property.size(); i++)
-		{
-			if ( (checkForMonopoly(property.get(i))))
-			{
-				buildProperties.add(property.get(i));
+	/*when a property is bought this is called to check if the monopoly is completed
+	 * if it is it will place a true boolean in the corresponding color(int) index 
+	 * in the 0th index*/
+	public void checkAndChangeMonopolyStat(Property prop, int color){
+		int parts = prop.getNumOfParts();
+		for(int i = 1; i < parts; i++){
+			if(property[color][i] != null){
+				property[color][0] = true;
+			}
+			else{
+				property[color][0] = false;
+				break;
 			}
 		}
-		return buildProperties;
+	}
+	
+	//used to check if rent should be doubled because a the monopoly is owned by one player
+	public boolean checkForMonopoly(int color){
+		return (boolean) property[color][0];
+	}
+	
+	/*makes an array of properties that a player can build on bases on 
+	 * if they have the monopoly, and restricts the player to build evenly 
+	 * across the properties of the monopoly*/
+	public List<Property> getBuildableProperties(){
+		ArrayList<Property> buildableProperties = new ArrayList<>();
+		for (int i=0; i<7; i++){
+			if ((boolean)property[i][0] == true){
+				int parts = ((Property) property[i][1]).getNumOfParts();
+				for(int j=1; j<=parts; i++){
+					int max = getMaxBuilt(i,parts);
+					if (((Property) property[i][j]).getNumHouses() <= max){
+						buildableProperties.add((Property) property[i][j]);
+					}
+				}
+			}
+		}
+		return buildableProperties;
 	}
 
+	/*helper function to propertiesAvailableToBuild() that returns the max
+	 * number of houses built on a single property within a monopoly*/
+	public static int getMaxBuilt(int color, int parts){
+		int max = 0;
+		for (int i=1; i<= parts; i++){
+			if (max < ((Property) property[color][parts]).getNumHouses()){
+				max = ((Property) property[color][parts]).getNumHouses();
+			}
+		}
+		return max;
+	}
+	
 	//returns the number of railroads owned
 	public int getRailroadOwnedCount(){
 		return railroads.size();
@@ -155,8 +179,8 @@ public class Player {
 		return utilities.size();
 	}
 	
-	//returns the number of properties owned
-	public int getPropertiesOwned() {
-		return property.size();
-	}
+//	//returns the number of properties owned
+//	public int getPropertiesOwned() {
+//		return property.size();
+//	}
 }
