@@ -122,7 +122,7 @@ public class Player {
 	 * in the 0th index*/
 	public void checkAndChangeMonopolyStat(Property prop, int color){
 		int parts = prop.getNumOfParts();
-		for(int i = 1; i < parts; i++){
+		for(int i = 1; i <= parts; i++){
 			if(property[color][i] != null){
 				property[color][0] = true;
 			}
@@ -148,7 +148,7 @@ public class Player {
 				int parts = ((Property) property[i][1]).getNumOfParts();
 				for(int j=1; j<=parts; i++){
 					int max = getMaxBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() <= max){
+					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5)){
 						buildableProperties.add((Property) property[i][j]);
 					}
 				}
@@ -177,6 +177,11 @@ public class Player {
 	//returns the number of utilities owned
 	public int getUtilitysOwned(){
 		return utilities.size();
+	}
+	
+	public void buildHouse(Property prop){
+		makePayment(prop.getHouseCost());
+		prop.buildHouse();
 	}
 	
 //	//returns the number of properties owned

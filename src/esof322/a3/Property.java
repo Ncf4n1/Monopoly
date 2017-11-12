@@ -11,7 +11,7 @@ public class Property extends Deed
 	private int mortgageVal;			// Money gained from mortgaging property
 	private int monopolyPart;	// Number of parts needed for monopoly
 	private int monoColor;				// Manages which properties go together to make a monopoly
-	int numOfParts;
+	private int numOfParts;
 	
 	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int monopolyPart, int x, int y, int monoColor, int numOfParts)
 	{
@@ -32,13 +32,7 @@ public class Property extends Deed
 		return price;
 	}
 	
-	public int getNumberOfHouses()
-	{
-		return numHouses;
-	}
-	
-	public int getPartNumber()
-	{
+	public int getPartNumber(){
 		return monopolyPart;
 	}
 	
@@ -51,13 +45,11 @@ public class Property extends Deed
 		return rentRates[numHouses];
 	}
 	
-	public void buildHouse()
-	{
+	public void buildHouse(){
 		numHouses++;
 	}
 	
-	public void sellHouse()
-	{
+	public void sellHouse(){
 		numHouses--;
 	}
 	
@@ -67,5 +59,17 @@ public class Property extends Deed
 	
 	public int getNumHouses(){
 		return numHouses;
+	}
+	
+	public int getMortgageValue(){
+		return mortgageVal;
+	}
+	
+	public int getHouseCost(){
+		return houseCost;
+	}
+	
+	public String getName(){
+		return name;
 	}
 }
