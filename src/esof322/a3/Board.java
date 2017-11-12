@@ -3,14 +3,6 @@ package esof322.a3;
 public class Board 
 {
 	static Space [] board = new Space [40];
-	private static final int BROWN = 0;
-	private static final int LIGHT_BLUE = 1;
-	private static final int PINK = 2;
-	private static final int ORANGE = 3;
-	private static final int RED = 4;
-	private static final int YELLOW = 5;
-	private static final int GREEN = 6;
-	private static final int DARK_BLUE = 7;
 	
 	
 	public Board(){

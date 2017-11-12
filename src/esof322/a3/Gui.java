@@ -10,7 +10,7 @@ import java.awt.image.*;
 
 public class Gui extends JFrame{
 
-  //private GameDriver driver;
+  private GameDriver driver = new GameDriver();
 
   public static void main(String[] args){
     new Gui();
@@ -36,9 +36,7 @@ public class Gui extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-              //hides current panel and replaces it with panel presenting options
-              //to start a new game
-
+              //dispose current frame and open options frame to start a new game
               OptionsFrame optionsFrame = new OptionsFrame();
               dispose();
             }
@@ -56,6 +54,27 @@ public class Gui extends JFrame{
         });
     centerPanel.add(close);
     add(centerPanel, BorderLayout.CENTER);
+  }
+
+  /**
+  * method to add the menu to the monopoly gui
+  * presents option to exit the gui
+  */
+  public void menu(){
+    JMenuBar bar = new JMenuBar();
+    JMenu exitOption = new JMenu("Exit");
+    JMenuItem exit = new JMenuItem("Exit Game");
+    exit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              //closes gui
+              System.exit(0);
+            }
+        });
+    exitOption.add(exit);
+    bar.add(exitOption);
+    setJMenuBar(bar);
   }
   /* class for new JFrame that contains the game set up options
    * user selects number of players and a time limit
@@ -101,18 +120,18 @@ public class Gui extends JFrame{
                 //for when we implement AI Players
                 /*int computers = (int)computerPlayers.getSelectedItem();
                 String[] computerNames = new String[computers]; */
-                	for (int i = 0; i < humans; i++)
-                	{
-                		humanNames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
-                	}
+                  for (int i = 0; i < humans; i++)
+                  {
+                    humanNames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
+                  }
                   //for when we implement AI Players
                   /*for(int j = 0; j < computers; j++){
                     computerNames[j] = (String) JOptionPane.showInputDialog("Please Input a Name for Computer Player " + (j+1));
                   }*/
-                  //driver.setNumPlayers(humans)
-                  //driver.setPlayerNames(playernames);
+                  driver.setNumPlayers(humans);
+                  driver.setPlayerNames(humanNames);
                   int time = (int)timeLimit.getSelectedItem();
-                	//driver.setTimeLimit((long)timeLimit.getSelectedItem());
+                  //driver.setTimeLimit((long)time);
                   BoardFrame boardFrame = new BoardFrame();
                   dispose();
                   //for when we implement AI Players
@@ -132,7 +151,7 @@ public class Gui extends JFrame{
   * class for a new JFrame that contains the board
   */
   private class BoardFrame extends JFrame{
-    void BoardFrame(){
+    public BoardFrame(){
       setTitle("Monopoly");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       menu();
@@ -153,37 +172,4 @@ public class Gui extends JFrame{
       add(boardPanel);
     }
   }
-
-  /**
-  * method to add the menu to the monopoly gui
-  * presents option to exit the gui
-  */
-  public void menu(){
-    JMenuBar bar = new JMenuBar();
-    JMenu exitOption = new JMenu("Exit");
-    JMenuItem exit = new JMenuItem("Exit Game");
-    exit.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-              //closes gui
-              System.exit(0);
-            }
-        });
-    exitOption.add(exit);
-    bar.add(exitOption);
-    setJMenuBar(bar);
-  }
-  /**
-  * method to create a new panel in the monopoly gui
-  * returns a JPanel
-  */
-  public JPanel createPanel(int x ,int y) {
-    JPanel newpanel = new JPanel();
-    newpanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-    setSize(x,y);
-    setVisible(true);
-    return newpanel;
-  }
-
 }
