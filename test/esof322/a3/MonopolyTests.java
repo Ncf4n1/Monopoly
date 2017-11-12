@@ -329,10 +329,43 @@ public class MonopolyTests {
 		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
 		player.buyProperty(prop);
 		
-		prop.setOwner(player);
-		
 		assertEquals(1, player.getPropertiesOwned());
+		assertEquals(1440, player.getMoneyTotal());
 		assertEquals(player, prop.getOwner());
+	}
+	
+	@Test 
+	public void testPlayerBuyRailroad ()
+	{
+		Railroad rr = new Railroad("ReadingRailroad", 750, 1425);
+		player.buyProperty(rr);
+		
+		assertEquals(1, player.getRailroadOwnedCount());
+		assertEquals(1300, player.getMoneyTotal());
+		assertEquals(player, rr.getOwner());
+	}
+	
+	@Test 
+	public void testPlayerBuyUtility ()
+	{
+		Utility u = new Utility("ElectricCompany", 75, 1119);
+		player.buyProperty(u);
+		
+		assertEquals(1, player.getUtilitysOwned());
+		assertEquals(1350, player.getMoneyTotal());
+		assertEquals(player, u.getOwner());
+	}
+	
+	@Test
+	public void testPlayerMortgage () 
+	{
+		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
+		player.buyProperty(prop);
+		
+		player.mortgage(prop);
+		
+		assertEquals(1470, player.getMoneyTotal());
+		assertTrue(prop.getMortgageStat());
 	}
 	
 	@Test
@@ -353,5 +386,40 @@ public class MonopolyTests {
 		
 		assertEquals(1380, player.getMoneyTotal());
 	}
-
+	
+	@Test
+	public void testPlayerRailroadCount ()
+	{
+		Railroad rr1 = new Railroad("ReadingRailroad", 750, 1425);
+		Railroad rr2 = new Railroad("PennsylvaniaRailroad", 75, 750);
+		
+		player.buyProperty(rr1);
+		player.buyProperty(rr2);
+		
+		assertEquals(2, player.getRailroadOwnedCount());
+	}
+	
+	@Test
+	public void testPlayerUtilityCount ()
+	{
+		Utility u1 = new Utility("ElectricCompany", 75, 1119);
+		Utility u2 = new Utility("WaterWorks", 1119,75);
+		
+		player.buyProperty(u1);
+		player.buyProperty(u2);
+		
+		assertEquals(2, player.getUtilitysOwned());
+	}
+	
+	@Test
+	public void testPlayerPropCount ()
+	{
+		Property p1 = new Property("IllinoisAvenue", 240, new int[] {20, 100, 300, 750, 925, 1100}, 150, 120, 3, 625, 75, 4);
+		Property p2 = new Property("PacificAvenue", 300, new int[] {26, 130, 390, 900, 1100, 1275}, 200, 150, 3, 1425, 262, 6);
+		
+		player.buyProperty(p1);
+		player.buyProperty(p2);
+		
+		assertEquals(2, player.getPropertiesOwned());
+	}
 }
