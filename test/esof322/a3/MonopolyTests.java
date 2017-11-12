@@ -311,10 +311,9 @@ public class MonopolyTests {
 	@Test 
 	public void testPlayerBuyProperty ()
 	{
-		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
 		player.buyProperty(prop);
 		
-		assertEquals("check for correct values of player when buying property", 1, player.getPropertiesOwned());
 		assertEquals("check for correct values of player when buying property", 1440, player.getMoneyTotal());
 		assertEquals("check for correct values of property when bought", player, prop.getOwner());
 	}
@@ -344,7 +343,7 @@ public class MonopolyTests {
 	@Test
 	public void testPlayerMortgage () 
 	{
-		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
 		player.buyProperty(prop);
 		
 		player.mortgage(prop);
@@ -354,22 +353,41 @@ public class MonopolyTests {
 	}
 	
 	@Test
-	public void testFalseCheckForMonopoly() {
-		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
-		
-		player.buyProperty(prop);
-		
-		assertFalse("check for correct values of player when not having a monopoly", player.checkForMonopoly(prop));
-	}
-	
-	@Test
-	public void testTrueCheckForMonopoly() {
-		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
-		Property prop2 = new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0);
+	public void testPlayerHouseMax ()
+	{
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
 		player.buyProperty(prop);
 		player.buyProperty(prop2);
 		
-		assertTrue("check for correct values of player when having a monopoly", player.checkForMonopoly(prop));
+		prop.buildHouse();
+		prop2.buildHouse();
+		prop.buildHouse();
+
+		
+		assertEquals("Check for correct value of max houses built on properties", 1, Player.getMaxBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+	}
+	
+	@Test
+	public void testFalseCheckForMonopoly() 
+	{
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		//Property prop =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		
+		player.buyProperty(prop);
+		
+		assertFalse("check for correct values of player when not having a monopoly", player.checkForMonopoly(prop.getMonoColor()));
+	}
+	
+	@Test
+	public void testTrueCheckForMonopoly() 
+	{
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		player.buyProperty(prop);
+		player.buyProperty(prop2);
+		
+		assertTrue("check for correct values of player when having a monopoly", player.checkForMonopoly(prop.getMonoColor()));
 	}
 	
 	@Test
@@ -394,17 +412,5 @@ public class MonopolyTests {
 		player.buyProperty(u2);
 		
 		assertEquals("check for correct values of player when owning multiple utilities", 2, player.getUtilitysOwned());
-	}
-	
-	@Test
-	public void testPlayerPropCount ()
-	{
-		Property p1 = new Property("IllinoisAvenue", 240, new int[] {20, 100, 300, 750, 925, 1100}, 150, 120, 3, 625, 75, 4);
-		Property p2 = new Property("PacificAvenue", 300, new int[] {26, 130, 390, 900, 1100, 1275}, 200, 150, 3, 1425, 262, 6);
-		
-		player.buyProperty(p1);
-		player.buyProperty(p2);
-		
-		assertEquals("check for correct values of player when owning multiple properties", 2, player.getPropertiesOwned());
 	}
 }
