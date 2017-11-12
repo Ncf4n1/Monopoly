@@ -2,9 +2,9 @@ package esof322.a3;
 
 public class Space
 {
-	private String name;
-	private int x;
-	private int y;
+	protected String name;
+	protected int x;
+	protected int y;
 	
 	public Space(String name, int x, int y)
 	{
