@@ -2,7 +2,7 @@ package esof322.a3;
 
 public class Board 
 {
-	static Space [] board = new Space [40];
+	static Space [] board = new Space [40];	//Data structure for the spaces on the board
 	
 	
 	public Board(){
@@ -48,7 +48,7 @@ public class Board
 		board[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 	}
 
-	public Space getSpace(int location) {
+	public Space getSpace(int location) { //gets the space according to the corresponding location a player is on
 		return board[location];
 	}
 }
