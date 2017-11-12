@@ -7,7 +7,7 @@ public class Player {
 	public String playerName;									// Name of the player
 	public String token;										// Token the player is using
 	private int money;											// Amount of money the player has
-	private static Object [][] property = new Object [][4];	// 2D array containing Objects of type booleans and property
+	private static Object [][] property = new Object [8][4];	// 2D array containing Objects of type booleans and property
 	private ArrayList<Railroad> railroads = new ArrayList<>();	// List of currently owned railroad
 	private ArrayList<Utility> utilities = new ArrayList<>();	// List of currently owned utilites
 	private int location;										// Current location on the board
