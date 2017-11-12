@@ -61,17 +61,7 @@ public class MonopolyTests {
 		
 		assertEquals("'buy' back  hotel from property", 10, bank.getHotels());
 	}
-	
-	@Test
-	public void testGiveMoney()
-	{
-		Player player = new Player ("Test", "Test");
-		Bank bank = new Bank();
-		
-		bank.giveMoney(player, 500);
-		
-		assertEquals("test giving player money", 2000, player.getMoneyTotal());
-	}
+
 	
 	//BOARD
 	
@@ -159,6 +149,7 @@ public class MonopolyTests {
 	{
 		assertEquals("check for correct intialization of property", 60, prop.getPrice());
 	}
+	
 	@Test
 	public void testPropertyInitRent ()
 	{
