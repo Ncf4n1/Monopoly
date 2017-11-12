@@ -1,4 +1,4 @@
-getpackage esof322.a3;
+package esof322.a3;
 
 public class Deed extends Space
 {	

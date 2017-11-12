@@ -141,6 +141,7 @@ public class Player {
 	/*makes an array of properties that a player can build on bases on 
 	 * if they have the monopoly, and restricts the player to build evenly 
 	 * across the properties of the monopoly*/
+	
 	public List<Property> getBuildableProperties(){
 		ArrayList<Property> buildableProperties = new ArrayList<>();
 		for (int i=0; i<7; i++){
@@ -148,7 +149,7 @@ public class Player {
 				int parts = ((Property) property[i][1]).getNumOfParts();
 				for(int j=1; j<=parts; i++){
 					int max = getMaxBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5)){
+					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5){
 						buildableProperties.add((Property) property[i][j]);
 					}
 				}
