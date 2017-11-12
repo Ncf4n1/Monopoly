@@ -9,10 +9,12 @@ public class Die {
 	public Die() {
 	}
 
+	//returns the die value
 	public int getDie(){
 		return die;
 	}
 
+	//get a random number between 1 and 6
 	public void rollDie()
 	{
 		Random rand = new Random();
