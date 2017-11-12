@@ -3,11 +3,11 @@ package esof322.a3;
 public class Deed extends Space
 {
 	
-	private String name;
-	private int price;
-	private Player owner;
-	private int mortgageVal;
-	private boolean mortgaged = false;
+	protected String name;
+	protected int price;
+	protected Player owner;
+	protected int mortgageVal;
+	protected boolean mortgaged = false;
 	
 	public Deed(String name, int price, int mortgageVal, int x, int y){
 		super(name, x, y);
