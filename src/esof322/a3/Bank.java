@@ -1,58 +1,46 @@
 package esof322.a3;
 
-public class Bank {
+public final class Bank {
 	
-	private int houses, hotels;
+	private static int houses;
+	private static int hotels;
 	
-	public Bank () {
+	private Bank() {
 		houses = 32;
 		hotels = 12;
 	}
 	
 	//deduct 1 from the number  of houses
-	public void sellHouse() {
-		
+	public void sellHouse() {		
 		houses--;
 		
 	}
 	
 	//deduct 1 from the number of hotels
-	public void sellHotel() {
-		
+	public static void sellHotel() {		
 		hotels--;
 		
 	}
 	
 	//add 1 to the number  of houses
-	public void buybackHouse() {
-			
+	public static void buybackHouse() {			
 		houses++;
 			
 	}
 		
 	//add 1 to the number of hotels
 	public void buybackHotel() {
-			
 		hotels++;
 		
 	}
 	
-	//give player money
-	public void giveMoney(Player player, int money) {
-		
-		player.takePayment(money);
-		
-	}
-	
 	//get the number of houses left to build
-	public int getHouses()
-	{
+	public int getHouses(){
 		return houses;
 	}
 	
 	//get the number of hotels left to build
-	public int getHotels()
-	{
+	public static int getHotels(){
 		return hotels;
 	}
 
