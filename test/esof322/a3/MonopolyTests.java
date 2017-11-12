@@ -371,12 +371,13 @@ public class MonopolyTests {
 	@Test
 	public void testFalseCheckForMonopoly() 
 	{
-		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Player play = new Player("TestPlayerName", "TestToken"); 
+		Property prop = new Property("NewYorkAvenue", 200, new int[] {16, 80, 220, 600, 800, 1000}, 100, 100, 3, 75, 262, 3, 3);
 		//Property prop =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
 		
-		player.buyProperty(prop);
+		play.buyProperty(prop);
 		
-		assertFalse("check for correct values of player when not having a monopoly", player.checkForMonopoly(prop.getMonoColor()));
+		assertEquals("check for correct values of player when not having a monopoly", false, play.checkForMonopoly(prop.getMonoColor()));
 	}
 	
 	@Test
