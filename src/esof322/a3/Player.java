@@ -148,7 +148,7 @@ public class Player {
 				int parts = ((Property) property[i][1]).getNumOfParts();
 				for(int j=1; j<=parts; i++){
 					int max = getMaxBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5)){
+					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5){
 						buildableProperties.add((Property) property[i][j]);
 					}
 				}
