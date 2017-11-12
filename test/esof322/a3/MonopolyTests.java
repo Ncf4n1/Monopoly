@@ -152,23 +152,13 @@ public class MonopolyTests {
 	
 	//PROPERTY
 	
-	Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
-	
+	Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+
 	@Test
-	public void testPropertyInitOwner ()
+	public void testPropertyPrice ()
 	{
-		assertNull("check for correct intialization of property", prop.getOwner());
+		assertEquals("check for correct intialization of property", 60, prop.getPrice());
 	}
-	
-	@Test
-	public void testPropertyOwnerChange ()
-	{
-		Player play = new Player ("NewPlayer", "TestToken");
-		prop.setOwner(play);
-		
-		assertEquals("check for change in owner", play, prop.getOwner());
-	}
-	
 	@Test
 	public void testPropertyInitRent ()
 	{
@@ -178,7 +168,7 @@ public class MonopolyTests {
 	@Test
 	public void testPropertyInitHouses ()
 	{
-		assertNull("check for correct intialization of property", prop.getOwner());
+		assertEquals("check for correct intialization of property", 0, prop.getNumberOfHouses());
 	}
 	
 	@Test
@@ -208,9 +198,15 @@ public class MonopolyTests {
 	}
 	
 	@Test
+	public void testMonopolyPart ()
+	{
+		assertEquals("check for the number in monopoly", 1, prop.getPartNumber());
+	}
+	
+	@Test
 	public void testPropertyNumofMonopolyParts ()
 	{
-		assertEquals("check for the number of monopoly part initialization", 2, prop.getNumberOfMonopolyParts());
+		assertEquals("check for the number of monopoly part initialization", 2, prop.getNumOfParts());
 	}
 	
 	//RAILROAD

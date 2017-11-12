@@ -14,7 +14,7 @@ public class Board
 		board[5] = new Railroad("ReadingRailroad", 750, 1425);
 		board[6] = new Property("OrientalAvenue", 100, new int[] {6, 30, 90, 270, 400, 550}, 50, 50, 1, 626, 1425, 1, 3);
 		board[7] = new Chance(506, 1425);
-		board[8] = new Property("VermontAvenue", 100, new int[] {6, 30, 90, 270, 400, 550}, 50, 50, 2, 386, 1425, 1);
+		board[8] = new Property("VermontAvenue", 100, new int[] {6, 30, 90, 270, 400, 550}, 50, 50, 2, 386, 1425, 1, 3);
 		board[9] = new Property("ConnecticutAvenue", 120, new int[] {8, 40, 100, 300, 450, 600}, 50, 60, 3, 262, 1425, 1, 3);
 		board[10] = new Jail(25, 1475);
 		board[11] = new Property("St.CharlesPlace", 140, new int[] {10, 50, 150, 450, 625, 750}, 100, 70, 1, 75,1243, 2, 3);
@@ -43,7 +43,7 @@ public class Board
 		board[34] = new Property("PennsylvaniaAvenue", 320, new int[] {28, 150, 450, 1000, 1200, 1400}, 200, 160, 3, 1425, 626, 6, 3);
 		board[35] = new Railroad("ShortLine", 1425, 750);
 		board[36] = new Chance(1425, 871);
-		board[37] = new Property("ParkPlace", 350, new int[] {35, 175, 500, 1100, 1300, 1500}, 200, 175, 1, 1425, 994, 7, 2)
+		board[37] = new Property("ParkPlace", 350, new int[] {35, 175, 500, 1100, 1300, 1500}, 200, 175, 1, 1425, 994, 7, 2);
 		board[38] = new LuxuryTax(100, 1425, 1119);
 		board[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 	}
