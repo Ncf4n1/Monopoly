@@ -168,21 +168,47 @@ public class Gui extends JFrame{
     private class BoardPanel extends JPanel{
       public BoardPanel(){
         setVisible(true);
+        boolean moveDone = false;
         JButton move = new JButton("Take Turn");
         move.addActionListener(new ActionListener() {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
                   //take a turn
+                  GameDriver.startTurn();
                   int roll = GameDriver.rollDice();
-                  System.out.println(roll);
-                  System.out.println("doubles in a row: " + GameDriver.doublesInARow);
-                  GameDriver.movePlayerToken();
-                  repaint();
+                  System.out.println("die 1: " + GameDriver.getDie1());
+                  System.out.println("die 2: " + GameDriver.getDie2());
+                  System.out.println("doubles: " + GameDriver.getDoublesInARow());
+                  if(GameDriver.getDoublesInARow() != 3){
+                    move.setVisible(true);
+                    GameDriver.movePlayerToken();
+                    System.out.println("location: " + GameDriver.getCurrentPlayer().getLocation());
+                    GameDriver.passGo();
+                    GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+                    System.out.println("Money: " + GameDriver.getCurrentPlayer().getMoneyTotal());
+                    repaint();
+                  }
+                  if(GameDriver.getDoublesInARow() == 0){
+                    move.setVisible(false);
+                  }
+                  //System.out.println("doubles in a row: " + GameDriver.doublesInARow);
                 }
             });
         repaint();
         add(move);
+        if(GameDriver.getDoublesInARow() == 0){
+          JButton endTurn = new JButton("End Turn");
+          endTurn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              GameDriver.endTurn();
+              move.setVisible(true);
+            }
+          });
+          add(endTurn);
+        }
+
       }
       @Override
       public void paintComponent(Graphics g){
@@ -194,6 +220,19 @@ public class Gui extends JFrame{
           g2d.drawRect(x-50, y-10, 100, 20);
           g2d.drawString(GameDriver.getPlayers()[i].token, x-47, y+5);
         }
+      }
+      public void addBuyPropertyButton(){
+        //int price = GameDriver.getPrice();
+        JButton buy = new JButton("Buy Space for $");
+        add(buy);
+        buy.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                  //buy property currently on
+                  GameDriver.buyProperty();
+                }
+            });
+
       }
     }
   }

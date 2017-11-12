@@ -7,24 +7,26 @@ public class GameDriver
 	private static int numPlayers;				// Number of Players playing the game (2-4)
 	private static String[] playernames;		// List of the names for each player
 	private static Player[] players;			// List of players playing the game
+	private static Gui gui;
 	private static long timeLimit;				// Time limit for the game
+	private static long endTime;
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board = new Board();
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
 	private static Die die2 = new Die();
-	public static int doublesInARow = 0;					// Number of times doubles has been rolled in a row
-	public static int rollTotal = 0;						// Total for the dice roll
-	public static int previousPlayerLocation = 0;			// Location of the current turn player prior to the dice roll
-	public static Property currentLandedProperty = null;	// Placeholder for a property if the player lands on it
-	public static Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
-	public static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
-
+	private static int doublesInARow = 0;					// Number of times doubles has been rolled in a row
+	private static int rollTotal = 0;						// Total for the dice roll
+	private static int previousPlayerLocation = 0;			// Location of the current turn player prior to the dice roll
+	private static Property currentLandedProperty = null;	// Placeholder for a property if the player lands on it
+	private static Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
+	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
+  private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
 
 	public static void main(String[] args)
 	{
-		Gui gui = new Gui();
+		gui = new Gui();
 		while(gui.initialized == false){
 
 		}
@@ -36,109 +38,7 @@ public class GameDriver
 		// Loop for a player taking a turn while within the time limit
 		while (System.currentTimeMillis() < endTime)
 		{
-			propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
-
-			previousPlayerLocation = players[currentPlayer].getLocation();
-			rollTotal = rollDice();
-			currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
-
-			// Checks if the player is passing GO and if so, pay the player
-			if ( (previousPlayerLocation <= 39) && (currentPlayerLocation >= 0) )
-			{
-				players[currentPlayer].takePayment(200);
-			}
-
-			// Handle which type of the square the player landed on
-			switch (currentPlayerLocation)
-			{
-				// Cases for Chance, Community Chest, Free Parking, and Both Jail Squares (Do Nothing)
-				case 2: case 7: case 10: case 17: case 20: case 22: case 30: case 33: case 36: break;
-
-				// Cases for two Tax spaces (Make appropriate tax payment)
-				case 4: players[currentPlayer].makePayment(200);
-						break;
-				case 38: players[currentPlayer].makePayment(100);
-						break;
-
-				// Case for landing on a railroad and either paying the correct rent or buying it
-				case 5: case 15: case 25: case 35: currentLandedRailroad = (Railroad) board.getSpace(currentPlayerLocation);
-						if ( (currentLandedRailroad.getOwner() != null) && (!currentLandedRailroad.getMortgageStat()))
-						{
-							players[currentPlayer].makePayment(currentLandedRailroad.getRent(currentLandedRailroad.getOwner().getRailroadOwnedCount()));
-						}
-						else
-						{
-							if (buyProperty)
-							{
-								players[currentPlayer].buyProperty(currentLandedRailroad);
-							}
-						}
-						break;
-
-				// Case for landing on a utility and paying the correct rent based on dice roll or buying it
-				case 12: case 28: currentLandedUtility = (Utility) board.getSpace(currentPlayerLocation);
-								  if ( (currentLandedUtility.getOwner() != null) && (!currentLandedUtility.getMortgageStat()))
-								  {
-									  if (currentLandedUtility.getOwner().getUtilitysOwned() == 1)
-									  {
-										  players[currentPlayer].makePayment(4*rollTotal);
-									  }
-									  else if (currentLandedUtility.getOwner().getUtilitysOwned() == 2)
-									  {
-										  players[currentPlayer].makePayment(10*rollTotal);
-									  }
-								  }
-
-				// Handle if the player landed on a property
-				default: currentLandedProperty = (Property) board.getSpace(currentPlayerLocation);
-
-						 // Check if the property is owned and not mortgaged and if not, buy it if the user wants
-						 if ( (currentLandedProperty.getOwner() != null) && (currentLandedProperty.getMortgageStat()))
-						 {
-							 // Check if the property is part of a monopoly and has no houses (Must double rent)
-							 if ( (currentLandedProperty.getOwner().checkForMonopoly(currentLandedProperty)) && (currentLandedProperty.getNumberOfHouses() == 0) )
-							 {
-								 players[currentPlayer].makePayment(2*currentLandedProperty.getRent());
-								 currentLandedProperty.getOwner().takePayment(2*currentLandedProperty.getRent());
-							 }
-							 else
-							 {
-								 players[currentPlayer].makePayment(currentLandedProperty.getRent());
-								 currentLandedProperty.getOwner().takePayment(currentLandedProperty.getRent());
-							 }
-						 }
-						 else
-						 {
-							 if (buyProperty)
-							 {
-								 players[currentPlayer].buyProperty(currentLandedProperty);
-							 }
-						 }
-
-			}
-
 			// Check if doubles were rolled and set the next player
-			if (die1.getDie() != die2.getDie())
-			{
-				doublesInARow = 0;
-				if (currentPlayer == players.length-1)
-				{
-					currentPlayer = 0;
-				}
-				else
-				{
-					currentPlayer++;
-				}
-			}
-			else
-			{
-				doublesInARow++;
-
-				if (doublesInARow == 3)
-				{
-					// Handle going to jail
-				}
-			}
 		}
 
 		// Determine the winner of the game
@@ -171,17 +71,146 @@ public class GameDriver
 			}
 		}
 	}
+	public static void setupGame(){
+		// Conversion of the time limit into milliseconds then stored as a long
+		endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
+		currentPlayer = 0;
+	}
+	public static void startTurn(){
+		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
+	}
+	public static boolean turnOver(){
+		if(doublesInARow == 3){
+			return true;
+		}
+		else if(doublesInARow == 0 && rollTotal != 0){
+			return true;
+		}
+		else
+			return false;
+	}
+	public static void endTurn(){
+		if(currentPlayer == players.length -1){
+			currentPlayer = 0;
+		}
+		else{
+			currentPlayer++;
+		}
+		doublesInARow = 0;
+		rollTotal = 0;
+	}
 
 	public static int rollDice(){
 		die1.rollDie();
 		die2.rollDie();
-		if(die1.getDie() == die2.getDie())
+		if(die1.getDie() == die2.getDie()){
 			doublesInARow++;
-		return die1.getDie() + die2.getDie();
+		}
+		else{
+			doublesInARow = 0;
+		}
+			rollTotal = die1.getDie() + die2.getDie();
+			return rollTotal;
+	}
+	public static int getDie1(){
+		return die1.getDie();
+	}
+	public static int getDie2(){
+		return die2.getDie();
+	}
+	public static int getDoublesInARow(){
+		return doublesInARow;
 	}
 
 	public static void movePlayerToken(){
+		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
+	}
+
+	public static void passGo(){
+		if ( previousPlayerLocation + rollTotal > 39 )
+		{
+			players[currentPlayer].takePayment(200);
+		}
+	}
+
+	public static void checkSpace(int Location){
+		// Handle which type of the square the player landed on
+		switch (currentPlayerLocation)
+		{
+			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
+			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 30: case 33: case 36:
+			 		break;
+
+			// Cases for two Tax spaces (Make appropriate tax payment)
+			case 4: players[currentPlayer].makePayment(200);
+					break;
+			case 38: players[currentPlayer].makePayment(100);
+					break;
+
+			// Case for landing on a railroad and either paying the correct rent or buying it
+			case 5: case 15: case 25: case 35: currentLandedRailroad = (Railroad) board.getSpace(currentPlayerLocation);
+					if ( (currentLandedRailroad.getOwner() != null) && (!currentLandedRailroad.getMortgageStat()))
+					{
+						players[currentPlayer].makePayment(currentLandedRailroad.getRent(currentLandedRailroad.getOwner().getRailroadOwnedCount()));
+					}
+					else
+					{
+						//Gui.addBuyPropertyButton();
+						/*if (buyProperty)
+						{
+							players[currentPlayer].buyProperty(currentLandedRailroad);
+						}*/
+					}
+					break;
+
+			// Case for landing on a utility and paying the correct rent based on dice roll or buying it
+			case 12: case 28: currentLandedUtility = (Utility) board.getSpace(currentPlayerLocation);
+								if ( (currentLandedUtility.getOwner() != null) && (!currentLandedUtility.getMortgageStat()))
+								{
+									if (currentLandedUtility.getOwner().getUtilitysOwned() == 1)
+									{
+										players[currentPlayer].makePayment(4*rollTotal);
+									}
+									else if (currentLandedUtility.getOwner().getUtilitysOwned() == 2)
+									{
+										players[currentPlayer].makePayment(10*rollTotal);
+									}
+								}
+					break;
+
+			// Handle if the player landed on a property
+			default: currentLandedProperty = (Property) board.getSpace(currentPlayerLocation);
+
+					 // Check if the property is owned and not mortgaged and if not, buy it if the user wants
+					 if ( (currentLandedProperty.getOwner() != null) && (!currentLandedProperty.getMortgageStat()))
+					 {
+						 // Check if the property is part of a monopoly and has no houses (Must double rent)
+						 if ( (currentLandedProperty.getOwner().checkForMonopoly(currentLandedProperty)) && (currentLandedProperty.getNumberOfHouses() == 0) )
+						 {
+							 players[currentPlayer].makePayment(2*currentLandedProperty.getRent());
+							 currentLandedProperty.getOwner().takePayment(2*currentLandedProperty.getRent());
+						 }
+						 else
+						 {
+							 players[currentPlayer].makePayment(currentLandedProperty.getRent());
+							 currentLandedProperty.getOwner().takePayment(currentLandedProperty.getRent());
+						 }
+					 }
+					 else
+					 {
+						 //Gui.addBuyPropertyButton();
+						 /*if (buyProperty)
+						 {
+							 players[currentPlayer].buyProperty(currentLandedProperty);
+						 }*/
+					 }
+				 	break;
+		}
+
+	}
+	public static void buyProperty(){
+		players[currentPlayer].buyProperty(currentLandedProperty);
 	}
 	// Function used by the GUI to get the number of players
 	public static void setNumPlayers(int players)
@@ -208,7 +237,7 @@ public class GameDriver
 		GameDriver.timeLimit = timeLimit;
 	}
 
-	// FUnction used by the GUI to determine if the player wants to buy the property
+	// Function used by the GUI to determine if the player wants to buy the property
 	public static void setBuyProperty(boolean decision)
 	{
 		GameDriver.buyProperty = decision;
@@ -219,6 +248,11 @@ public class GameDriver
 	}
 	public static Player[] getPlayers(){
 		return players;
+	}
+	public static int getPrice(){
+		String name = board.getSpace(currentPlayerLocation).getName();
+		//return Property.getPrice(name);
+		return 0000;
 	}
 
 	public static int getXCoordinate(Player p){
