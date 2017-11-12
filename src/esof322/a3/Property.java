@@ -5,7 +5,6 @@ public class Property extends Deed
 	
 	private String name;				// Name of property
 	private int price;					// Purchase price for property
-	private Player owner;				// Current owner of property
 	private int[] rentRates;			// Rent rates for a certain # of houses on property
 	private int houseCost;				// Cost of purchasing a house / hotel
 	private int numHouses;				// Number of houses built on property
@@ -24,13 +23,7 @@ public class Property extends Deed
 		this.numberOfMonopolyParts = numberOfMonopolyParts;
 		this.monoColor = monoColor;
 		
-		owner = null;
 		numHouses = 0;
-	}
-	
-	public Player getOwner()
-	{
-		return owner;
 	}
 	
 	public int getNumberOfHouses()
