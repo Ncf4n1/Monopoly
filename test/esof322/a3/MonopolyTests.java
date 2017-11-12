@@ -168,7 +168,7 @@ public class MonopolyTests {
 	@Test
 	public void testPropertyInitHouses ()
 	{
-		assertEquals("check for correct intialization of property", 0, prop.getNumberOfHouses());
+		assertEquals("check for correct intialization of property", 0, prop.getNumHouses());
 	}
 	
 	@Test
@@ -176,7 +176,7 @@ public class MonopolyTests {
 	{
 		prop.buildHouse();
 		
-		assertEquals("check for building a house on a property", 1, prop.getNumberOfHouses());
+		assertEquals("check for building a house on a property", 1, prop.getNumHouses());
 	}
 	
 	@Test
@@ -185,7 +185,7 @@ public class MonopolyTests {
 		prop.buildHouse();
 		prop.sellHouse();
 		
-		assertEquals("check for selling a house", 0, prop.getNumberOfHouses());
+		assertEquals("check for selling a house", 0, prop.getNumHouses());
 	}
 	
 	@Test
