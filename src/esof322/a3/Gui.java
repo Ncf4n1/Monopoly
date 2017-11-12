@@ -10,13 +10,14 @@ import java.awt.image.*;
 
 public class Gui extends JFrame{
 
-  private GameDriver driver = new GameDriver();
+  private static Gui instance;
 
   public static void main(String[] args){
     new Gui();
   }
 
   public Gui() {
+	  super("Monopoly");
     startWindow();
   }
   /**
@@ -24,8 +25,8 @@ public class Gui extends JFrame{
   * presents options to start a new game or exit the gui
   */
   public void startWindow() {
-    setTitle("Monopoly");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Container container = getContentPane();
     menu();
     setSize(1500, 1500);
     setVisible(true);
@@ -151,6 +152,7 @@ public class Gui extends JFrame{
   * class for a new JFrame that contains the board
   */
   private class BoardFrame extends JFrame{
+	  BufferedImage boardImage;
     public BoardFrame(){
       setTitle("Monopoly");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -161,9 +163,9 @@ public class Gui extends JFrame{
       boardPanel.setLayout(new BoxLayout(boardPanel, BoxLayout.Y_AXIS));
       try{
         File boardFile = new File("Board.png");
-        BufferedImage boardImage = ImageIO.read(boardFile);
-        JLabel picLabel = new JLabel(new ImageIcon(boardImage));
-        boardPanel.add(picLabel);
+        boardImage = ImageIO.read(boardFile);
+        //JLabel picLabel = new JLabel(new ImageIcon(boardImage));
+        //boardPanel.add(boardImage);
       }
       catch(IOException e){
         System.out.println(e);
