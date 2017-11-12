@@ -10,13 +10,14 @@ import java.awt.image.*;
 
 public class Gui extends JFrame{
 
-  public boolean initialized = false;
+  private static Gui instance;
 
   public static void main(String[] args){
     new Gui();
   }
 
   public Gui() {
+	  super("Monopoly");
     startWindow();
   }
   /**
@@ -24,8 +25,8 @@ public class Gui extends JFrame{
   * presents options to start a new game or exit the gui
   */
   public void startWindow() {
-    setTitle("Monopoly");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Container container = getContentPane();
     menu();
     setSize(1500, 1500);
     setVisible(true);
@@ -83,6 +84,7 @@ public class Gui extends JFrame{
     public OptionsFrame(){
       setTitle("Monopoly");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      menu();
       setSize(1500, 1500);
       setVisible(true);
       JPanel playerPanel = new JPanel();
@@ -121,21 +123,16 @@ public class Gui extends JFrame{
                 String[] computerNames = new String[computers]; */
                   for (int i = 0; i < humans; i++)
                   {
-                    humanNames[i] = JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
-                  }
-                  for (int i = 0; i < humans; i++)
-                  {
-                    System.out.println(humanNames[i]);
+                    humanNames[i] = (String) JOptionPane.showInputDialog("Please Input a Name for Human Player " + (i+1));
                   }
                   //for when we implement AI Players
                   /*for(int j = 0; j < computers; j++){
-                    computerNames[j] =  JOptionPane.showInputDialog("Please Input a Name for Computer Player " + (j+1));
+                    computerNames[j] = (String) JOptionPane.showInputDialog("Please Input a Name for Computer Player " + (j+1));
                   }*/
-                  GameDriver.setNumPlayers(humans);
-                  GameDriver.setPlayerNames(humanNames);
+                  driver.setNumPlayers(humans);
+                  driver.setPlayerNames(humanNames);
                   int time = (int)timeLimit.getSelectedItem();
-                  GameDriver.setTimeLimit((long)time);
-                  initialized = true;
+                  //driver.setTimeLimit((long)time);
                   BoardFrame boardFrame = new BoardFrame();
                   dispose();
                   //for when we implement AI Players
@@ -155,46 +152,26 @@ public class Gui extends JFrame{
   * class for a new JFrame that contains the board
   */
   private class BoardFrame extends JFrame{
+	  BufferedImage boardImage;
     public BoardFrame(){
       setTitle("Monopoly");
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      menu();
       setSize(1500, 1500);
       setVisible(true);
-
-      BoardPanel boardPanel = new BoardPanel();
+      JPanel boardPanel = new JPanel();
+      boardPanel.setLayout(new BoxLayout(boardPanel, BoxLayout.Y_AXIS));
+      try{
+        File boardFile = new File("Board.png");
+        boardImage = ImageIO.read(boardFile);
+        //JLabel picLabel = new JLabel(new ImageIcon(boardImage));
+        //boardPanel.add(boardImage);
+      }
+      catch(IOException e){
+        System.out.println(e);
+      }
+      boardPanel.setVisible(true);
       add(boardPanel);
-    }
-
-    private class BoardPanel extends JPanel{
-      public BoardPanel(){
-        setVisible(true);
-        JButton move = new JButton("Take Turn");
-        move.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                  //take a turn
-                  int roll = GameDriver.rollDice();
-                  System.out.println(roll);
-                  System.out.println("doubles in a row: " + GameDriver.doublesInARow);
-                  GameDriver.movePlayerToken();
-                  repaint();
-                }
-            });
-        repaint();
-        add(move);
-      }
-      @Override
-      public void paintComponent(Graphics g){
-        super.paintComponent(g);
-        for(int i = 0; i < GameDriver.getPlayers().length; i++){
-          int x = GameDriver.getXCoordinate(GameDriver.getPlayers()[i])/4;
-          int y = GameDriver.getYCoordinate(GameDriver.getPlayers()[i])/4;
-          Graphics2D g2d = (Graphics2D) g;
-          g2d.drawRect(x-50, y-10, 100, 20);
-          g2d.drawString(GameDriver.getPlayers()[i].token, x-47, y+5);
-        }
-      }
     }
   }
 }

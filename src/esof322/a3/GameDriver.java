@@ -25,19 +25,39 @@ public class GameDriver
 	public static void main(String[] args)
 	{
 		Gui gui = new Gui();
+<<<<<<< HEAD
+		Board board = new Board();
+		int currentPlayer = 0;					// Index of the current player for the player array
+		int rollTotal = 0;						// Total for the dice roll
+		int previousPlayerLocation = 0;			// Location of the current turn player prior to the dice roll
+		int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
+		Property currentLandedProperty = null;	// Placeholder for a property if the player lands on it
+		Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
+		Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
+		Die die1 = new Die();
+		Die die2 = new Die();
+		int doublesInARow = 0;					// Number of times doubles has been rolled in a row
+		//ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
+		
+=======
 		while(gui.initialized == false){
 
 		}
 		ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
 
+>>>>>>> origin/master
 		// Conversion of the time limit into milliseconds then stored as a long
 		long endTime = System.currentTimeMillis() + (timeLimit*60)*1000;
 
 		// Loop for a player taking a turn while within the time limit
 		while (System.currentTimeMillis() < endTime)
+<<<<<<< HEAD
+		{			
+=======
 		{
 			propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
 
+>>>>>>> origin/master
 			previousPlayerLocation = players[currentPlayer].getLocation();
 			rollTotal = rollDice();
 			currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
