@@ -24,7 +24,7 @@ public class MonopolyTests {
 		Bank bank = new Bank();
 		bank.sellHouse();
 		
-		assertEquals(31, bank.getHouses());
+		assertEquals("'sell' a house from bank", 31, bank.getHouses());
 	}
 	
 	@Test 
@@ -37,7 +37,7 @@ public class MonopolyTests {
 		
 		bank.buybackHouse();
 		
-		assertEquals(30, bank.getHouses());
+		assertEquals("'buy' back a house from property", 30, bank.getHouses());
 	}
 	
 	@Test
@@ -46,7 +46,7 @@ public class MonopolyTests {
 		Bank bank = new Bank();
 		bank.sellHotel();
 		
-		assertEquals(11, bank.getHotels());
+		assertEquals("'sell' hotel from bank", 11, bank.getHotels());
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class MonopolyTests {
 		
 		bank.buybackHotel();
 		
-		assertEquals(10, bank.getHotels());
+		assertEquals("'buy' back  hotel from property", 10, bank.getHotels());
 	}
 	
 	@Test
@@ -70,7 +70,7 @@ public class MonopolyTests {
 		
 		bank.giveMoney(player, 500);
 		
-		assertEquals(2000, player.getMoneyTotal());
+		assertEquals("test giving player money", 2000, player.getMoneyTotal());
 	}
 	
 	//BOARD
@@ -92,19 +92,19 @@ public class MonopolyTests {
 	@Test
 	public void testDeedName ()
 	{
-		assertEquals("TestName", deed.getName());
+		assertEquals("check for intialization of property", "TestName", deed.getName());
 	}
 	
 	@Test
 	public void testDeedPrice ()
 	{
-		assertEquals(500, deed.getPrice());
+		assertEquals("check for intialization of property", 500, deed.getPrice());
 	}
 	
 	@Test
 	public void testDeedOwnerInitial ()
 	{
-		assertNull(deed.getOwner());
+		assertNull("check for intialization of property", deed.getOwner());
 	}
 	
 	@Test
@@ -114,27 +114,27 @@ public class MonopolyTests {
 		
 		deed.setOwner(player);
 		
-		assertEquals("Test", deed.getOwner().getName());
+		assertEquals("check for a change in ownership", "Test", deed.getOwner().getName());
 	}
 	
 	@Test
 	public void testDeedMortVal ()
 	{
-		assertEquals( 250, deed.getMortgageVal());
+		assertEquals("check for getting the mortgage value", 250, deed.getMortgageVal());
 	}
 	
 	@Test
 	public void testDeedSetMortgage ()
 	{
-		assertFalse(deed.getMortgageStat());
+		assertFalse("check for a intial status of mortgage", deed.getMortgageStat());
 		
 		deed.mortgage();
 		
-		assertTrue(deed.getMortgageStat());
+		assertTrue("check for a change in mortgage status to true", deed.getMortgageStat());
 		
 		deed.unMortgage();
 		
-		assertFalse(deed.getMortgageStat());
+		assertFalse("check for a change in mortgage status to false", deed.getMortgageStat());
 	}
 	
 	//GO
@@ -147,7 +147,7 @@ public class MonopolyTests {
 		
 		go.collectPassingGo(player);
 		
-		assertEquals(1700, player.getMoneyTotal());
+		assertEquals("check for passing go money to player", 1700, player.getMoneyTotal());
 	}
 	
 	//PROPERTY
@@ -157,7 +157,7 @@ public class MonopolyTests {
 	@Test
 	public void testPropertyInitOwner ()
 	{
-		assertNull(prop.getOwner());
+		assertNull("check for correct intialization of property", prop.getOwner());
 	}
 	
 	@Test
@@ -166,50 +166,51 @@ public class MonopolyTests {
 		Player play = new Player ("NewPlayer", "TestToken");
 		prop.setOwner(play);
 		
-		assertEquals(play, prop.getOwner());
+		assertEquals("check for change in owner", play, prop.getOwner());
 	}
 	
 	@Test
 	public void testPropertyInitRent ()
 	{
-		assertEquals(2, prop.getRent());
+		assertEquals("check for correct intialization of property", 2, prop.getRent());
 	}
 	
 	@Test
 	public void testPropertyInitHouses ()
 	{
-		assertNull(prop.getOwner());
+		assertNull("check for correct intialization of property", prop.getOwner());
 	}
 	
 	@Test
 	public void testPropertyAddHouses ()
 	{
-		//prop.buildHouse();
+		prop.buildHouse();
 		
-		//assertEquals(1, prop.getNumberOfHouses());
+		assertEquals("check for building a house on a property", 1, prop.getNumberOfHouses());
 	}
 	
 	@Test
 	public void testPropertySellHouse ()
 	{
-		//prop.sellHouse();
+		prop.buildHouse();
+		prop.sellHouse();
 		
-		//assertEquals(0, prop.getNumberOfHouses());
+		assertEquals("check for selling a house", 0, prop.getNumberOfHouses());
 	}
 	
 	@Test
 	public void testPropertyHouseRent ()
 	{
-		//prop.buildHouse();
-		//prop.buildHouse();
+		prop.buildHouse();
+		prop.buildHouse();
 		
-		//assertEquals(30, prop.getRent());
+		assertEquals("check for change in rent", 30, prop.getRent());
 	}
 	
 	@Test
 	public void testPropertyNumofMonopolyParts ()
 	{
-		assertEquals(2, prop.getNumberOfMonopolyParts());
+		assertEquals("check for the number of monopoly part initialization", 2, prop.getNumberOfMonopolyParts());
 	}
 	
 	//RAILROAD
@@ -222,7 +223,7 @@ public class MonopolyTests {
 		
 		player.buyProperty(railroad);
 		
-		assertEquals(25, railroad.getRent(player.getRailroadOwnedCount()));
+		assertEquals("check for correct initialization of railroad", 25, railroad.getRent(player.getRailroadOwnedCount()));
 	}
 	
 	//SPACE
@@ -232,7 +233,7 @@ public class MonopolyTests {
 	{
 		Space space = new Space ("Test", 0, 0);
 		
-		assertEquals("Test" , space.getName());
+		assertEquals("check for correct initialization of space", "Test" , space.getName());
 	}
 	
 	//UTILITY
@@ -241,7 +242,7 @@ public class MonopolyTests {
 	public void testUtility ()
 	{
 		Utility util = new Utility ("Test", 0, 0);
-		assertEquals("Test", util.getName());
+		assertEquals("check for correct initialization of utility", "Test", util.getName());
 	}
 	
 	//PLAYER
@@ -250,25 +251,25 @@ public class MonopolyTests {
 	@Test 
 	public void testPlayerName ()
 	{
-		assertEquals("TestPlayerName", player.getName());
+		assertEquals("check for correct initialization of player", "TestPlayerName", player.getName());
 	}
 	
 	@Test 
 	public void testPlayerInitLocat ()
 	{
-		assertEquals(0, player.getLocation());
+		assertEquals("check for correct initialization of player", 0, player.getLocation());
 	}
 	
 	@Test 
 	public void testPlayerInitJailStat ()
 	{
-		assertFalse(player.getJailedStat());
+		assertFalse("check for correct initialization of player", player.getJailedStat());
 	}
 	
 	@Test 
 	public void testPlayerInitMoney ()
 	{
-		assertEquals(1500, player.getMoneyTotal());
+		assertEquals("check for correct initialization of player", 1500, player.getMoneyTotal());
 	}
 	
 	@Test 
@@ -276,11 +277,11 @@ public class MonopolyTests {
 	{
 		player.setJailedStat(true);
 		
-		assertTrue(player.getJailedStat());
+		assertTrue("check for change in player jail status to in jail", player.getJailedStat());
 		
 		player.setJailedStat(false);
 		
-		assertFalse(player.getJailedStat());
+		assertFalse("check for change in player jail status to out of jail", player.getJailedStat());
 	}
 	
 	@Test 
@@ -288,11 +289,11 @@ public class MonopolyTests {
 	{
 		player.makePayment(500);
 		
-		assertEquals(1000, player.getMoneyTotal());
+		assertEquals("check player make payment", 1000, player.getMoneyTotal());
 		
 		player.takePayment(1000);
 		
-		assertEquals(2000, player.getMoneyTotal());
+		assertEquals("check player take payment", 2000, player.getMoneyTotal());
 	}
 	
 	@Test 
@@ -300,7 +301,7 @@ public class MonopolyTests {
 	{
 		player.moveToken(10);
 		
-		assertEquals(10, player.getLocation());
+		assertEquals("check player location change", 10, player.getLocation());
 	}
 	
 	@Test 
@@ -308,19 +309,7 @@ public class MonopolyTests {
 	{
 		player.moveToken(56);
 		
-		assertEquals(16, player.getLocation());
-	}
-	
-	@Test 
-	public void testPlayerCheckDoublesTrue ()
-	{
-		assertTrue(player.checkIfDoubles(3, 3));
-	}	
-	
-	@Test 
-	public void testPlayerCheckDoublesFalse ()
-	{
-		assertFalse(player.checkIfDoubles(1, 5));
+		assertEquals("check player location overflow", 16, player.getLocation());
 	}
 	
 	@Test 
@@ -329,9 +318,9 @@ public class MonopolyTests {
 		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
 		player.buyProperty(prop);
 		
-		assertEquals(1, player.getPropertiesOwned());
-		assertEquals(1440, player.getMoneyTotal());
-		assertEquals(player, prop.getOwner());
+		assertEquals("check for correct values of player when buying property", 1, player.getPropertiesOwned());
+		assertEquals("check for correct values of player when buying property", 1440, player.getMoneyTotal());
+		assertEquals("check for correct values of property when bought", player, prop.getOwner());
 	}
 	
 	@Test 
@@ -340,9 +329,9 @@ public class MonopolyTests {
 		Railroad rr = new Railroad("ReadingRailroad", 750, 1425);
 		player.buyProperty(rr);
 		
-		assertEquals(1, player.getRailroadOwnedCount());
-		assertEquals(1300, player.getMoneyTotal());
-		assertEquals(player, rr.getOwner());
+		assertEquals("check for correct values of player when buying railroad", 1, player.getRailroadOwnedCount());
+		assertEquals("check for correct values of player when buying railroad", 1300, player.getMoneyTotal());
+		assertEquals("check for correct values of railroad when bought", player, rr.getOwner());
 	}
 	
 	@Test 
@@ -351,9 +340,9 @@ public class MonopolyTests {
 		Utility u = new Utility("ElectricCompany", 75, 1119);
 		player.buyProperty(u);
 		
-		assertEquals(1, player.getUtilitysOwned());
-		assertEquals(1350, player.getMoneyTotal());
-		assertEquals(player, u.getOwner());
+		assertEquals("check for correct values of player when buying utility", 1, player.getUtilitysOwned());
+		assertEquals("check for correct values of player when buying utility", 1350, player.getMoneyTotal());
+		assertEquals("check for correct values of utlility wwhen bought", player, u.getOwner());
 	}
 	
 	@Test
@@ -364,8 +353,8 @@ public class MonopolyTests {
 		
 		player.mortgage(prop);
 		
-		assertEquals(1470, player.getMoneyTotal());
-		assertTrue(prop.getMortgageStat());
+		assertEquals("check for correct values of player when mortgage property", 1470, player.getMoneyTotal());
+		assertTrue("check for correct values of property after mortgage", prop.getMortgageStat());
 	}
 	
 	@Test
@@ -374,7 +363,7 @@ public class MonopolyTests {
 		
 		player.buyProperty(prop);
 		
-		assertFalse(player.checkForMonopoly(prop));
+		assertFalse("check for correct values of player when not having a monopoly", player.checkForMonopoly(prop));
 	}
 	
 	@Test
@@ -384,7 +373,7 @@ public class MonopolyTests {
 		player.buyProperty(prop);
 		player.buyProperty(prop2);
 		
-		assertEquals(1380, player.getMoneyTotal());
+		assertTrue("check for correct values of player when having a monopoly", player.checkForMonopoly(prop));
 	}
 	
 	@Test
@@ -396,7 +385,7 @@ public class MonopolyTests {
 		player.buyProperty(rr1);
 		player.buyProperty(rr2);
 		
-		assertEquals(2, player.getRailroadOwnedCount());
+		assertEquals("check for correct values of player when owning multiple railroads", 2, player.getRailroadOwnedCount());
 	}
 	
 	@Test
@@ -408,7 +397,7 @@ public class MonopolyTests {
 		player.buyProperty(u1);
 		player.buyProperty(u2);
 		
-		assertEquals(2, player.getUtilitysOwned());
+		assertEquals("check for correct values of player when owning multiple utilities", 2, player.getUtilitysOwned());
 	}
 	
 	@Test
@@ -420,6 +409,6 @@ public class MonopolyTests {
 		player.buyProperty(p1);
 		player.buyProperty(p2);
 		
-		assertEquals(2, player.getPropertiesOwned());
+		assertEquals("check for correct values of player when owning multiple properties", 2, player.getPropertiesOwned());
 	}
 }
