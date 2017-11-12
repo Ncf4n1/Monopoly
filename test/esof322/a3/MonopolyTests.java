@@ -161,6 +161,15 @@ public class MonopolyTests {
 	}
 	
 	@Test
+	public void testPropertyOwnerChange ()
+	{
+		Player play = new Player ("NewPlayer", "TestToken");
+		prop.setOwner(play);
+		
+		assertEquals(play, prop.getOwner());
+	}
+	
+	@Test
 	public void testPropertyInitRent ()
 	{
 		assertEquals(2, prop.getRent());
@@ -235,19 +244,108 @@ public class MonopolyTests {
 		assertEquals("Test", util.getName());
 	}
 	
+	//PLAYER
+	Player player = new Player("TestPlayerName", "TestToken");
+	
+	@Test 
+	public void testPlayerName ()
+	{
+		assertEquals("TestPlayerName", player.getName());
+	}
+	
+	@Test 
+	public void testPlayerInitLocat ()
+	{
+		assertEquals(0, player.getLocation());
+	}
+	
+	@Test 
+	public void testPlayerInitJailStat ()
+	{
+		assertFalse(player.getJailedStat());
+	}
+	
+	@Test 
+	public void testPlayerInitMoney ()
+	{
+		assertEquals(1500, player.getMoneyTotal());
+	}
+	
+	@Test 
+	public void testPlayerChangeJailStat ()
+	{
+		player.setJailedStat(true);
+		
+		assertTrue(player.getJailedStat());
+		
+		player.setJailedStat(false);
+		
+		assertFalse(player.getJailedStat());
+	}
+	
+	@Test 
+	public void testPlayerPayments ()
+	{
+		player.makePayment(500);
+		
+		assertEquals(1000, player.getMoneyTotal());
+		
+		player.takePayment(1000);
+		
+		assertEquals(2000, player.getMoneyTotal());
+	}
+	
+	@Test 
+	public void testPlayerLocationChange ()
+	{
+		player.moveToken(10);
+		
+		assertEquals(10, player.getLocation());
+	}
+	
+	@Test 
+	public void testPlayerLocationPast39 ()
+	{
+		player.moveToken(56);
+		
+		assertEquals(16, player.getLocation());
+	}
+	
+	@Test 
+	public void testPlayerCheckDoublesTrue ()
+	{
+		assertTrue(player.checkIfDoubles(3, 3));
+	}	
+	
+	@Test 
+	public void testPlayerCheckDoublesFalse ()
+	{
+		assertFalse(player.checkIfDoubles(1, 5));
+	}
+	
+	@Test 
+	public void testPlayerBuyProperty ()
+	{
+		Property prop = new Property ("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
+		player.buyProperty(prop);
+		
+		prop.setOwner(player);
+		
+		assertEquals(1, player.getPropertiesOwned());
+		assertEquals(player, prop.getOwner());
+	}
+	
 	@Test
 	public void testFalseCheckForMonopoly() {
-		Player player = new Player("Test", "Test");
 		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
 		
 		player.buyProperty(prop);
 		
-		assertEquals(true, player.checkForMonopoly(prop));
+		assertFalse(player.checkForMonopoly(prop));
 	}
 	
 	@Test
 	public void testTrueCheckForMonopoly() {
-		Player player = new Player("Test", "Test");
 		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 2, 1243, 1425, 0);
 		Property prop2 = new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0);
 		player.buyProperty(prop);
