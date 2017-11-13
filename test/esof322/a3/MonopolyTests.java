@@ -572,4 +572,26 @@ public class MonopolyTests {
 		
 		assertEquals("Check for buildable properties", 2, player.getHouseBuildableProps().size());
 	}
+	
+	@Test
+	public void testPlayerPropsWithHotels() 
+	{
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		player.buyProperty(prop);
+		player.buyProperty(prop2);
+		
+		prop.buildHouse();
+		prop2.buildHouse();
+		prop.buildHouse();
+		prop2.buildHouse();
+		prop.buildHouse();
+		prop2.buildHouse();
+		prop.buildHouse();
+		prop2.buildHouse();
+		
+		prop.buildHotel();
+		
+		assertEquals("Check for Properties with hotels", 1, player.getPropsWithHotels().size());
+	}
 }
