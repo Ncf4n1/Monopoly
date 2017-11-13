@@ -22,9 +22,9 @@ class SelectionPanel extends JPanel implements ActionListener{
     private final JLabel playerLabel;
     private final JLabel chooseTimeLimit;
     public boolean initialized = false;
-    
+
     private Player[] players;
-    
+
     public SelectionPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -33,31 +33,31 @@ class SelectionPanel extends JPanel implements ActionListener{
         start = new JButton("Start");
         playerNum = new JComboBox<>(new Integer[]{2, 3, 4});
         timeLimit = new JComboBox<>(new Integer[]{1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60});
-        
+
         playerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         chooseTimeLimit.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         playerNum.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         timeLimit.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         playerNum.setMaximumSize(new Dimension(100, 100));
         timeLimit.setMaximumSize(new Dimension(100, 100));
-        
+
         playerNum.addActionListener(this);
         timeLimit.addActionListener(this);
         start.addActionListener(this);
-        
+
         playerLabel.setAlignmentX(CENTER_ALIGNMENT);
         playerNum.setAlignmentX(CENTER_ALIGNMENT);
         chooseTimeLimit.setAlignmentX(CENTER_ALIGNMENT);
         timeLimit.setAlignmentX(CENTER_ALIGNMENT);
         start.setAlignmentX(CENTER_ALIGNMENT);
-        
+
         add(playerLabel);
         add(playerNum);
         add(chooseTimeLimit);
         add(timeLimit);
         add(start);
     }
-    
+
     public static SelectionPanel getInstance()
     {
         if (instance == null)
@@ -66,6 +66,7 @@ class SelectionPanel extends JPanel implements ActionListener{
         }
         return instance;
     }
+
     
     @Override
     public void actionPerformed(ActionEvent ae)
@@ -81,7 +82,7 @@ class SelectionPanel extends JPanel implements ActionListener{
                           break;
         }
     }
-    
+
     public void playerSetup()
     {
         players = new Player[(int) playerNum.getSelectedItem()];
@@ -102,10 +103,10 @@ class SelectionPanel extends JPanel implements ActionListener{
             }
             name = JOptionPane.showInputDialog("Please Input a Name for Player " + (i+1));
             lastTokenChosen = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Token", "Token Selection", JOptionPane.PLAIN_MESSAGE, null, tokens.toArray(), tokens.get(0));
-            
+
             players[i] = new Player(name, lastTokenChosen);
         }
-        
+
         PlayerInfoPanel.getInstance().setNumPlayers(players.length);
         GameDriver.setPlayers(players);
     }

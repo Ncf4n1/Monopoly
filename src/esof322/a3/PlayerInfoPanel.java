@@ -64,11 +64,11 @@ public class PlayerInfoPanel extends JPanel {
     		if (player.getPropertiesOwned() instanceof Property)
     		{
     			Property placeholder = (Property) player.getPropertiesOwned().get(i);
-    			list += placeholder.getName() + " - " + placeholder.getNumHouses() + " Houses";
+    			list += placeholder.getName() + " - " + placeholder.getNumHouses() + " Houses\n";
     		}
     		else
     		{
-    			list += player.getPropertiesOwned().get(i).getName();
+    			list += player.getPropertiesOwned().get(i).getName() + "\n";
     		}
     	}
     	return list;

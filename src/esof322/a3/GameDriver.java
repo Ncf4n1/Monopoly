@@ -201,6 +201,7 @@ public class GameDriver
             }
 	}
 
+
 	// Function used by the GUI to get the number of players
 	public static void setPlayers(Player[] players)
 	{
