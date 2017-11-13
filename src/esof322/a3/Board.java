@@ -2,8 +2,10 @@ package esof322.a3;
 
 public class Board 
 {
-	static Space [] board = new Space [40];
-	
+	static Space [] board = new Space [40];	//Data structure for the spaces on the board
+	//Property Parameters: name, buy price, rent rates, house cost, mortgage value, first second or third part of a monopoly, x coordinate on the board, y coordinate on the board, monopoly color, properties in monopoly
+	//Railroad Parameters: Name, x coordinate, y coordinate
+	//Utility Parameters: Name, x coordinate, y coordinate
 	
 	public Board(){
 		board[0] = new Go(1400, 1400);
@@ -48,7 +50,7 @@ public class Board
 		board[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 	}
 
-	public Space getSpace(int location) {
+	public Space getSpace(int location) { //gets the space according to the corresponding location a player is on
 		return board[location];
 	}
 }
