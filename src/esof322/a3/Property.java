@@ -49,6 +49,7 @@ public class Property extends Deed
 	
 	public void buildHotel(){
 		for(int i=0; i<4; i++){
+			this.buildHouse();
 			Bank.buyBackHouse();
 		}
 		Bank.sellHotel();
