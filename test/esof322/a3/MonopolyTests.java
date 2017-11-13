@@ -420,6 +420,9 @@ public class MonopolyTests {
 		
 		assertEquals("Check player money after building house", 1110, player.getMoneyTotal());
 		assertEquals("Check houses on property", 1, prop.getNumHouses());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -449,10 +452,13 @@ public class MonopolyTests {
 		player.buildHouse(prop);
 		player.buildHouse(prop);
 		player.buildHouse(prop);
-		player.buildHouse(prop);
+		player.buildHotel(prop);
 		
 		assertEquals("Check player money after building house", 510, player.getMoneyTotal());
 		assertEquals("Check houses on property", 5, prop.getNumHouses());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test 
@@ -571,6 +577,9 @@ public class MonopolyTests {
 		player.buyProperty(prop2);
 		
 		assertEquals("Check for buildable properties", 2, player.getHouseBuildableProps().size());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -593,5 +602,8 @@ public class MonopolyTests {
 		prop.buildHotel();
 		
 		assertEquals("Check for Properties with hotels", 1, player.getPropsWithHotels().size());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 }
