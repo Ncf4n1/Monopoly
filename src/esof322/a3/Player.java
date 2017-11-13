@@ -211,15 +211,15 @@ public class Player {
 		return min;
 	}
 	
-//	public static int getMaxBuilt(int color, int parts){
-//		int max = 5;
-//		for (int i=1; i<= parts; i++){
-//			if (max < ((Property) property[color][parts]).getNumHouses()){
-//				max = ((Property) property[color][parts]).getNumHouses();
-//			}
-//		}
-//		return max;
-//	}
+	public static int getMaxBuilt(int color, int parts){
+		int max = 5;
+		for (int i=1; i<= parts; i++){
+			if (max < ((Property) property[color][parts]).getNumHouses()){
+				max = ((Property) property[color][parts]).getNumHouses();
+			}
+		}
+		return max;
+	}
 	
 	//returns the number of railroads owned
 	public int getRailroadOwnedCount(){
