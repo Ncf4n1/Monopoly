@@ -66,18 +66,22 @@ public class ImagePanel extends JPanel {
          super.paintComponent(g);
          g.drawImage(boardImage, 0, 0, this.getInstance().getHeight(), this.getInstance().getHeight(), null);
          drawTokens(g);
+         PlayerInfoPanel.getInstance().updateInfo();
+         revalidate();
     }
 
     public void drawTokens(Graphics g)
     {
         int x = 0;
         int y = 0;
+        double scaler = (this.getHeight() / 1500.0);
+        System.out.println(scaler);
         for (Player player : GameDriver.getPlayers()) {
              for (int i = 0; i < tokenNames.length; i++) {
                  if (player.token.equals(tokenNames[i])) {
-                     x = (int) ((this.getHeight() / 1500) * GameDriver.getXCoordinate(player));
-                     System.out.println(GameDriver.getXCoordinate(player));
-                     y = (int) ((this.getHeight() /1500) * GameDriver.getYCoordinate(player));
+                     x = (int) ((scaler) * GameDriver.getXCoordinate(player));
+                     //System.out.println(GameDriver.getXCoordinate(player));
+                     y = (int) ((scaler) * GameDriver.getYCoordinate(player));
                      g.drawImage(tokens[i], x, y, this);
                      break;
                  }
