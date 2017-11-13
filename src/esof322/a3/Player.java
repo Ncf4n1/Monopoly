@@ -273,9 +273,10 @@ public class Player {
 		for (int i=0; i<8; i++){
 			if ((boolean)property[i][0] == true){
 				int parts = ((Property) property[i][1]).getNumOfParts();
-					for(int j=1; j<=parts; i++){
-						if (((Property) property[i][j]).getNumHouses()>4){
-							propsWithHotels.add((Property) property[i][j]);
+					for(int j=1; j<parts; j++){
+						if(property[i][j] != null)
+							if (((Property) property[i][j]).getNumHouses()>4){
+								propsWithHotels.add((Property) property[i][j]);
 					}
 				}
 			}
