@@ -28,7 +28,6 @@ public class Player {
   
 	public int getLocation(){
 		return location;
-
 	}
 
 	public boolean getJailedStat(){
@@ -59,7 +58,6 @@ public class Player {
 		if (location > 39){
 			location = location - 39 - 1;
 		}
-		
 		return location;
 	}
 
@@ -138,30 +136,76 @@ public class Player {
 		return (boolean) property[color][0];
 	}
 	
-	/*makes an array of properties that a player can build on bases on 
+	/*makes an array of properties that a player can build houses on bases on 
 	 * if they have the monopoly, and restricts the player to build evenly 
 	 * across the properties of the monopoly*/
+	public List<Property> getHouseBuildableProps(){
+		ArrayList<Property> houseBuildableProperties = new ArrayList<>();
+		for (int i=0; i<7; i++){
+			if ((boolean)property[i][0] == true){
+				int parts = ((Property) property[i][1]).getNumOfParts();
+				for(int j=1; j<=parts; i++){
+					int min = getMinBuilt(i,parts);
+					if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
+						houseBuildableProperties.add((Property) property[i][j]);
+					}
+				}
+			}
+		}
+		return houseBuildableProperties;
+	}
+
+	/*makes an array of properties that a player can build hotels on bases on 
+	 * if they have the monopoly, and restricts the player to build evenly 
+	 * across the properties of the monopoly*/
+	public List<Property> getHotelBuildableProps(){
+		ArrayList<Property> HotelBuildableProperties = new ArrayList<>();
+		for (int i=0; i<7; i++){
+			if ((boolean)property[i][0] == true){
+				int parts = ((Property) property[i][1]).getNumOfParts();
+				for(int j=1; j<=parts; i++){
+					int min = getMinBuilt(i,parts);
+					if (min == 4){
+						HotelBuildableProperties.add((Property) property[i][j]);
+					}
+				}
+			}
+		}
+		return HotelBuildableProperties;
+	}
 	
-	public List<Property> getBuildableProperties(){
-		ArrayList<Property> buildableProperties = new ArrayList<>();
+	/*makes an array of properties that a player can sell from restricting 
+	 * the player to maintain even building across the properties of the monopoly*/
+	public List<Property> getPropWithSellable(){
+		ArrayList<Property> PropWithSellable = new ArrayList<>();
 		for (int i=0; i<7; i++){
 			if ((boolean)property[i][0] == true){
 				int parts = ((Property) property[i][1]).getNumOfParts();
 				for(int j=1; j<=parts; i++){
 					int max = getMaxBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() <= max && ((Property) property[i][j]).getNumHouses()<5){
-						buildableProperties.add((Property) property[i][j]);
+					if (((Property) property[i][j]).getNumHouses() == max){
+						PropWithSellable.add((Property) property[i][j]);
 					}
 				}
 			}
 		}
-		return buildableProperties;
+		return PropWithSellable;
 	}
-
+	
 	/*helper function to propertiesAvailableToBuild() that returns the max
 	 * number of houses built on a single property within a monopoly*/
+	public static int getMinBuilt(int color, int parts){
+		int min = 5;
+		for (int i=1; i<= parts; i++){
+			if (min > ((Property) property[color][parts]).getNumHouses()){
+				min = ((Property) property[color][parts]).getNumHouses();
+			}
+		}
+		return min;
+	}
+	
 	public static int getMaxBuilt(int color, int parts){
-		int max = 0;
+		int max = 5;
 		for (int i=1; i<= parts; i++){
 			if (max < ((Property) property[color][parts]).getNumHouses()){
 				max = ((Property) property[color][parts]).getNumHouses();
@@ -187,6 +231,11 @@ public class Player {
 		}
 		makePayment(prop.getHouseCost());
 		prop.buildHouse();
+	}
+	
+	public void buildHotel(Property prop){
+		makePayment(prop.getHouseCost());
+		prop.buildHotel();
 	}
 	
 //	//returns the number of properties owned
