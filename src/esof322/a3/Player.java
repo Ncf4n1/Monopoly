@@ -248,8 +248,21 @@ public class Player {
 	
 
 	
-//	//returns the number of properties owned
-//	public int getPropertiesOwned() {
-//		return property.size();
-//	}
+	public List<Deed> getPropertiesOwned() {
+		ArrayList <Deed> allProp = new ArrayList<>();
+		for(int i=0; i<8; i++){
+			for(int j= 1; j<4; j++){
+				if(property[i][j] != null){
+					allProp.add((Deed) property[i][j]);
+				}	
+			}
+		}
+		for(Railroad x: railroads){
+			allProp.add(x);
+		}
+		for(Utility x: utilities){
+			allProp.add(x);
+		}
+		return allProp;
+	}
 }
