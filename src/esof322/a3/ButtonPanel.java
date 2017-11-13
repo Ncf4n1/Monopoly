@@ -76,7 +76,6 @@ public class ButtonPanel extends JPanel implements ActionListener
                 if (GameDriver.getDoublesInARow() != 3)
                 {
                     GameDriver.rollDice();
-                    System.out.println("took turn");
                     GameDriver.movePlayerToken();
                     ImagePanel.getInstance().repaint();
                     GameDriver.passGo();
