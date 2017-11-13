@@ -238,6 +238,8 @@ public class Player {
 		prop.buildHotel();
 	}
 	
+
+	
 //	//returns the number of properties owned
 //	public int getPropertiesOwned() {
 //		return property.size();
