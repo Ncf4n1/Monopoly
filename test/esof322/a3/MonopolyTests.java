@@ -555,4 +555,15 @@ public class MonopolyTests {
 		
 		assertEquals("check for correct values of player when owning multiple utilities", 2, player.getUtilitysOwned());
 	}
+	
+	@Test
+	public void testPlayerBuildableProps()
+	{/*
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		player.buyProperty(prop);
+		player.buyProperty(prop2);*/
+		
+		assertEquals("Check for buildable properties", 0, player.getHouseBuildableProps().size());
+	}
 }
