@@ -2,16 +2,14 @@ package esof322.a3;
 
 public final class Bank {
 	
-	private static int houses;
-	private static int hotels;
+	private static int houses = 32;
+	private static int hotels = 12;
 	
 	private Bank() {
-		houses = 32;
-		hotels = 12;
 	}
 	
 	//deduct 1 from the number  of houses
-	public void sellHouse() {		
+	public static void sellHouse() {		
 		houses--;
 		
 	}
@@ -29,13 +27,13 @@ public final class Bank {
 	}
 		
 	//add 1 to the number of hotels
-	public void buybackHotel() {
+	public static void buybackHotel() {
 		hotels++;
 		
 	}
 	
 	//get the number of houses left to build
-	public int getHouses(){
+	public static int getHouses(){
 		return houses;
 	}
 	
