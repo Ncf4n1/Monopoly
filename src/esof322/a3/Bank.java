@@ -2,17 +2,15 @@ package esof322.a3;
 
 public final class Bank {
 	
-	private static int houses;
-	private static int hotels;
+	private static int houses = 32;
+	private static int hotels = 12;
 	
 	private Bank() {
-		houses = 32;
-		hotels = 12;
 	}
 	
 	//deduct 1 from the number  of houses
-	public void sellHouse() {		
-		houses--;	
+	public static void sellHouse() {		
+		houses--;
 	}
 	
 	//deduct 1 from the number of hotels

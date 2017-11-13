@@ -21,57 +21,43 @@ public class MonopolyTests {
 	@Test 
 	public void testBankSellHouse()
 	{
-		Bank bank = new Bank();
-		bank.sellHouse();
+		Bank.sellHouse();
 		
-		assertEquals("'sell' a house from bank", 31, bank.getHouses());
+		assertEquals("'sell' a house from bank", 31, Bank.getHouses());
 	}
 	
 	@Test 
 	public void testBankBuyBackHouse()
 	{
-		Bank bank = new Bank();
-		bank.sellHouse();
-		bank.sellHouse();
-		bank.sellHouse();
+		Bank.sellHouse();
+		Bank.sellHouse();
+		Bank.sellHouse();
 		
-		bank.buybackHouse();
+		Bank.buybackHouse();
 		
-		assertEquals("'buy' back a house from property", 30, bank.getHouses());
+		assertEquals("'buy' back a house from property", 30, Bank.getHouses());
 	}
 	
 	@Test
 	public void testBankSellHotel()
 	{
-		Bank bank = new Bank();
-		bank.sellHotel();
+		Bank.sellHotel();
 		
-		assertEquals("'sell' hotel from bank", 11, bank.getHotels());
+		assertEquals("'sell' hotel from bank", 11, Bank.getHotels());
 	}
 	
 	@Test
 	public void testBankBuyBackHotel()
 	{
-		Bank bank = new Bank();
-		bank.sellHotel();
-		bank.sellHotel();
-		bank.sellHotel();
+		Bank.sellHotel();
+		Bank.sellHotel();
+		Bank.sellHotel();
 		
-		bank.buybackHotel();
+		Bank.buybackHotel();
 		
-		assertEquals("'buy' back  hotel from property", 10, bank.getHotels());
+		assertEquals("'buy' back  hotel from property", 10, Bank.getHotels());
 	}
-	
-	@Test
-	public void testGiveMoney()
-	{
-		Player player = new Player ("Test", "Test");
-		Bank bank = new Bank();
-		
-		bank.giveMoney(player, 500);
-		
-		assertEquals("test giving player money", 2000, player.getMoneyTotal());
-	}
+
 	
 	//BOARD
 	
@@ -159,6 +145,7 @@ public class MonopolyTests {
 	{
 		assertEquals("check for correct intialization of property", 60, prop.getPrice());
 	}
+	
 	@Test
 	public void testPropertyInitRent ()
 	{
