@@ -75,13 +75,11 @@ public class ImagePanel extends JPanel {
         int x = 0;
         int y = 0;
         double scaler = (this.getHeight() / 1500.0);
-        System.out.println(scaler);
         for (Player player : GameDriver.getPlayers()) {
              for (int i = 0; i < tokenNames.length; i++) {
                  if (player.token.equals(tokenNames[i])) {
-                     x = (int) ((scaler) * GameDriver.getXCoordinate(player));
-                     //System.out.println(GameDriver.getXCoordinate(player));
-                     y = (int) ((scaler) * GameDriver.getYCoordinate(player));
+                     x = (int) ((scaler) * GameDriver.getXCoordinate(player) - 10.0);
+                     y = (int) ((scaler) * GameDriver.getYCoordinate(player) - 10.0);
                      g.drawImage(tokens[i], x, y, this);
                      break;
                  }

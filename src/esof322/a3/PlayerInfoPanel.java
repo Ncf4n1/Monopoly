@@ -36,7 +36,7 @@ public class PlayerInfoPanel extends JPanel {
         {
         JTextArea area = new JTextArea(players[i].getName() + " - " + players[i].token + "\n" +
                               "Money: $" + players[i].getMoneyTotal() + "\n" +
-                              "Properties Owned: ",
+                              "Properties Owned: \n" + getPropertyStrings(players[i]),
                                10, 50);
         
         area.setFont(new Font("Sans-Serif", Font.BOLD, 20));
@@ -54,5 +54,15 @@ public class PlayerInfoPanel extends JPanel {
         this.revalidate();
         this.repaint();
         infoSetup(GameDriver.getPlayers());
+    }
+    
+    public String getPropertyStrings(Player player)
+    {
+    	String list = "";
+    	for (int i = 0; i < player.getPropertiesOwned().size(); i++)
+    	{
+    		list += player.getPropertiesOwned().get(i).getName() + "\n";
+    	}
+    	return list;
     }
 }
