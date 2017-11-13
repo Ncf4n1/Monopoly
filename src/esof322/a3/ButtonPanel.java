@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class ButtonPanel extends JPanel implements ActionListener
 {
     private static ButtonPanel instance;
-    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel;
+    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, mortgage;
 
     public ButtonPanel()
     {
@@ -21,17 +21,20 @@ public class ButtonPanel extends JPanel implements ActionListener
         buyProperty = new JButton("Buy Property");
         buyHouse = new JButton("Buy House");
         buyHotel = new JButton("Buy Hotel");
+        mortgage = new JButton("Mortgage");
 
         endTurn.setEnabled(false);
         buyProperty.setEnabled(false);
         buyHouse.setEnabled(false);
         buyHotel.setEnabled(false);
+        mortgage.setEnabled(false);
         takeTurn.setActionCommand("Take Turn");
         setButton(takeTurn);
         setButton(endTurn);
         setButton(buyProperty);
         setButton(buyHouse);
         setButton(buyHotel);
+        setButton(mortgage);
     }
 
     /*
@@ -96,18 +99,72 @@ public class ButtonPanel extends JPanel implements ActionListener
                 buyProperty.setEnabled(false);
                 takeTurn.setText("Take Turn: " + GameDriver.getCurrentPlayer().getName());
                 PlayerInfoPanel.getInstance().updateInfo();
+                if (GameDriver.getCurrentPlayer().getHouseBuildableProps().size() > 0)
+                {
+                	buyHouse.setEnabled(true);
+                }
+                else
+                {
+                	buyHouse.setEnabled(false);
+                }
+                if (GameDriver.getCurrentPlayer().getHotelBuildableProps().size() > 0)
+                {
+                	buyHotel.setEnabled(true);
+                }
+                else
+                {
+                	buyHotel.setEnabled(false);
+                }
                 break;
             case "Buy Property":
                 GameDriver.buyProperty();
                 buyProperty.setEnabled(false);
                 PlayerInfoPanel.getInstance().updateInfo();
+                mortgage.setEnabled(true);
                 break;
             case "Buy House":
-
-                break;
+//            	String[] buildableHouses = new String[GameDriver.getCurrentPlayer().getHouseBuildableProps().size()];
+//            	for (int i = 0; i < buildableHouses.length; i++)
+//            	{
+//            		buildableHouses[i] = GameDriver.getCurrentPlayer().getHouseBuildableProps().get(i).getName() + " (" + GameDriver.getCurrentPlayer().getHouseBuildableProps().get(i).getNumHouses() + " Houses on Property)";
+//            	}
+//            	String buildHouseOnProperty = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a House to Build On", "Building Selection", JOptionPane.PLAIN_MESSAGE, null, buildableHouses, buildableHouses[0]);
+//            	for (int j = 0; j < buildableHouses.length;)
+//            	{
+//            		if (GameDriver.getCurrentPlayer().getHouseBuildableProps().get(j).getName().equals(buildHouseOnProperty))
+//            		{
+//            			GameDriver.getCurrentPlayer().buildHouse(GameDriver.getCurrentPlayer().getHouseBuildableProps().get(j));
+//            		}
+//            		break;
+//            	}
+//                break;
             case "Buy Hotel":
-
-                break;
+//            	String buildHotelOnProperty = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a House to Build On", "Building Selection", JOptionPane.PLAIN_MESSAGE, null, GameDriver.getCurrentPlayer().getHotelBuildableProps().toArray(), GameDriver.getCurrentPlayer().getHotelBuildableProps().get(0));
+//            	for (int j = 0; j < GameDriver.getCurrentPlayer().getHotelBuildableProps().size();)
+//            	{
+//            		if (GameDriver.getCurrentPlayer().getHotelBuildableProps().get(j).getName().equals(buildHotelOnProperty))
+//            		{
+//            			GameDriver.getCurrentPlayer().buildHotel(GameDriver.getCurrentPlayer().getHotelBuildableProps().get(j));
+//            		}
+//            		break;
+//            	}
+//                break;
+            	
+            case "Mortgage":
+            	String[] properties = new String[GameDriver.getCurrentPlayer().getPropertiesOwned().size()];
+            	for (int i = 0; i < GameDriver.getCurrentPlayer().getPropertiesOwned().size(); i++)
+            	{
+            		properties[i] = GameDriver.getCurrentPlayer().getPropertiesOwned().get(i).getName();
+            	}
+            	String mortgaged = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Property to Mortgage", "Mortgage Selection", JOptionPane.PLAIN_MESSAGE, null, GameDriver.getCurrentPlayer().getPropertiesOwned().toArray(), GameDriver.getCurrentPlayer().getPropertiesOwned().get(0));
+            	for (int j = 0; j < GameDriver.getCurrentPlayer().getPropertiesOwned().size(); j++)
+            	{
+            		if (GameDriver.getCurrentPlayer().getPropertiesOwned().get(j).getName().equals(mortgaged))
+            		{
+            			GameDriver.getCurrentPlayer().mortgage(GameDriver.getCurrentPlayer().getPropertiesOwned().get(j));
+            		}
+            		break;
+            	}
             default:
                 break;
         }
