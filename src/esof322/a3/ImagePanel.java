@@ -16,7 +16,7 @@ public class ImagePanel extends JPanel {
     private final Image[] tokens;
     private final String[] tokenNames;
     private final Player[] players;
-    
+
     public ImagePanel()
     {
         boardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
@@ -47,10 +47,10 @@ public class ImagePanel extends JPanel {
         add(infoPanel, BorderLayout.EAST);
         add(buttonPanel, BorderLayout.EAST);
         setBackground(Color.WHITE);
-        
+
         players = GameDriver.getPlayers();
     }
-    
+
     public static ImagePanel getInstance()
     {
         if (instance == null)
@@ -59,15 +59,15 @@ public class ImagePanel extends JPanel {
         }
         return instance;
     }
-    
+
     @Override
     public void paintComponent(Graphics g)
-    { 
+    {
          super.paintComponent(g);
-         g.drawImage(boardImage, 0, 0, this);
+         g.drawImage(boardImage, 0, 0, this.getInstance().getHeight(), this.getInstance().getHeight(), null);
          drawTokens(g);
     }
-    
+
     public void drawTokens(Graphics g)
     {
         int x = 0;
@@ -75,8 +75,9 @@ public class ImagePanel extends JPanel {
         for (Player player : GameDriver.getPlayers()) {
              for (int i = 0; i < tokenNames.length; i++) {
                  if (player.token.equals(tokenNames[i])) {
-                     x = (int) (0.86667 * GameDriver.getXCoordinate(player));
-                     y = (int) (0.86667 * GameDriver.getYCoordinate(player));
+                     x = (int) ((this.getHeight() / 1500) * GameDriver.getXCoordinate(player));
+                     System.out.println(GameDriver.getXCoordinate(player));
+                     y = (int) ((this.getHeight() /1500) * GameDriver.getYCoordinate(player));
                      g.drawImage(tokens[i], x, y, this);
                      break;
                  }

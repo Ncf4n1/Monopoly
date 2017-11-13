@@ -6,12 +6,12 @@ import java.awt.event.*;
 
 /*
   Class that creates button and determines what each does when clicked
-*/        
+*/
 public class ButtonPanel extends JPanel implements ActionListener
 {
     private static ButtonPanel instance;
     private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel;
-    
+
     public ButtonPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -21,7 +21,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         buyProperty = new JButton("Buy Property");
         buyHouse = new JButton("Buy House");
         buyHotel = new JButton("Buy Hotel");
-        
+
         endTurn.setEnabled(false);
         buyProperty.setEnabled(false);
         buyHouse.setEnabled(false);
@@ -33,7 +33,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         setButton(buyHouse);
         setButton(buyHotel);
     }
-    
+
     /*
       Method that formats, aligns, and adds button to the panel
     */
@@ -46,12 +46,12 @@ public class ButtonPanel extends JPanel implements ActionListener
         button.setFont(new Font("Sans-Serif", Font.BOLD, 18));
         add(button);
     }
-    
+
     public void enablePropertyButton()
     {
         buyProperty.setEnabled(true);
     }
-    
+
     /*
       Method that returns instance of the button panel
     */
@@ -63,7 +63,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         }
         return instance;
     }
-    
+
     /*
       Method that determines what each button does when it is clicked
     */
@@ -75,6 +75,8 @@ public class ButtonPanel extends JPanel implements ActionListener
             case "Take Turn":
                 if (GameDriver.getDoublesInARow() != 3)
                 {
+                    GameDriver.rollDice();
+                    System.out.println("took turn");
                     GameDriver.movePlayerToken();
                     ImagePanel.getInstance().repaint();
                     GameDriver.passGo();
@@ -86,7 +88,7 @@ public class ButtonPanel extends JPanel implements ActionListener
                     takeTurn.setEnabled(false);
                     endTurn.setEnabled(true);
                 }
-                
+
                 break;
             case "End Turn":
                 GameDriver.endTurn();
@@ -102,10 +104,10 @@ public class ButtonPanel extends JPanel implements ActionListener
                 PlayerInfoPanel.getInstance().updateInfo();
                 break;
             case "Buy House":
-                
+
                 break;
             case "Buy Hotel":
-                
+
                 break;
             default:
                 break;
