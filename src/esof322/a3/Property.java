@@ -44,6 +44,7 @@ public class Property extends Deed
 	
 	public void buildHouse(){
 		numHouses++;
+		Bank.sellHouse();
 	}
 	
 	public void buildHotel(){
