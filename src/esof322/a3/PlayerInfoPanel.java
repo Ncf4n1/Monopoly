@@ -9,13 +9,13 @@ public class PlayerInfoPanel extends JPanel {
     private static PlayerInfoPanel instance;
     private int numPlayers;
     private Player[] players;
-    
+
     public PlayerInfoPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
-    
-    
+
+
     public static PlayerInfoPanel getInstance()
     {
         if (instance == null)
@@ -24,12 +24,12 @@ public class PlayerInfoPanel extends JPanel {
         }
         return instance;
     }
-    
+
     public void setNumPlayers(int numPlayers)
     {
         this.numPlayers = numPlayers;
     }
-    
+
     public void infoSetup(Player[] players)
     {
         for (int i = 0; i < numPlayers; i++)
@@ -38,16 +38,16 @@ public class PlayerInfoPanel extends JPanel {
                               "Money: $" + players[i].getMoneyTotal() + "\n" +
                               "Properties Owned: \n" + getPropertyStrings(players[i]),
                                10, 50);
-        
-        area.setFont(new Font("Sans-Serif", Font.BOLD, 20));
+
+        area.setFont(new Font("Sans-Serif", Font.BOLD, 18));
         area.setEditable(false);
         area.setAlignmentX(CENTER_ALIGNMENT);
         add(area);
         }
-        
+
         this.players = players;
     }
-    
+
     public void updateInfo()
     {
         this.removeAll();

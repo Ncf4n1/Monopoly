@@ -20,6 +20,9 @@ public class Player {
 		money = 1500;
 		location = 0;
 		jailed = false;
+		
+		for (int i = 0; i < 8; i++)
+			property[i][0] = false;
 	}
 	
 	//return player name
@@ -148,19 +151,20 @@ public class Player {
 	 * across the properties of the monopoly*/
 	public List<Property> getHouseBuildableProps(){
 		ArrayList<Property> houseBuildableProperties = new ArrayList<>();
-		for (int i=0; i<7; i++){
-			if ((boolean)property[i][0] == true){
-				int parts = ((Property) property[i][1]).getNumOfParts();
-				for(int j=1; j<=parts; i++){
-					int min = getMinBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
-						houseBuildableProperties.add((Property) property[i][j]);
+			for (int i=0; i<8; i++){
+				if ((boolean)property[i][0] == true){
+					int parts = ((Property) property[i][1]).getNumOfParts();
+					for(int j=1; j<=parts; j++){
+						int min = getMinBuilt(i,parts);
+						if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
+							houseBuildableProperties.add((Property) property[i][j]);
+						}
 					}
 				}
 			}
-		}
 		return houseBuildableProperties;
-	}
+		}
+	
 
 	/*makes an array of properties that a player can build hotels on bases on 
 	 * if they have the monopoly, and restricts the player to build evenly 
@@ -204,18 +208,18 @@ public class Player {
 	public static int getMinBuilt(int color, int parts){
 		int min = 5;
 		for (int i=1; i<= parts; i++){
-			if (min > ((Property) property[color][parts]).getNumHouses()){
-				min = ((Property) property[color][parts]).getNumHouses();
+			if (min > ((Property) property[color][i]).getNumHouses()){
+				min = ((Property) property[color][i]).getNumHouses();
 			}
 		}
 		return min;
 	}
 	
 	public static int getMaxBuilt(int color, int parts){
-		int max = 5;
+		int max = 0;
 		for (int i=1; i<= parts; i++){
-			if (max < ((Property) property[color][parts]).getNumHouses()){
-				max = ((Property) property[color][parts]).getNumHouses();
+			if (max < ((Property) property[color][i]).getNumHouses()){
+				max = ((Property) property[color][i]).getNumHouses();
 			}
 		}
 		return max;
