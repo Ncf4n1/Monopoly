@@ -22,23 +22,28 @@ public class Player {
 		jailed = false;
 	}
 	
+	//return player name
 	public String getName(){
 		return playerName;
 	}
   
+	//return current location of the player, 0-39, follows array in board class
 	public int getLocation(){
 		return location;
 
 	}
 
+	//gets the jailed status of the current player
 	public boolean getJailedStat(){
 		return jailed;
 	}
 
+	//gets the current money total of the player
 	public int getMoneyTotal(){
 		return money;
 	}
 
+	//sets the jailed status
 	public void setJailedStat(boolean stat){
 		jailed = stat;
 	}
@@ -53,6 +58,7 @@ public class Player {
 		money = money + amount;
 	}
 
+	//moves the token, follows the board array of spaces
 	public int moveToken(int spacesMoved){
 		location = location + spacesMoved;
 		//reset so as to stay in sync with board, and not have values go past possible
@@ -96,22 +102,23 @@ public class Player {
 	public void buyProperty(Deed obj){
 		if (obj instanceof Property){
 			//property.add((Property) obj);
-			Property prop = (Property) obj;
-			int color = prop.getMonoColor();
-			int part = prop.getPartNumber();
-			property [color][part] = obj;
-			checkAndChangeMonopolyStat(prop, color);
+			Property prop = (Property) obj;			//sets the incoming deed to type Property
+			int color = prop.getMonoColor();		//gets the Monopoly group the property belongs to
+			int part = prop.getPartNumber();		//gets the number of properties in the Monopoly
+			property [color][part] = obj;			//adds the property to an array that shows what is owned by player
+			checkAndChangeMonopolyStat(prop, color);//method call to check if there is a monopoly, and set it to be true if so
 		}
 		else if (obj instanceof Railroad){
-			railroads.add((Railroad) obj);
+			railroads.add((Railroad) obj);			//sets the incoming deed to type Railroad and adds it to the arraylist of railroads
 		}
 		else if (obj instanceof Utility){
-			utilities.add((Utility) obj);
+			utilities.add((Utility) obj);			//sets the incoming deed to type Utility, add to Utility arraylist
 		}
-		makePayment(obj.getPrice());
-		obj.setOwner(this);
+		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
+		obj.setOwner(this);							//sets the owner to the current player for the deed
 	}
 
+	//mortgages the deed, giving the player the money and setting the deed to mortgaged
 	public void mortgage(Deed deed){
 		takePayment(deed.getMortgageVal());
 		deed.mortgage();
@@ -122,11 +129,11 @@ public class Player {
 	 * in the 0th index*/
 	public void checkAndChangeMonopolyStat(Property prop, int color){
 		int parts = prop.getNumOfParts();
-		for(int i = 1; i <= parts; i++){
-			if(property[color][i] != null){
+		for(int i = 1; i <= parts; i++){		//for loops to iterate through 2-D array of properties
+			if(property[color][i] != null){		//if the method does not find a null, indicating all deed owned by player, sets the monopoly var to true
 				property[color][0] = true;
 			}
-			else{
+			else{								//else sets it to false and breaks out of the loop as there is no possibility of a monopoly for that group
 				property[color][0] = false;
 				break;
 			}
@@ -180,6 +187,7 @@ public class Player {
 		return utilities.size();
 	}
 	
+	//builds a house, unless there are 4, where it builds a hotel
 	public void buildHouse(Property prop){
 		int currentHouses = prop.getNumHouses();
 		if (currentHouses == 4){
