@@ -39,5 +39,13 @@ public final class Bank {
 		return hotels;
 	}
 
+	//test only
+	public static void testHouse(int num){
+		houses = num;
+	}
 	
+	//test only
+	public static void testHotel(int num){
+		hotels = num;
+	}
 }

@@ -204,18 +204,18 @@ public class Player {
 	public static int getMinBuilt(int color, int parts){
 		int min = 5;
 		for (int i=1; i<= parts; i++){
-			if (min > ((Property) property[color][parts]).getNumHouses()){
-				min = ((Property) property[color][parts]).getNumHouses();
+			if (min > ((Property) property[color][i]).getNumHouses()){
+				min = ((Property) property[color][i]).getNumHouses();
 			}
 		}
 		return min;
 	}
 	
 	public static int getMaxBuilt(int color, int parts){
-		int max = 5;
+		int max = 0;
 		for (int i=1; i<= parts; i++){
-			if (max < ((Property) property[color][parts]).getNumHouses()){
-				max = ((Property) property[color][parts]).getNumHouses();
+			if (max < ((Property) property[color][i]).getNumHouses()){
+				max = ((Property) property[color][i]).getNumHouses();
 			}
 		}
 		return max;

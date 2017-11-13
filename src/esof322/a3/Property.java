@@ -67,7 +67,7 @@ public class Property extends Deed
 		}
 		else{
 			int houseDiff = 4 - Bank.getHouses();
-			for (int i=0; i<=houseDiff; i++){
+			for (int i=0; i<houseDiff; i++){
 				sellHouse();
 			}
 		}	
