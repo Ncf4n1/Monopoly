@@ -105,7 +105,6 @@ public class GameDriver
 	public static void movePlayerToken(){
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
-		System.out.println("moved");
 	}
 
         public static void passGo()
