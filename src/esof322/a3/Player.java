@@ -148,19 +148,30 @@ public class Player {
 	 * across the properties of the monopoly*/
 	public List<Property> getHouseBuildableProps(){
 		ArrayList<Property> houseBuildableProperties = new ArrayList<>();
-		for (int i=0; i<7; i++){
-			if ((boolean)property[i][0] == true){
-				int parts = ((Property) property[i][1]).getNumOfParts();
-				for(int j=1; j<=parts; i++){
-					int min = getMinBuilt(i,parts);
-					if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
-						houseBuildableProperties.add((Property) property[i][j]);
+		boolean found = false;
+			for(int a=0; a<8; a++){
+				for(int j= 1; j<4; j++){
+					if(property[a][j] != null){
+						found = true;
+						break;
 					}
 				}
 			}
-		}
+		if (found == true)
+			for (int i=0; i<8; i++){
+				if ((boolean)property[i][0] == true){
+					int parts = ((Property) property[i][1]).getNumOfParts();
+					for(int j=1; j<=parts; i++){
+						int min = getMinBuilt(i,parts);
+						if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
+							houseBuildableProperties.add((Property) property[i][j]);
+						}
+					}
+				}
+			}
 		return houseBuildableProperties;
-	}
+		}
+	
 
 	/*makes an array of properties that a player can build hotels on bases on 
 	 * if they have the monopoly, and restricts the player to build evenly 
