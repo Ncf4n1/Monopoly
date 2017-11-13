@@ -11,25 +11,22 @@ public final class Bank {
 	//deduct 1 from the number  of houses
 	public static void sellHouse() {		
 		houses--;
-		
 	}
 	
 	//deduct 1 from the number of hotels
 	public static void sellHotel() {		
-		hotels--;
-		
+		hotels--;	
 	}
 	
 	//add 1 to the number  of houses
-	public static void buybackHouse() {			
-		houses++;
-			
+	public static void buyBackHouse() {			
+		houses++;		
 	}
 		
 	//add 1 to the number of hotels
-	public static void buybackHotel() {
-		hotels++;
-		
+	public static void buyBackHotel() {
+		hotels++;	
+		houses = houses-4;
 	}
 	
 	//get the number of houses left to build

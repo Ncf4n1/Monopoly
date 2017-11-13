@@ -9,12 +9,11 @@ public class Property extends Deed
 	private int houseCost;				// Cost of purchasing a house / hotel
 	private int numHouses;				// Number of houses built on property
 	private int mortgageVal;			// Money gained from mortgaging property
-	private int monopolyPart;	// Number of parts needed for monopoly
+	private int monopolyPart;			// Number of parts needed for monopoly
 	private int monoColor;				// Manages which properties go together to make a monopoly
 	private int numOfParts;
 	
-	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int monopolyPart, int x, int y, int monoColor, int numOfParts)
-	{
+	public Property(String name, int price, int[] rentRates, int houseCost, int mortgageVal, int monopolyPart, int x, int y, int monoColor, int numOfParts){
 		super(name, price, mortgageVal, x, y);
 		this.name = name;
 		this.price = price;
@@ -24,7 +23,6 @@ public class Property extends Deed
 		this.monopolyPart = monopolyPart;
 		this.monoColor = monoColor;
 		this.numOfParts = numOfParts;
-		
 		numHouses = 0;
 	}
 	
@@ -40,8 +38,7 @@ public class Property extends Deed
 		return numOfParts;
 	}
 	
-	public int getRent()
-	{
+	public int getRent(){
 		return rentRates[numHouses];
 	}
 	
@@ -50,15 +47,29 @@ public class Property extends Deed
 	}
 	
 	public void buildHotel(){
-		numHouses++;
-		for(int i=0; i<=4; i++){
-			Bank.buybackHouse();
+		for(int i=0; i<4; i++){
+			Bank.buyBackHouse();
 		}
 		Bank.sellHotel();
 	}
 	
 	public void sellHouse(){
 		numHouses--;
+		owner.takePayment(houseCost/2);
+	}
+	
+	public void sellHotel(){
+		if (Bank.getHouses() >= 4){
+			sellHouse();
+			numHouses = 4;
+			Bank.buyBackHotel();
+		}
+		else{
+			int houseDiff = 4 - Bank.getHouses();
+			for (int i=0; i<=houseDiff; i++){
+				sellHouse();
+			}
+		}	
 	}
 	
 	public int getMonoColor(){
