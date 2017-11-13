@@ -26,10 +26,10 @@ public class GameDriver
 	public static void main(String[] args)
 	{
             GuiFrame.getInstance();
-            
+
 //            while (!SelectionPanel.getInstance().initialized){}
 //            while (System.currentTimeMillis() < endTime){}
-            
+
 //            ArrayList<Player> winners = new ArrayList<>();
 //            Player winner = players[0];
 //            // Cycle through players and determine who has the most money
@@ -61,11 +61,11 @@ public class GameDriver
         {
             return board.getSpace(currentPlayerLocation).getName();
         }
-        
+
 //	public static void startTurn(){
 //		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
 //	}
-        
+
 	public static void endTurn(){
 		if(currentPlayer == players.length -1){
 			currentPlayer = 0;
@@ -105,8 +105,9 @@ public class GameDriver
 	public static void movePlayerToken(){
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
+		System.out.println("moved");
 	}
-        
+
         public static void passGo()
         {
             if (previousPlayerLocation + rollTotal > 39)
@@ -200,7 +201,7 @@ public class GameDriver
                 players[currentPlayer].buyProperty(currentLandedProperty);
             }
 	}
-        
+
 	// Function used by the GUI to get the number of players
 	public static void setPlayers(Player[] players)
 	{
@@ -243,4 +244,3 @@ public class GameDriver
 		return y;
 	}
 }
-
