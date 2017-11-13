@@ -49,10 +49,10 @@ public class Property extends Deed
 	
 	public void buildHotel(){
 		for(int i=0; i<4; i++){
-			this.buildHouse();
 			Bank.buyBackHouse();
 		}
 		Bank.sellHotel();
+		this.numHouses++;
 	}
 	
 	public void sellHouse(){
@@ -68,6 +68,7 @@ public class Property extends Deed
 		}
 		else{
 			int houseDiff = 4 - Bank.getHouses();
+			numHouses = 4;
 			for (int i=0; i<houseDiff; i++){
 				sellHouse();
 			}
