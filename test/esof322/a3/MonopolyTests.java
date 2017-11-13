@@ -24,6 +24,9 @@ public class MonopolyTests {
 		Bank.sellHouse();
 		
 		assertEquals("'sell' a house from bank", 31, Bank.getHouses());
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test 
@@ -36,6 +39,10 @@ public class MonopolyTests {
 		Bank.buyBackHouse();
 		
 		assertEquals("'buy' back a house from property", 30, Bank.getHouses());
+
+		Bank.testHouse(32);
+		Bank.testHotel(12);;	
+		
 	}
 	
 	@Test
@@ -44,6 +51,11 @@ public class MonopolyTests {
 		Bank.sellHotel();
 		
 		assertEquals("'sell' hotel from bank", 11, Bank.getHotels());
+		
+		Bank.buyBackHotel();
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -56,6 +68,9 @@ public class MonopolyTests {
 		Bank.buyBackHotel();
 		
 		assertEquals("'buy' back  hotel from property", 10, Bank.getHotels());
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 
 	
@@ -161,9 +176,14 @@ public class MonopolyTests {
 	@Test
 	public void testPropertyAddHouses ()
 	{
+		Player player = new Player ("TestName", "TestToken");
+		player.buyProperty(prop);
 		prop.buildHouse();
 		
 		assertEquals("check for building a house on a property", 1, prop.getNumHouses());
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -176,6 +196,9 @@ public class MonopolyTests {
 		
 		assertEquals("check for selling a house", 0, prop.getNumHouses());
 		assertEquals("check for payment of selling a house", 1465, player.getMoneyTotal());
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -196,6 +219,9 @@ public class MonopolyTests {
 		
 		assertEquals("Ensure bank has houses back after buying hotel", 32, Bank.getHouses());
 		assertEquals("Ensure bank sells hotel", 11, Bank.getHotels());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -218,6 +244,9 @@ public class MonopolyTests {
 		
 		assertEquals("Check if houses given back to bank when hotel bought", 28, Bank.getHouses());
 		assertEquals("Check if property has hotel", 4, prop2.getNumHouses());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -236,37 +265,15 @@ public class MonopolyTests {
 		
 		prop2.buildHotel();
 		
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		Bank.sellHouse();
-		
-		prop2.sellHotel();
+		Bank.testHouse(2);
 		
 		assertEquals("Check houses available in Bank", 2, Bank.getHouses());
+
+		prop2.sellHotel();
 		assertEquals("Check if only available houses are added back to property", 2, prop2.getNumHouses());
+		
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -276,6 +283,9 @@ public class MonopolyTests {
 		prop.buildHouse();
 		
 		assertEquals("check for change in rent", 30, prop.getRent());
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
@@ -398,6 +408,52 @@ public class MonopolyTests {
 		assertEquals("check for correct values of player when buying property", 1440, player.getMoneyTotal());
 		assertEquals("check for correct values of property when bought", player, prop.getOwner());
 	}
+
+	@Test
+	public void testPlayerBuildHouseNot4()
+	{
+		Property prop = new Property("IllinoisAvenue", 240, new int[] {20, 100, 300, 750, 925, 1100}, 150, 120, 3, 625, 75, 4, 3);
+		
+		player.buyProperty(prop);
+		
+		player.buildHouse(prop);
+		
+		assertEquals("Check player money after building house", 1110, player.getMoneyTotal());
+		assertEquals("Check houses on property", 1, prop.getNumHouses());
+	}
+	
+	@Test
+	public void testPlayerBuildHouse4()
+	{
+		Property prop = new Property("IllinoisAvenue", 240, new int[] {20, 100, 300, 750, 925, 1100}, 150, 120, 3, 625, 75, 4, 3);
+		
+		player.buyProperty(prop);
+		
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		
+		assertEquals("Check player money after building house", 660, player.getMoneyTotal());
+		assertEquals("Check houses on property", 4, prop.getNumHouses());
+	}
+	
+	@Test
+	public void testPlayerBuildHotel()
+	{
+		Property prop = new Property("IllinoisAvenue", 240, new int[] {20, 100, 300, 750, 925, 1100}, 150, 120, 3, 625, 75, 4, 3);
+		
+		player.buyProperty(prop);
+		
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		player.buildHouse(prop);
+		
+		assertEquals("Check player money after building house", 510, player.getMoneyTotal());
+		assertEquals("Check houses on property", 5, prop.getNumHouses());
+	}
 	
 	@Test 
 	public void testPlayerBuyRailroad ()
@@ -434,7 +490,7 @@ public class MonopolyTests {
 	}
 	
 	@Test
-	public void testPlayerHouseMax ()
+	public void testPlayerHouseMaxMin ()
 	{
 		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
 		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
@@ -446,7 +502,11 @@ public class MonopolyTests {
 		prop.buildHouse();
 
 		
-		assertEquals("Check for correct value of max houses built on properties", 1, Player.getMaxBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+		assertEquals("Check for correct value of max houses built on properties", 2, Player.getMaxBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+		assertEquals("Check for correct value of min houses built on properties", 1, Player.getMinBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+	
+		Bank.testHouse(32);
+		Bank.testHotel(12);
 	}
 	
 	@Test
