@@ -37,7 +37,7 @@ public class ImagePanel extends JPanel {
         emptyPanel1.setVisible(false);
         JPanel emptyPanel2 = new JPanel();
         emptyPanel2.setVisible(false);
-        layout.setHgap(100);
+        layout.setHgap(200);
         setLayout(layout);
         add(emptyPanel1, BorderLayout.WEST);
         add(emptyPanel2, BorderLayout.WEST);
