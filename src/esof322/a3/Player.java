@@ -20,6 +20,9 @@ public class Player {
 		money = 1500;
 		location = 0;
 		jailed = false;
+		
+		for (int i = 0; i < 8; i++)
+			property[i][0] = false;
 	}
 	
 	//return player name
@@ -148,7 +151,7 @@ public class Player {
 	 * across the properties of the monopoly*/
 	public List<Property> getHouseBuildableProps(){
 		ArrayList<Property> houseBuildableProperties = new ArrayList<>();
-		boolean found = false;
+		/*boolean found = false;
 			for(int a=0; a<8; a++){
 				for(int j= 1; j<4; j++){
 					if(property[a][j] != null){
@@ -157,11 +160,11 @@ public class Player {
 					}
 				}
 			}
-		if (found == true)
+		if (found == true)*/
 			for (int i=0; i<8; i++){
 				if ((boolean)property[i][0] == true){
 					int parts = ((Property) property[i][1]).getNumOfParts();
-					for(int j=1; j<=parts; i++){
+					for(int j=1; j<=parts; j++){
 						int min = getMinBuilt(i,parts);
 						if (((Property) property[i][j]).getNumHouses() == min && ((Property) property[i][j]).getNumHouses()<4){
 							houseBuildableProperties.add((Property) property[i][j]);
