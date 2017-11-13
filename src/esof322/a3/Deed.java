@@ -16,34 +16,42 @@ public class Deed extends Space
 		this.mortgageVal = mortgageVal;
 	}
 
+	//returns the name of the deed
 	public String getName(){
 		return name;
 	}
 	
+	//gets the buying price for the deed
 	public int getPrice(){
 		return price;
 	}
 	
+	//sets a new owner for the current deed
 	public void setOwner(Player player){
 		owner = player;
 	}
 	
+	//gets the current owner
 	public Player getOwner(){
 		return owner;
 	}
 	
+	//gets the mortgage value for the current deed
 	public int getMortgageVal(){
 		return mortgageVal;
 	}
 	
+	//mortgages the current deed
 	public void mortgage(){
 		mortgaged = true;
 	}
 	
+	//removes the mortgages from the current deed
 	public void unMortgage(){
 		mortgaged = false;
 	}
 	
+	//returns the mortgage status of the current deed
 	public boolean getMortgageStat(){
 		return mortgaged;
 	}
