@@ -178,7 +178,7 @@ public class ButtonPanel extends JPanel implements ActionListener
             	{
             		sellableHouses[i] = GameDriver.getCurrentPlayer().getPropWithSellable().get(i).getName() + " (" + GameDriver.getCurrentPlayer().getPropWithSellable().get(i).getNumHouses() + " Houses on Property)";
             	}
-            	String sellHouseOnProperty = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Property to Sell Houes On", "Selling Selection", JOptionPane.PLAIN_MESSAGE, null, sellableHouses, sellableHouses[0]);
+            	String sellHouseOnProperty = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Property to Sell House On", "Selling Selection", JOptionPane.PLAIN_MESSAGE, null, sellableHouses, sellableHouses[0]);
             	for (int j = 0; j < sellableHouses.length; j++)
             	{
             		if (GameDriver.getCurrentPlayer().getPropWithSellable().get(j).getName().equals(sellHouseOnProperty))
@@ -189,21 +189,20 @@ public class ButtonPanel extends JPanel implements ActionListener
                 break;
             	
             case "Sell Hotel":
-            	String[] sellableHotels = new String[GameDriver.getCurrentPlayer().getPropWithSellable().size()];
-            	for (int i = 0; i < sellableHouses.length; i++)
+            	String[] sellableHotels = new String[GameDriver.getCurrentPlayer().getPropsWithHotels().size()];
+            	for (int i = 0; i < sellableHotels.length; i++)
             	{
-            		sellableHouses[i] = GameDriver.getCurrentPlayer().getHouseBuildableProps().get(i).getName() + " (" + GameDriver.getCurrentPlayer().getHouseBuildableProps().get(i).getNumHouses() + " Houses on Property)";
+            		sellableHotels[i] = GameDriver.getCurrentPlayer().getPropsWithHotels().get(i).getName();
             	}
-            	String sellableHotels = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Property to Sell Houes On", "Selling Selection", JOptionPane.PLAIN_MESSAGE, null, sellableHouses, sellableHouses[0]);
-            	for (int j = 0; j < sellableHouses.length; j++)
+            	String sellHotelOnProperty = (String) JOptionPane.showInputDialog(GuiFrame.getInstance(), "Please Select a Property to Sell Hotel On", "Selling Selection", JOptionPane.PLAIN_MESSAGE, null, sellableHotels, sellableHotels[0]);
+            	for (int j = 0; j < sellableHotels.length; j++)
             	{
-            		if (GameDriver.getCurrentPlayer().getPropWithSellable().get(j).getName().equals(sellHouseOnProperty))
+            		if (GameDriver.getCurrentPlayer().getPropsWithHotels().get(j).getName().equals(sellHotelOnProperty))
             		{
-            			GameDriver.getCurrentPlayer().getPropWithSellable().get(j).sellHouse();
+            			GameDriver.getCurrentPlayer().getPropsWithHotels().get(j).sellHotel();;
             		}
             	}
                 break;
-            	break;
             	
             case "Mortgage":
             	String[] properties = new String[GameDriver.getCurrentPlayer().getPropertiesOwned().size()];
