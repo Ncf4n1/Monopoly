@@ -502,8 +502,8 @@ public class MonopolyTests {
 		prop.buildHouse();
 
 		
-		assertEquals("Check for correct value of max houses built on properties", 2, Player.getMaxBuilt(prop.getMonoColor(), prop.getNumOfParts()));
-		assertEquals("Check for correct value of min houses built on properties", 1, Player.getMinBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+		assertEquals("Check for correct value of max houses built on properties", 2, player.getMaxBuilt(prop.getMonoColor(), prop.getNumOfParts()));
+		assertEquals("Check for correct value of min houses built on properties", 1, player.getMinBuilt(prop.getMonoColor(), prop.getNumOfParts()));
 	
 		Bank.testHouse(32);
 		Bank.testHotel(12);
