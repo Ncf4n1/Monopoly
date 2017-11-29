@@ -8,7 +8,7 @@ public class GoToJail extends Space
 		super("GoToJail", x, y);
 	}
 	
-	public void sendToJail(Player player)
+	public static void sendToJail(Player player)
 	{
 		player.setJailedStat(true);
 	}

@@ -12,7 +12,7 @@ public class Player {
 	private ArrayList<Utility> utilities = new ArrayList<>();	// List of currently owned utilites
 	private int location;										// Current location on the board
 	private boolean jailed;										// Jailed status of player (future implementation)
-	//private int turnsInJail;									// Number of turns the player has been in jail
+	private int turnsInJail;									// Number of turns the player has been in jail
 
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -44,7 +44,17 @@ public class Player {
 	public int getMoneyTotal(){
 		return money;
 	}
+	
+	public int getTurnsInJail()
+	{
+		return turnsInJail;
+	}
 
+	public void setLocation(int location)
+	{
+		this.location = location;
+	}
+	
 	//sets the jailed status
 	public void setJailedStat(boolean stat){
 		jailed = stat;
@@ -70,23 +80,19 @@ public class Player {
 		return location;
 	}
 
-	/*//roll to leave jail
+	//roll to leave jail
 	public void rollToGetOutOfJail(){
-		int die1 = rollDie();
-		int die2 = rollDie();
-
+		int doublesInARow = GameDriver.getDoublesInARow();
+		int rollTotal = GameDriver.rollDice();
 		//checks if the die are doubles
-		if (checkIfDoubles(die1, die2)){
+		if (doublesInARow < GameDriver.getDoublesInARow()){
 			setJailedStat(false);
-			moveToken((die1+die2));
+			GameDriver.movePlayerToken();
 		}
 		//else iterates turns in jail or forces payment
 		else{
 			if(turnsInJail < 3){
 				turnsInJail++;
-			}
-			else{
-				payToLeaveJail();
 			}
 		}
 	}
@@ -96,8 +102,9 @@ public class Player {
 		makePayment(50);
 		setJailedStat(false);
 		turnsInJail = 0;
-		moveToken(rollTwoDice());
-	}*/
+		int rollTotal = GameDriver.rollDice();
+		GameDriver.movePlayerToken();
+	}
 
 	//add property to ArrayList, then make payment
 	public void buyProperty(Deed obj){
