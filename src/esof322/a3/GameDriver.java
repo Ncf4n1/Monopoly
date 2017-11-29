@@ -21,7 +21,7 @@ public class GameDriver
 	private static Property currentLandedProperty = null;	// Placeholder for a property if the player lands on it
 	private static Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
 	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
-        private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
+    private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
 
 	public static void main(String[] args)
 	{
@@ -120,8 +120,26 @@ public class GameDriver
 		switch (currentPlayerLocation)
 		{
 			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
-			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 30: case 33: case 36:
+			case 0: case 2: case 7: case 17: case 20: case 22: case 33: case 36:
+					break;
+					
+			case 10: if (players[currentPlayer].getJailedStat())
+					 {
+						if (players[currentPlayer].getTurnsInJail() < 3)
+						{
+							ButtonPanel.getInstance().enableJailPayOption();
+							ButtonPanel.getInstance().enableJailRollOption();
+						}
+						else
+						{
+							ButtonPanel.getInstance().enableJailPayOption();
+						}
+					 }
 			 		break;
+			 		
+			case 30: players[currentPlayer].setJailedStat(true);
+					 players[currentPlayer].setLocation(10);
+					break;
 
 			// Cases for two Tax spaces (Make appropriate tax payment)
 			case 4: players[currentPlayer].makePayment(200);

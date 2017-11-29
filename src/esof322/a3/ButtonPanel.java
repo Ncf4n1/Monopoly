@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class ButtonPanel extends JPanel implements ActionListener
 {
     private static ButtonPanel instance;
-    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, sellHouse, sellHotel, mortgage;
+    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, sellHouse, sellHotel, mortgage, payToLeaveJail, rollToLeaveJail;
 
     public ButtonPanel()
     {
@@ -24,6 +24,8 @@ public class ButtonPanel extends JPanel implements ActionListener
         sellHouse = new JButton("Sell House");
         sellHotel = new JButton("Sell Hotel");
         mortgage = new JButton("Mortgage");
+        payToLeaveJail = new JButton("Pay to Leave Jail");
+        rollToLeaveJail = new JButton("Roll to Leave Jail");
 
         endTurn.setEnabled(false);
         buyProperty.setEnabled(false);
@@ -32,7 +34,11 @@ public class ButtonPanel extends JPanel implements ActionListener
         sellHouse.setEnabled(false);
         sellHotel.setEnabled(false);
         mortgage.setEnabled(false);
+        payToLeaveJail.setEnabled(false);
+        rollToLeaveJail.setEnabled(false);
+        
         takeTurn.setActionCommand("Take Turn");
+        
         setButton(takeTurn);
         setButton(endTurn);
         setButton(buyProperty);
@@ -41,6 +47,8 @@ public class ButtonPanel extends JPanel implements ActionListener
         setButton(sellHouse);
         setButton(sellHotel);
         setButton(mortgage);
+        setButton(payToLeaveJail);
+        setButton(rollToLeaveJail);
     }
 
     /*
@@ -60,7 +68,17 @@ public class ButtonPanel extends JPanel implements ActionListener
     {
         buyProperty.setEnabled(true);
     }
+    
+    public void enableJailPayOption()
+    {
+    	payToLeaveJail.setEnabled(true);
+    }
 
+    public void enableJailRollOption()
+    {
+    	rollToLeaveJail.setEnabled(true);
+    }
+    
     /*
       Method that returns instance of the button panel
     */
@@ -96,7 +114,6 @@ public class ButtonPanel extends JPanel implements ActionListener
                     takeTurn.setEnabled(false);
                     endTurn.setEnabled(true);
                 }
-
                 break;
                 
             case "End Turn":
@@ -144,6 +161,16 @@ public class ButtonPanel extends JPanel implements ActionListener
                 buyProperty.setEnabled(false);
                 PlayerInfoPanel.getInstance().updateInfo();
                 break;
+                
+            case "Pay to Leave Jail":
+            	GameDriver.getCurrentPlayer().payToLeaveJail();
+            	ImagePanel.getInstance().repaint();
+            	break;
+            	
+            case "Roll to Leave Jail":
+            	GameDriver.getCurrentPlayer().rollToGetOutOfJail();
+            	ImagePanel.getInstance().repaint();
+            	break;
                 
             case "Buy House":
             	String[] buildableHouses = new String[GameDriver.getCurrentPlayer().getHouseBuildableProps().size()];
