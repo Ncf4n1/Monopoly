@@ -107,23 +107,37 @@ public class Player {
 	}
 
 	//add property to ArrayList, then make payment
-	public void buyProperty(Deed obj){
-		if (obj instanceof Property){
+	public void buyProperty(Property obj){
+		/*if (obj instanceof Property){*/
 			//property.add((Property) obj);
-			Property prop = (Property) obj;			//sets the incoming deed to type Property
-			int color = prop.getMonoColor();		//gets the Monopoly group the property belongs to
-			int part = prop.getPartNumber();		//gets the number of properties in the Monopoly
+			//Property prop = (Property) obj;			//sets the incoming deed to type Property
+			int color = obj.getMonoColor();		//gets the Monopoly group the property belongs to
+			int part = obj.getPartNumber();		//gets the number of properties in the Monopoly
 			property [color][part] = obj;			//adds the property to an array that shows what is owned by player
-			checkAndChangeMonopolyStat(prop, color);//method call to check if there is a monopoly, and set it to be true if so
-		}
-		else if (obj instanceof Railroad){
-			railroads.add((Railroad) obj);			//sets the incoming deed to type Railroad and adds it to the arraylist of railroads
-		}
-		else if (obj instanceof Utility){
-			utilities.add((Utility) obj);			//sets the incoming deed to type Utility, add to Utility arraylist
-		}
+			checkAndChangeMonopolyStat(obj, color);//method call to check if there is a monopoly, and set it to be true if so
+		//}
+//		else if (obj instanceof Railroad){
+//			railroads.add((Railroad) obj);			//sets the incoming deed to type Railroad and adds it to the arraylist of railroads
+//		}
+//		else if (obj instanceof Utility){
+//			utilities.add((Utility) obj);			//sets the incoming deed to type Utility, add to Utility arraylist
+//		}
 		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
 		obj.setOwner(this);							//sets the owner to the current player for the deed
+	}
+	
+	public void buyProperty(Railroad obj)
+	{
+		railroads.add(obj);
+		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
+		obj.setOwner(this);	
+	}
+	
+	public void buyProperty(Utility obj)
+	{
+		utilities.add(obj);
+		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
+		obj.setOwner(this);	
 	}
 
 	//mortgages the deed, giving the player the money and setting the deed to mortgaged

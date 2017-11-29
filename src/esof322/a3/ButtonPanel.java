@@ -69,16 +69,6 @@ public class ButtonPanel extends JPanel implements ActionListener
         buyProperty.setEnabled(true);
     }
     
-    public void enableJailPayOption()
-    {
-    	payToLeaveJail.setEnabled(true);
-    }
-
-    public void enableJailRollOption()
-    {
-    	rollToLeaveJail.setEnabled(true);
-    }
-    
     /*
       Method that returns instance of the button panel
     */
@@ -117,9 +107,50 @@ public class ButtonPanel extends JPanel implements ActionListener
                 break;
                 
             case "End Turn":
+            	if (GameDriver.getCurrentPlayer().getLocation() == 30)
+            	{
+            		GameDriver.getCurrentPlayer().setLocation(10);
+            	}
                 GameDriver.endTurn();
-                endTurn.setEnabled(false);
-                takeTurn.setEnabled(true);
+
+                if (GameDriver.getCurrentPlayer().getJailedStat())
+                {
+                	takeTurn.setEnabled(false);
+                	mortgage.setEnabled(false);
+                	buyHouse.setEnabled(false);
+                	buyHotel.setEnabled(false);
+                	sellHouse.setEnabled(false);
+                	sellHotel.setEnabled(false);
+                	if (GameDriver.getCurrentPlayer().getTurnsInJail() < 3)
+                	{
+                		rollToLeaveJail.setEnabled(true);
+                		payToLeaveJail.setEnabled(true);
+                	}
+                	else
+                	{
+                		payToLeaveJail.setEnabled(true);
+                	}
+                }
+                else
+                {
+                	endTurn.setEnabled(false);
+                	takeTurn.setEnabled(true);
+                	
+                	if (GameDriver.getCurrentPlayer().getPropertiesOwned().size() > 0)
+                    {
+                    	for (int i = 0; i < GameDriver.getCurrentPlayer().getPropertiesOwned().size(); i++)
+                    	{
+                    		if (!GameDriver.getCurrentPlayer().getPropertiesOwned().get(i).mortgaged)
+                    		{
+                    			mortgage.setEnabled(true);
+                    		}
+                    	}
+                    }
+                    else
+                    {
+                    	mortgage.setEnabled(false);
+                    }
+                }
                 buyProperty.setEnabled(false);
                 takeTurn.setText("Take Turn: " + GameDriver.getCurrentPlayer().getName());
                 PlayerInfoPanel.getInstance().updateInfo();
@@ -138,21 +169,6 @@ public class ButtonPanel extends JPanel implements ActionListener
                 else
                 {
                 	buyHotel.setEnabled(false);
-                }
-                
-                if (GameDriver.getCurrentPlayer().getPropertiesOwned().size() > 0)
-                {
-                	for (int i = 0; i < GameDriver.getCurrentPlayer().getPropertiesOwned().size(); i++)
-                	{
-                		if (!GameDriver.getCurrentPlayer().getPropertiesOwned().get(i).mortgaged)
-                		{
-                			mortgage.setEnabled(true);
-                		}
-                	}
-                }
-                else
-                {
-                	mortgage.setEnabled(false);
                 }
                 break;
                 
