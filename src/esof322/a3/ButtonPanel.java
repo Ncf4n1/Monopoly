@@ -110,6 +110,8 @@ public class ButtonPanel extends JPanel implements ActionListener
             	if (GameDriver.getCurrentPlayer().getLocation() == 30)
             	{
             		GameDriver.getCurrentPlayer().setLocation(10);
+            		GameDriver.getCurrentPlayer().setJailedStat(true);
+            		ImagePanel.getInstance().repaint();
             	}
                 GameDriver.endTurn();
 
@@ -128,6 +130,7 @@ public class ButtonPanel extends JPanel implements ActionListener
                 	}
                 	else
                 	{
+                		rollToLeaveJail.setEnabled(false);
                 		payToLeaveJail.setEnabled(true);
                 	}
                 }
@@ -180,11 +183,15 @@ public class ButtonPanel extends JPanel implements ActionListener
                 
             case "Pay to Leave Jail":
             	GameDriver.getCurrentPlayer().payToLeaveJail();
+            	rollToLeaveJail.setEnabled(false);
+            	payToLeaveJail.setEnabled(false);
             	ImagePanel.getInstance().repaint();
             	break;
             	
             case "Roll to Leave Jail":
             	GameDriver.getCurrentPlayer().rollToGetOutOfJail();
+            	rollToLeaveJail.setEnabled(false);
+            	payToLeaveJail.setEnabled(false);
             	ImagePanel.getInstance().repaint();
             	break;
                 
