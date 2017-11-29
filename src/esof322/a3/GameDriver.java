@@ -75,9 +75,9 @@ public class GameDriver
 		}
 		doublesInARow = 0;
 		rollTotal = 0;
-                currentLandedProperty = null;
-                currentLandedRailroad = null;
-                currentLandedUtility = null;
+        currentLandedProperty = null;
+        currentLandedRailroad = null;
+        currentLandedUtility = null;
 	}
 
 	public static int rollDice(){
@@ -120,26 +120,11 @@ public class GameDriver
 		switch (currentPlayerLocation)
 		{
 			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
-			case 0: case 2: case 7: case 17: case 20: case 22: case 33: case 36:
+			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 33: case 36:
 					break;
-					
-			case 10: if (players[currentPlayer].getJailedStat())
-					 {
-						if (players[currentPlayer].getTurnsInJail() < 3)
-						{
-							ButtonPanel.getInstance().enableJailPayOption();
-							ButtonPanel.getInstance().enableJailRollOption();
-						}
-						else
-						{
-							ButtonPanel.getInstance().enableJailPayOption();
-						}
-					 }
-			 		break;
 			 		
 			case 30: players[currentPlayer].setJailedStat(true);
-					 players[currentPlayer].setLocation(10);
-					break;
+					 break;
 
 			// Cases for two Tax spaces (Make appropriate tax payment)
 			case 4: players[currentPlayer].makePayment(200);
@@ -207,7 +192,7 @@ public class GameDriver
 	public static void buyProperty(){
             if (currentLandedProperty == null && currentLandedUtility == null)
             {
-		players[currentPlayer].buyProperty(currentLandedRailroad);
+            	players[currentPlayer].buyProperty(currentLandedRailroad);
             }
             else if (currentLandedProperty == null && currentLandedRailroad == null)
             {
