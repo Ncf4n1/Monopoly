@@ -56,6 +56,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         turnsTaken.setMaximumSize(new Dimension(200, 50));
         add(Box.createRigidArea(new Dimension(25, 25)));
         turnsTaken.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+        turnsTaken.setEditable(false);
         add(turnsTaken);
     }
 
@@ -126,6 +127,7 @@ public class ButtonPanel extends JPanel implements ActionListener
                 if (GameDriver.getCurrentPlayer().getJailedStat())
                 {
                 	takeTurn.setEnabled(false);
+                	endTurn.setEnabled(false);
                 	mortgage.setEnabled(false);
                 	buyHouse.setEnabled(false);
                 	buyHotel.setEnabled(false);
