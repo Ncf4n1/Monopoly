@@ -7,8 +7,8 @@ public class GameDriver
 	private static int numPlayers;				// Number of Players playing the game (2-4)
 	private static String[] playernames;		// List of the names for each player
 	private static Player[] players;			// List of players playing the game
-	private static int timeLimit;				// Time limit for the game
-	private static long endTime;
+	private static int turnLimit;				// Time limit for the game
+	//private static long endTime;
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board = new Board();
 	private static int currentPlayer = 0;					// Index of the current player for the player array
@@ -22,39 +22,11 @@ public class GameDriver
 	private static Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
 	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
     private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
+    private static int turns = 0;
 
 	public static void main(String[] args)
 	{
             GuiFrame.getInstance();
-
-//            while (!SelectionPanel.getInstance().initialized){}
-//            while (System.currentTimeMillis() < endTime){}
-
-//            ArrayList<Player> winners = new ArrayList<>();
-//            Player winner = players[0];
-//            // Cycle through players and determine who has the most money
-//            for (int i = 1; i < players.length; i++)
-//            {
-//                if (players[i].getMoneyTotal() > winner.getMoneyTotal())
-//                {
-//                    winner = players[i];
-//                }
-//            }
-//            winners.add(winner);
-//            for (int j = 0; j < players.length; j++)
-//            {
-//                if (!players[j].getName().equals(winner.getName()))
-//                {
-//                    if (players[j].getMoneyTotal() == winner.getMoneyTotal())
-//                    {
-//                        winners.add(players[j]);
-//                    }
-//                }
-//            }
-//            for (Player w : winners)
-//            {
-//                System.out.println(w.getName());
-//            }
     }
 
         public static String getSpaceName()
@@ -67,10 +39,18 @@ public class GameDriver
 //	}
 
 	public static void endTurn(){
-		if(currentPlayer == players.length -1){
+		if (currentPlayer == players.length -1)
+		{
 			currentPlayer = 0;
+	        turns++;
+	        
+	        if (turns >= turnLimit)
+	        {
+	        	setWinnerList();
+	        }
 		}
-		else{
+		else
+		{
 			currentPlayer++;
 		}
 		doublesInARow = 0;
@@ -100,6 +80,11 @@ public class GameDriver
 //	}
 	public static int getDoublesInARow(){
 		return doublesInARow;
+	}
+	
+	public static int getTurnsTaken()
+	{
+		return turns;
 	}
 
 	public static void movePlayerToken(){
@@ -213,10 +198,10 @@ public class GameDriver
 	}
 
 	// Function used by the GUI to set the time limit of the game
-	public static void setTimeLimit(int timeLimit)
+	public static void setTurnLimit(int turnLimit)
 	{
-            GameDriver.timeLimit = timeLimit;
-            endTime = System.currentTimeMillis() + (GameDriver.timeLimit*60)*1000;
+            GameDriver.turnLimit = turnLimit;
+            //endTime = System.currentTimeMillis() + (GameDriver.timeLimit*60)*1000;
 	}
 
 
@@ -245,5 +230,32 @@ public class GameDriver
 				y = board.getSpace(players[i].getLocation()).getY();
 		}
 		return y;
+	}
+	
+	public static void setWinnerList()
+	{
+		ArrayList<Player> winners = new ArrayList<>();
+        Player winner = players[0];
+        // Cycle through players and determine who has the most money
+        for (int i = 1; i < players.length; i++)
+        {
+            if (players[i].getMoneyTotal() > winner.getMoneyTotal())
+            {
+                winner = players[i];
+            }
+        }
+        winners.add(winner);
+        for (int j = 0; j < players.length; j++)
+        {
+            if (!players[j].getName().equals(winner.getName()))
+            {
+                if (players[j].getMoneyTotal() == winner.getMoneyTotal())
+                {
+                    winners.add(players[j]);
+                }
+            }
+        }
+        
+        ImagePanel.getInstance().declareWinner(winners);
 	}
 }

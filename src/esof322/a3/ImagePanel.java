@@ -5,7 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class ImagePanel extends JPanel {
@@ -85,5 +88,22 @@ public class ImagePanel extends JPanel {
                  }
              }
         }
+    }
+    
+    public void declareWinner(ArrayList<Player> winners)
+    {
+    	JOptionPane.showMessageDialog(this, "Winner(s):\n" + getWinnerString(winners), "Winners", JOptionPane.CLOSED_OPTION);
+    	System.exit(0);
+    }
+    
+    public String getWinnerString(ArrayList<Player> winners)
+    {
+    	String winnerList = "";
+    	for (Player winner : winners)
+    	{
+    		winnerList += winner.getName() + "\n";
+    	}
+    	
+    	return winnerList;
     }
 }

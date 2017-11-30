@@ -17,10 +17,10 @@ import javax.swing.JPanel;
 
 class SelectionPanel extends JPanel implements ActionListener{
     private static SelectionPanel instance;
-    private final JComboBox<Integer> playerNum, timeLimit;
+    private final JComboBox<Integer> playerNum, turnLimit;
     private final JButton start;
     private final JLabel playerLabel;
-    private final JLabel chooseTimeLimit;
+    private final JLabel chooseTurnLimit;
     public boolean initialized = false;
 
     private Player[] players;
@@ -29,32 +29,32 @@ class SelectionPanel extends JPanel implements ActionListener{
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         playerLabel = new JLabel("Choose Number of Players");
-        chooseTimeLimit = new JLabel("Choose a Time Limit (In Minutes)");
+        chooseTurnLimit = new JLabel("Choose a Turn Limit");
         start = new JButton("Start");
         playerNum = new JComboBox<>(new Integer[]{2, 3, 4});
-        timeLimit = new JComboBox<>(new Integer[]{1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60});
+        turnLimit = new JComboBox<>(new Integer[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60});
 
         playerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
-        chooseTimeLimit.setFont(new Font("Sans-Serif", Font.BOLD, 20));
+        chooseTurnLimit.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         playerNum.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
-        timeLimit.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
+        turnLimit.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         playerNum.setMaximumSize(new Dimension(100, 100));
-        timeLimit.setMaximumSize(new Dimension(100, 100));
+        turnLimit.setMaximumSize(new Dimension(100, 100));
 
         playerNum.addActionListener(this);
-        timeLimit.addActionListener(this);
+        turnLimit.addActionListener(this);
         start.addActionListener(this);
 
         playerLabel.setAlignmentX(CENTER_ALIGNMENT);
         playerNum.setAlignmentX(CENTER_ALIGNMENT);
-        chooseTimeLimit.setAlignmentX(CENTER_ALIGNMENT);
-        timeLimit.setAlignmentX(CENTER_ALIGNMENT);
+        chooseTurnLimit.setAlignmentX(CENTER_ALIGNMENT);
+        turnLimit.setAlignmentX(CENTER_ALIGNMENT);
         start.setAlignmentX(CENTER_ALIGNMENT);
 
         add(playerLabel);
         add(playerNum);
-        add(chooseTimeLimit);
-        add(timeLimit);
+        add(chooseTurnLimit);
+        add(turnLimit);
         add(start);
     }
 
@@ -77,8 +77,8 @@ class SelectionPanel extends JPanel implements ActionListener{
                           CardLayout cl = (CardLayout) MainPanel.getInstance().getLayout();
                           cl.next(MainPanel.getInstance());
                           PlayerInfoPanel.getInstance().infoSetup(players);
-                          GameDriver.setTimeLimit((int) timeLimit.getSelectedItem());
-                          //this.initialized = true;
+                          GameDriver.setTurnLimit((int) turnLimit.getSelectedItem());
+                          //initialized = true;
                           break;
         }
     }
