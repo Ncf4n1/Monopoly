@@ -606,4 +606,17 @@ public class MonopolyTests {
 		Bank.testHouse(32);
 		Bank.testHotel(12);
 	}
+	
+	//Die
+	
+	@Test
+	public void testDie ()
+	{
+		Die die = new Die();
+		boolean rolled = false;
+		die.rollDie();
+		if (die.getDie() >= 1 && die.getDie() <= 6)
+			rolled = true;
+		assertTrue("Check to make sure rolled values are between 1 and 6, inclusively", rolled);
+	}
 }
