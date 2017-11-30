@@ -11,7 +11,8 @@ public class ButtonPanel extends JPanel implements ActionListener
 {
     private static ButtonPanel instance;
     private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, sellHouse, sellHotel, mortgage, payToLeaveJail, rollToLeaveJail;
-
+    private final JTextArea turnsTaken;
+    
     public ButtonPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -49,6 +50,13 @@ public class ButtonPanel extends JPanel implements ActionListener
         setButton(mortgage);
         setButton(payToLeaveJail);
         setButton(rollToLeaveJail);
+        
+        turnsTaken = new JTextArea("Rounds Completed: " + GameDriver.getTurnsTaken());
+        turnsTaken.setAlignmentX(Component.CENTER_ALIGNMENT);
+        turnsTaken.setMaximumSize(new Dimension(200, 50));
+        add(Box.createRigidArea(new Dimension(25, 25)));
+        turnsTaken.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+        add(turnsTaken);
     }
 
     /*
@@ -173,6 +181,8 @@ public class ButtonPanel extends JPanel implements ActionListener
                 {
                 	buyHotel.setEnabled(false);
                 }
+                
+                turnsTaken.replaceRange(String.valueOf(GameDriver.getTurnsTaken()), 18, 19);
                 break;
                 
             case "Buy Property":
