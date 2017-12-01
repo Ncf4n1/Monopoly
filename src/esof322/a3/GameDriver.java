@@ -29,10 +29,10 @@ public class GameDriver
             GuiFrame.getInstance();
     }
 
-        public static String getSpaceName()
-        {
-            return board.getSpace(currentPlayerLocation).getName();
-        }
+    public static String getSpaceName()
+    {
+        return board.getSpace(currentPlayerLocation).getName();
+    }
 
 //	public static void startTurn(){
 //		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
@@ -55,9 +55,9 @@ public class GameDriver
 		}
 		doublesInARow = 0;
 		rollTotal = 0;
-        currentLandedProperty = null;
-        currentLandedRailroad = null;
-        currentLandedUtility = null;
+//        currentLandedProperty = null;
+//        currentLandedRailroad = null;
+//        currentLandedUtility = null;
 	}
 
 	public static int rollDice(){
@@ -92,15 +92,18 @@ public class GameDriver
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
 
-        public static void passGo()
+    public static void passGo()
+    {
+        if (previousPlayerLocation + rollTotal > 39)
         {
-            if (previousPlayerLocation + rollTotal > 39)
-            {
-                players[currentPlayer].takePayment(200);
-            }
+            players[currentPlayer].takePayment(200);
         }
+    }
 
 	public static void checkSpace(int Location){
+        currentLandedProperty = null;
+        currentLandedRailroad = null;
+        currentLandedUtility = null;
 		// Handle which type of the square the player landed on
 		switch (currentPlayerLocation)
 		{
@@ -187,6 +190,10 @@ public class GameDriver
             {
                 players[currentPlayer].buyProperty(currentLandedProperty);
             }
+            else
+            {
+            	System.out.println("Not bought");
+            }
 	}
 
 
@@ -236,10 +243,12 @@ public class GameDriver
 	{
 		ArrayList<Player> winners = new ArrayList<>();
         Player winner = players[0];
+        winner.calculateTotalWorth();
         // Cycle through players and determine who has the most money
         for (int i = 1; i < players.length; i++)
         {
-            if (players[i].getMoneyTotal() > winner.getMoneyTotal())
+        	players[i].calculateTotalWorth();
+            if (players[i].getTotalWorth() > winner.getTotalWorth())
             {
                 winner = players[i];
             }
@@ -249,7 +258,7 @@ public class GameDriver
         {
             if (!players[j].getName().equals(winner.getName()))
             {
-                if (players[j].getMoneyTotal() == winner.getMoneyTotal())
+                if (players[j].getTotalWorth() == winner.getTotalWorth())
                 {
                     winners.add(players[j]);
                 }
