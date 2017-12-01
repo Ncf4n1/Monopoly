@@ -7,19 +7,21 @@ public class Player {
 	public String playerName;									// Name of the player
 	public String token;										// Token the player is using
 	private int money;											// Amount of money the player has
-	private Object[][] property = new Object[8][4];	// 2D array containing Objects of type booleans and property
+	private Object[][] property = new Object[8][4];				// 2D array containing Objects of type booleans and property
 	private ArrayList<Railroad> railroads = new ArrayList<>();	// List of currently owned railroad
 	private ArrayList<Utility> utilities = new ArrayList<>();	// List of currently owned utilites
 	private int location;										// Current location on the board
 	private boolean jailed;										// Jailed status of player (future implementation)
 	private int turnsInJail;									// Number of turns the player has been in jail
-
+	private int totalWorth = 0;
+	
 	public Player(String name, String selectedToken){
 		playerName = name;
 		token = selectedToken;
 		money = 1500;
 		location = 0;
 		jailed = false;
+		totalWorth = 0;
 
 		for (int i = 0; i < 8; i++)
 			property[i][0] = false;
@@ -49,6 +51,11 @@ public class Player {
 	{
 		return turnsInJail;
 	}
+	
+	public int getTotalWorth()
+	{
+		return totalWorth;
+	}
 
 	public void setLocation(int location)
 	{
@@ -62,12 +69,12 @@ public class Player {
 
 	// Player must pay bank or another player
 	public void makePayment(int amount){
-		money = money - amount;
+		money -= amount;
 	}
 
 	// Player receives money from the bank or another player
 	public void takePayment(int amount){
-		money = money + amount;
+		money += amount;
 	}
 
 	//moves the token, follows the board array of spaces
@@ -111,25 +118,25 @@ public class Player {
 		/*if (obj instanceof Property){*/
 			//property.add((Property) obj);
 			//Property prop = (Property) obj;			//sets the incoming deed to type Property
-			int color = obj.getMonoColor();		//gets the Monopoly group the property belongs to
-			int part = obj.getPartNumber();		//gets the number of properties in the Monopoly
-			property [color][part] = obj;			//adds the property to an array that shows what is owned by player
-			checkAndChangeMonopolyStat(obj, color);//method call to check if there is a monopoly, and set it to be true if so
+			int color = obj.getMonoColor();				//gets the Monopoly group the property belongs to
+			int part = obj.getPartNumber();				//gets the number of properties in the Monopoly
+			property [color][part] = obj;				//adds the property to an array that shows what is owned by player
+			checkAndChangeMonopolyStat(obj, color);		//method call to check if there is a monopoly, and set it to be true if so
 		//}
 //		else if (obj instanceof Railroad){
-//			railroads.add((Railroad) obj);			//sets the incoming deed to type Railroad and adds it to the arraylist of railroads
+//			railroads.add((Railroad) obj);				//sets the incoming deed to type Railroad and adds it to the arraylist of railroads
 //		}
 //		else if (obj instanceof Utility){
-//			utilities.add((Utility) obj);			//sets the incoming deed to type Utility, add to Utility arraylist
+//			utilities.add((Utility) obj);				//sets the incoming deed to type Utility, add to Utility arraylist
 //		}
-		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
-		obj.setOwner(this);							//sets the owner to the current player for the deed
+		makePayment(obj.getPrice());					//makes the player pay the amount specified by deed
+		obj.setOwner(this);								//sets the owner to the current player for the deed
 	}
 	
 	public void buyProperty(Railroad obj)
 	{
 		railroads.add(obj);
-		makePayment(obj.getPrice());				//makes the player pay the amount specified by deed
+		makePayment(obj.getPrice());					//makes the player pay the amount specified by deed
 		obj.setOwner(this);	
 	}
 	
@@ -303,5 +310,27 @@ public class Player {
 			}
 		}
 	return propsWithHotels;
+	}
+	
+	public void calculateTotalWorth()
+	{
+		totalWorth = getMoneyTotal();
+		
+		for (Deed deed : getPropertiesOwned())
+		{
+			if (deed instanceof Property)
+			{
+				totalWorth += ((Property) deed).getNumHouses() * ((Property) deed).getHouseCost();
+			}
+			
+			if (deed.getMortgageStat())
+			{
+				totalWorth += 0.5 * deed.getPrice();
+			}
+			else
+			{
+				totalWorth += deed.getPrice();
+			}
+		}
 	}
 }
