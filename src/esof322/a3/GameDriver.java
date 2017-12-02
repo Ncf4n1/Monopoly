@@ -94,6 +94,10 @@ public class GameDriver
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
 
+	public static void drawChanceCard(){
+		chanceDeck.drawCard(players[currentPlayer], board);
+	}
+	
     public static void passGo()
     {
         if (previousPlayerLocation + rollTotal > 39)
