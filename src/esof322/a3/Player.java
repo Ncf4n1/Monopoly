@@ -14,6 +14,10 @@ public class Player {
 	private boolean jailed;										// Jailed status of player (future implementation)
 	private int turnsInJail;									// Number of turns the player has been in jail
 	private int totalWorth = 0;
+	private int totalHouses = 0;
+	private int totalHotels = 0;
+	private boolean chanceGetOutOfJailCard = false;
+	private boolean comChestGetOutOfJailCard = false;
 	
 	public Player(String name, String selectedToken){
 		playerName = name;
@@ -57,6 +61,39 @@ public class Player {
 		return totalWorth;
 	}
 
+	public int getnumHouses(){
+		return totalHouses;
+	}
+	
+	public int getnumHotels(){
+		return totalHotels;
+	}
+
+	public void setChanceGetOutOfJailCard(){
+		chanceGetOutOfJailCard = true;
+	}
+	
+	public void useChanceGetOutOfJailCard(){
+		chanceGetOutOfJailCard = false;
+	}
+	
+	public void getComChestGetOutOfJailCard(){
+		chanceGetOutOfJailCard = true;
+	}
+	
+	public void useComChestGetOutOfJailCard(){
+		chanceGetOutOfJailCard = false;
+	}
+	
+	public boolean checkForGetOutOfJailCard(){
+		if (chanceGetOutOfJailCard){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
 	public void setLocation(int location)
 	{
 		this.location = location;
@@ -231,8 +268,6 @@ public class Player {
 		return PropWithSellable;
 	}
 
-	/*helper function to propertiesAvailableToBuild() that returns the max
-	 * number of houses built on a single property within a monopoly*/
 	public int getMinBuilt(int color, int parts){
 		int min = 5;
 		for (int i=1; i<= parts; i++){
@@ -268,16 +303,18 @@ public class Player {
 		int currentHouses = prop.getNumHouses();
 		if (currentHouses == 4){
 			prop.buildHotel();
+			totalHotels ++;
 		}
 		makePayment(prop.getHouseCost());
 		prop.buildHouse();
+		totalHouses ++;
 	}
 
 	public void buildHotel(Property prop){
 		makePayment(prop.getHouseCost());
 		prop.buildHotel();
 	}
-
+	
 	public List<Deed> getPropertiesOwned() {
 		ArrayList <Deed> allProp = new ArrayList<>();
 		for(int i=0; i<8; i++){

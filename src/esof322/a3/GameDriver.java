@@ -23,6 +23,8 @@ public class GameDriver
 	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
     private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
     private static int turns = 0;
+    private static ChanceDeck chanceDeck = new ChanceDeck();
+//    private static CommunityChest communityDeck = new CommunityChest();
 
 	public static void main(String[] args)
 	{
@@ -107,10 +109,14 @@ public class GameDriver
 		// Handle which type of the square the player landed on
 		switch (currentPlayerLocation)
 		{
-			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
-			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 33: case 36:
+			// Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
+			case 0: case 2:  case 10: case 17: case 20:  case 33: 
 					break;
-			 		
+			
+			// Cases for Chance 
+			case 7: case 22: case 36: chanceDeck.drawCard(players[currentPlayer], board);
+					break;
+					
 			case 30: players[currentPlayer].setJailedStat(true);
 					 break;
 
@@ -139,10 +145,12 @@ public class GameDriver
                                                 if (currentLandedUtility.getOwner().getUtilitysOwned() == 1)
                                                 {
                                                         players[currentPlayer].makePayment(4*rollTotal);
+                                                        currentLandedUtility.getOwner().takePayment(4*rollTotal);
                                                 }
                                                 else if (currentLandedUtility.getOwner().getUtilitysOwned() == 2)
                                                 {
                                                         players[currentPlayer].makePayment(10*rollTotal);
+                                                        currentLandedUtility.getOwner().takePayment(10*rollTotal);
                                                 }
                                         }
                                         else if (currentLandedUtility.getOwner() == null)
@@ -267,4 +275,7 @@ public class GameDriver
         
         ImagePanel.getInstance().declareWinner(winners);
 	}
+	
+	
+	
 }
