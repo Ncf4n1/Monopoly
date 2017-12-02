@@ -1,14 +1,10 @@
 package esof322.a3;
 
-import java.awt.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 
-public class ChanceDeck {
-	
+public class ChanceDeck {	
 	static ArrayList<Card> deck = new ArrayList<Card>();
 	static final int deckSize = 16;
 	static boolean getOutOfJailCard = true;
@@ -137,7 +133,7 @@ public class ChanceDeck {
 	}
 	
 	public void returnGetOutOfJailCard(){
-		
+		getOutOfJailCard = true;
 	}
 
 	public Space getNewSpace(){
