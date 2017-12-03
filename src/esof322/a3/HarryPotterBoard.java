@@ -8,7 +8,7 @@ public class HarryPotterBoard
 	//Property Parameters: name, buy price, rent rates, house cost, mortgage value, first second or third part of a monopoly, x coordinate on the board, y coordinate on the board, monopoly color, properties in monopoly
 	//Railroad Parameters: Name, x coordinate, y coordinate
 	//Utility Parameters: Name, x coordinate, y coordinate
-  private static Image hpboardImage;
+  public static Image hpboardImage;
 
   public HarryPotterBoard(){
     harryPotterBoard[0] = new Go(1400, 1400);

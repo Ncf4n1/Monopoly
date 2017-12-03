@@ -23,7 +23,7 @@ class SelectionPanel extends JPanel implements ActionListener{
     private final JComboBox<Integer> playerNum, turnLimit;
     private final JButton start;
     private final JLabel playerLabel;
-    private final JLabel chooseTurnLimit, styleLable;
+    private final JLabel chooseTurnLimit, styleLabel;
     public boolean initialized = false;
 
     private Player[] players;
@@ -31,7 +31,7 @@ class SelectionPanel extends JPanel implements ActionListener{
     public SelectionPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        styleLable = new JLable("Choose Game Theme");
+        styleLabel = new JLable("Choose Game Theme");
         playerLabel = new JLabel("Choose Number of Players");
         chooseTurnLimit = new JLabel("Choose a Turn Limit");
         start = new JButton("Start");
@@ -39,7 +39,7 @@ class SelectionPanel extends JPanel implements ActionListener{
         playerNum = new JComboBox<>(new Integer[]{2, 3, 4});
         turnLimit = new JComboBox<>(new Integer[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60});
 
-        styleLable.setFont(new Font("Sans-Serif", Font.BOLD, 20));
+        styleLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         playerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         chooseTurnLimit.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         style.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
@@ -54,7 +54,7 @@ class SelectionPanel extends JPanel implements ActionListener{
         turnLimit.addActionListener(this);
         start.addActionListener(this);
 
-        styleLable.setAlignmentX(CENTER_ALIGNMENT);
+        styleLabel.setAlignmentX(CENTER_ALIGNMENT);
         style.setAlignmentX(CENTER_ALIGNMENT);
         playerLabel.setAlignmentX(CENTER_ALIGNMENT);
         playerNum.setAlignmentX(CENTER_ALIGNMENT);
@@ -62,7 +62,7 @@ class SelectionPanel extends JPanel implements ActionListener{
         turnLimit.setAlignmentX(CENTER_ALIGNMENT);
         start.setAlignmentX(CENTER_ALIGNMENT);
 
-        add(styleLable);
+        add(styleLabel);
         add(style);
         add(playerLabel);
         add(playerNum);
@@ -86,8 +86,8 @@ class SelectionPanel extends JPanel implements ActionListener{
     {
         String command = ae.getActionCommand();
         switch (command) {
-            case "Start": GameDriver.setBoardandTokens(style.getSelectedItem());
-                          playerSetup(style.getSelectedItem());
+            case "Start": GameDriver.setBoardandTokens((String) style.getSelectedItem());
+                          playerSetup((String) style.getSelectedItem());
                           CardLayout cl = (CardLayout) MainPanel.getInstance().getLayout();
                           cl.next(MainPanel.getInstance());
                           PlayerInfoPanel.getInstance().infoSetup(players);
@@ -101,10 +101,10 @@ class SelectionPanel extends JPanel implements ActionListener{
     {
         String[] tnames;
         if(type.equalsIgnoreCase("normal")){
-          tnames = NormalFactory.nNames;
+          tnames = NormalTokens.normalTokenNames;
         }
         else{
-          tnames = HarryPotterFactory.nNames;
+          tnames = HarryPotterTokens.harryPotterTokenNames;
         }
         players = new Player[(int) playerNum.getSelectedItem()];
         String name = "";

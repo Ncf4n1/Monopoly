@@ -2,7 +2,7 @@ package esof322.a3;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Board implements GameStyleFactory
+public class Board
 {
 	private static Space[] board;  //Data structure for the spaces on the board
 	//Property Parameters: name, buy price, rent rates, house cost, mortgage value, first second or third part of a monopoly, x coordinate on the board, y coordinate on the board, monopoly color, properties in monopoly
@@ -10,8 +10,7 @@ public class Board implements GameStyleFactory
 	//Utility Parameters: Name, x coordinate, y coordinate
   private static Image boardImage;
 
-	@Override
-	public Board createBoard(String type){
+	public Board(String type){
 		if(type.equalsIgnoreCase("normal")){
 			board = NormalBoard.getBoard();
 			boardImage = NormalBoard.getImage();
@@ -20,6 +19,10 @@ public class Board implements GameStyleFactory
 			board = HarryPotterBoard.getBoard();
 			boardImage = HarryPotterBoard.getImage();
 		}
+	}
+
+	public Image getBoardImage(){
+		return boardImage;
 	}
 
 	public static Space getSpace(int location){

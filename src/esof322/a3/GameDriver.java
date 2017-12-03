@@ -1,6 +1,8 @@
 package esof322.a3;
 
 import java.util.*;
+import java.awt.Image;
+
 
 public class GameDriver
 {
@@ -10,10 +12,9 @@ public class GameDriver
 	private static int turnLimit;				// Time limit for the game
 	//private static long endTime;
 	private static Tokens[] tokens;
-	private static NormalFactory nfactory = new NormalFactory();
-	private static HarryPotterFactory hpfactory = new HarryPotterFactory();
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board;
+	private static Image boardImage;
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -119,11 +120,7 @@ public class GameDriver
 			// Cases for Chance
 			case 7: case 22: case 36: chanceDeck.drawCard(players[currentPlayer], board);
 					break;
-<<<<<<< HEAD
 
-=======
-
->>>>>>> 9e84f791c3a54d1dd19ee7dd18a8ad79411814aa
 			case 30: players[currentPlayer].setJailedStat(true);
 					 break;
 
@@ -284,13 +281,18 @@ public class GameDriver
 	}
 
 	public void setBoardandTokens(String type){
-		if(type.equalsIgnoreCase("NORMAL")){
-			board = nfactory.createBoard(type);
-			tokens = nfactory.createTokens();
+		GameStyleFactory factory = new GameStyleFactory();
+		GameStyle style = factory.getStyle(type);
+
+		board = style.createBoard();
+		tokens = style.createTokens();
+		if(type.equalsIgnoreCase("Normal")){
+			ImagePanel.getInstance().setType(type);
+
 		}
-		else if(type.equalsIgnoreCase("HARRY POTTER")){
-			board = hpfactory.createBoard(type);
-			tokens = hpfactory.createTokens();
+		else if(type.equalsIgnoreCase("Harry Potter")){
+			ImagePanel.getInstance().setType(type);
 		}
+		boardImage = board.getBoardImage();
 	}
 }
