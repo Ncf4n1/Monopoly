@@ -2,6 +2,8 @@ package esof322.a3;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -695,37 +697,75 @@ public class MonopolyTests {
 		
 		play.setJailedStat(true);
 		play.setLocation(10);
-		play.rollToGetOutOfJail();
+		play.rollToGetOutOfJail(); // turns in jail = 1
 		
-		if(play.getJailedStat()) 
+		if(play.getJailedStat()) //check if still in jail
 		{
 			assertEquals("Check if turns incremented when still in jail", 1, play.getTurnsInJail());
-			play.rollToGetOutOfJail();
-			if(play.getJailedStat())
+			play.rollToGetOutOfJail(); // turns in jail = 2
+			if(play.getJailedStat()) //check if still in jail
 			{
 				assertEquals("Check if turns incremented when still in jail", 2, play.getTurnsInJail());
-				play.rollToGetOutOfJail();
-				if(play.getJailedStat())
+				play.rollToGetOutOfJail(); //turns in jail = 3
+				if(play.getJailedStat()) //check if still in jail
 				{
 					assertEquals("Check if turns incremented when still in jail", 3, play.getTurnsInJail());
-					play.payToLeaveJail();
+					play.payToLeaveJail(); //subtract 50 from 1500 for payment
 					assertEquals("Check to make sure player left jail", 0, play.getTurnsInJail());
 					assertEquals("Check player paid to leave jail", 1450, play.getMoneyTotal());
 				}
-				else
+				else //else assert left jail
 				{
 					assertEquals("Check if player left jail", 0, play.getTurnsInJail());
 				}
 			}
-			else
+			else //else assert left jail
 			{
 				assertEquals("Check if player left jail", 0, play.getTurnsInJail());
 			}
 		}
-		else
+		else //assert left jail
 		{
 			assertEquals("Check if player left jail", 0, play.getTurnsInJail());
 		}
+	}
+	
+	@Test
+	public void testgetHotelBuildablePropsWithNone()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		ArrayList<Property> HotelBuildableProperties = new ArrayList<>();
+		
+		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
+	}
+	
+	@Test
+	public void testgetHotelBuildablePropsWithOneProp()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		play.buyProperty(prop);
+		ArrayList<Property> HotelBuildableProperties = new ArrayList<>();
+		
+		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
+	}
+	
+	@Test
+	public void testgetHotelBuildablePropsWithOneMonop()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		
+		play.buyProperty(prop);
+		play.buyProperty(prop2);
+		
+		ArrayList<Property> HotelBuildableProperties = new ArrayList<>();
+		
+		HotelBuildableProperties.add(prop);
+		HotelBuildableProperties.add(prop2);
+		
+		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
 	}
 	
 	//Die
