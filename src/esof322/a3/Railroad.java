@@ -18,8 +18,7 @@ public class Railroad extends Deed
 		mortgageVal = 100;
 	}
 	
-	public int getRent(int numOwned)
-	{
+	public int getRent(int numOwned){
 		return rentRates[numOwned-1];
 	}
 }
