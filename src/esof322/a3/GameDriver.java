@@ -2,6 +2,8 @@ package esof322.a3;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class GameDriver
 {
 	private static int numPlayers;				// Number of Players playing the game (2-4)
@@ -103,6 +105,7 @@ public class GameDriver
     }
 
 	public static void checkSpace(int Location){
+		JOptionPane.showMessageDialog(null, rollTotal + ", " +board.getSpace(Location).getName());
         currentLandedProperty = null;
         currentLandedRailroad = null;
         currentLandedUtility = null;
