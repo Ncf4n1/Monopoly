@@ -15,7 +15,6 @@ public class GameDriver
 	private static Tokens[] tokens;		//players tokens
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board;							//game board
-	private static Image boardImage;				//board image
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -282,7 +281,6 @@ public class GameDriver
                 }
             }
         }
-
         ImagePanel.getInstance().declareWinner(winners);
 	}
 
@@ -296,6 +294,5 @@ public class GameDriver
 		board = style.createBoard();
 		tokens = style.createTokens();
 		ImagePanel.setType(type);
-		boardImage = board.getBoardImage();
 	}
 }

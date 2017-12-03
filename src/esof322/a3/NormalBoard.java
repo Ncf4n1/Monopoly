@@ -8,7 +8,7 @@ public class NormalBoard
 	//Property Parameters: name, buy price, rent rates, house cost, mortgage value, first second or third part of a monopoly, x coordinate on the board, y coordinate on the board, monopoly color, properties in monopoly
 	//Railroad Parameters: Name, x coordinate, y coordinate
 	//Utility Parameters: Name, x coordinate, y coordinate
-  public static Image normalboardImage;
+  public static Image normalboardImage;   //image of the normal monopoly board
 
   public NormalBoard(){
     normalBoard[0] = new Go(1400, 1400);
@@ -52,12 +52,15 @@ public class NormalBoard
     normalBoard[38] = new LuxuryTax(100, 1425, 1119);
     normalBoard[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 
-    normalboardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
+    normalboardImage = new ImageIcon(this.getClass().getResource("images/BoardResized.png")).getImage();
 
   }
+  //return the normal board array of spaces
   public Space[] getBoard(){
     return normalBoard;
   }
+
+  //return the normal image of the board
   public Image getImage(){
     return normalboardImage;
   }
