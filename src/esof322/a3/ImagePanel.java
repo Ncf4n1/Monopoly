@@ -15,15 +15,14 @@ public class ImagePanel extends JPanel {
     private static ImagePanel instance;
     private final PlayerInfoPanel infoPanel;
     private final ButtonPanel buttonPanel;
-    private final Image boardImage;
-    private final Image[] tokens;
-    private final String[] tokenNames;
+    private static Image boardImage;
+    private static Image[] tokens;
+    private static String[] tokenNames;
     private final Player[] players;
 
     public ImagePanel()
     {
-        boardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
-        tokens = new Image[4];
+        /*tokens = new Image[4];
         tokenNames = new String[4];
         tokens[0] = new ImageIcon(this.getClass().getResource("Scottish Terrier.png")).getImage();
         tokenNames[0] = "Scottish Terrier";
@@ -32,7 +31,7 @@ public class ImagePanel extends JPanel {
         tokens[2] = new ImageIcon(this.getClass().getResource("Top Hat.png")).getImage();
         tokenNames[2] = "Top Hat";
         tokens[3] = new ImageIcon(this.getClass().getResource("Thimble.png")).getImage();
-        tokenNames[3] = "Thimble";
+        tokenNames[3] = "Thimble";  */
         GridLayout layout = new GridLayout(0,5);
         infoPanel = PlayerInfoPanel.getInstance();
         buttonPanel = ButtonPanel.getInstance();
@@ -52,6 +51,19 @@ public class ImagePanel extends JPanel {
         setBackground(Color.WHITE);
 
         players = GameDriver.getPlayers();
+    }
+
+    public static void setType(String type){
+      if(type.equalsIgnoreCase("Normal")){
+        tokens = NormalTokens.normalTokenImages;
+        tokenNames = NormalTokens.normalTokenNames;
+        boardImage = NormalBoard.normalboardImage;
+      }
+      else if(type.equalsIgnoreCase("Harry Potter")){
+        tokens = HarryPotterTokens.harryPotterTokenImages;
+        tokenNames = HarryPotterTokens.harryPotterTokenNames;
+        boardImage = HarryPotterBoard.hpboardImage;
+      }
     }
 
     public static ImagePanel getInstance()
@@ -89,13 +101,13 @@ public class ImagePanel extends JPanel {
              }
         }
     }
-    
+
     public void declareWinner(ArrayList<Player> winners)
     {
     	JOptionPane.showMessageDialog(this, "Winner(s):\n" + getWinnerString(winners), "Winners", JOptionPane.CLOSED_OPTION);
     	System.exit(0);
     }
-    
+
     public String getWinnerString(ArrayList<Player> winners)
     {
     	String winnerList = "";
@@ -103,7 +115,7 @@ public class ImagePanel extends JPanel {
     	{
     		winnerList += winner.getName() + "\n";
     	}
-    	
+
     	return winnerList;
     }
 }

@@ -1,6 +1,8 @@
 package esof322.a3;
 
 import java.util.*;
+import java.awt.Image;
+
 
 import javax.swing.JOptionPane;
 
@@ -11,8 +13,10 @@ public class GameDriver
 	private static Player[] players;			// List of players playing the game
 	private static int turnLimit;				// Time limit for the game
 	//private static long endTime;
+	private static Tokens[] tokens;
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
-	private static Board board = new Board();
+	private static Board board;
+	private static Image boardImage;
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -47,7 +51,7 @@ public class GameDriver
 		{
 			currentPlayer = 0;
 	        turns++;
-	        
+
 	        if (turns >= turnLimit)
 	        {
 	        	setWinnerList();
@@ -85,7 +89,7 @@ public class GameDriver
 	public static int getDoublesInARow(){
 		return doublesInARow;
 	}
-	
+
 	public static int getTurnsTaken()
 	{
 		return turns;
@@ -95,7 +99,7 @@ public class GameDriver
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
-	
+
     public static void passGo()
     {
         if (previousPlayerLocation + rollTotal > 39)
@@ -113,13 +117,13 @@ public class GameDriver
 		switch (currentPlayerLocation)
 		{
 			// Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
-			case 0: case 2:  case 10: case 17: case 20:  case 33: 
+			case 0: case 2:  case 10: case 17: case 20:  case 33:
 					break;
-			
-			// Cases for Chance 
+
+			// Cases for Chance
 			case 7: case 22: case 36: chanceDeck.drawCard(players[currentPlayer], board);
 					break;
-					
+
 			case 30: players[currentPlayer].setJailedStat(true);
 					 break;
 
@@ -249,7 +253,7 @@ public class GameDriver
 		}
 		return y;
 	}
-	
+
 	public static void setWinnerList()
 	{
 		ArrayList<Player> winners = new ArrayList<>();
@@ -275,10 +279,23 @@ public class GameDriver
                 }
             }
         }
-        
+
         ImagePanel.getInstance().declareWinner(winners);
 	}
-	
-	
-	
+
+	public static void setBoardandTokens(String type){
+		GameStyleFactory factory = new GameStyleFactory();
+		GameStyle style = factory.getStyle(type);
+
+		board = style.createBoard();
+		tokens = style.createTokens();
+		if(type.equalsIgnoreCase("Normal")){
+			ImagePanel.setType(type);
+
+		}
+		else if(type.equalsIgnoreCase("Harry Potter")){
+			ImagePanel.setType(type);
+		}
+		boardImage = board.getBoardImage();
+	}
 }
