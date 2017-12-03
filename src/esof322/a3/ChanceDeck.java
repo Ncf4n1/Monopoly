@@ -3,6 +3,8 @@ package esof322.a3;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 
 public class ChanceDeck {	
 	static ArrayList<Card> deck = new ArrayList<Card>();
@@ -72,6 +74,7 @@ public class ChanceDeck {
 		int  randIndex = rand.nextInt(16);
 		card = deck.get(randIndex);
 		deck.remove(randIndex);
+		JOptionPane.showMessageDialog(null, card.getTitle());
 		cardResolution();
 	}	
 	

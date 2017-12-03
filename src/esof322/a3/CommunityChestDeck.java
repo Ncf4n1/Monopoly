@@ -1,7 +1,13 @@
 package esof322.a3;
 
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class CommunityChestDeck {
 	static ArrayList<Card> deck = new ArrayList<Card>();
@@ -58,9 +64,14 @@ public class CommunityChestDeck {
 		int  randIndex = rand.nextInt(16);
 		card = deck.get(randIndex);
 		deck.remove(randIndex);
+		JOptionPane.showMessageDialog(null, card.getTitle());
 		cardResolution();
 	}	
 	
+	public void displayCard(Card card){
+		JOptionPane.showMessageDialog(null, card.getTitle());
+	}
+
 	public void cardResolution(){
 		int funcType = card.getType();
 		switch(funcType){
