@@ -10,6 +10,7 @@ public class Board
 	//Utility Parameters: Name, x coordinate, y coordinate
   private static Image boardImage;
 
+	// Determines which board style is being used
 	public Board(String type){
 		if(type.equalsIgnoreCase("normal")){
 			NormalBoard nb = new NormalBoard();
