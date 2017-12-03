@@ -1,18 +1,17 @@
 package esof322.a3;
 
 import java.util.*;
-
+import java.awt.Image;
 import javax.swing.JOptionPane;
 
-public class GameDriver
-{
+public class GameDriver{
 	private static int numPlayers;				// Number of Players playing the game (2-4)
 	private static String[] playernames;		// List of the names for each player
 	private static Player[] players;			// List of players playing the game
 	private static int turnLimit;				// Time limit for the game
-	//private static long endTime;
+	private static Tokens[] tokens;		//players tokens
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
-	private static Board board = new Board();
+	private static Board board;							//game board
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -20,6 +19,7 @@ public class GameDriver
 	private static int doublesInARow = 0;					// Number of times doubles has been rolled in a row
 	private static int rollTotal = 0;						// Total for the dice roll
 	private static int previousPlayerLocation = 0;			// Location of the current turn player prior to the dice roll
+
 	private static Property propLoction = null;	// Placeholder for a property if the player lands on it
 	private static Railroad rRLocation = null;	// Placeholder for railroad if the player lands on it
 	private static Utility utilLocation = null;	// Placeholder for utility if the player lands on it
@@ -27,44 +27,36 @@ public class GameDriver
     private static int turns = 0;
     private static ChanceDeck chanceDeck = new ChanceDeck();
     private static CommunityChestDeck communityDeck = new CommunityChestDeck();
-//    private static CommunityChest communityDeck = new CommunityChest();
 
-	public static void main(String[] args)
-	{
-            GuiFrame.getInstance();
-    }
+	public static void main(String[] args){
+	   GuiFrame.getInstance();
+	}
 
-    public static String getSpaceName()
-    {
-        return board.getSpace(currentPlayerLocation).getName();
-    }
-
-//	public static void startTurn(){
-//		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
-//	}
-
+  public static String getSpaceName(){
+    	return board.getSpace(currentPlayerLocation).getName();
+  }
+  
+	//method to end a player's turn
+	//checks if the game is over and resets variables
+	//sets next player to be current player
 	public static void endTurn(){
-		if (currentPlayer == players.length -1)
-		{
+		if (currentPlayer == players.length -1){
 			currentPlayer = 0;
 	        turns++;
-	        
-	        if (turns >= turnLimit)
-	        {
+
+	        if (turns >= turnLimit){
 	        	setWinnerList();
 	        }
 		}
-		else
-		{
+		else{
 			currentPlayer++;
 		}
 		doublesInARow = 0;
 		rollTotal = 0;
-//        currentLandedProperty = null;
-//        currentLandedRailroad = null;
-//        currentLandedUtility = null;
 	}
-
+  
+	//method to roll rollDice
+	//returns roll total of 2 die
 	public static int rollDice(){
 		die1.rollDie();
 		die2.rollDie();
@@ -77,33 +69,22 @@ public class GameDriver
 			rollTotal = die1.getDie() + die2.getDie();
 			return rollTotal;
 	}
-//	public static int getDie1(){
-//		return die1.getDie();
-//	}
-//	public static int getDie2(){
-//		return die2.getDie();
-//	}
+
+	//return number of doubles that have been rolled in a row
 	public static int getDoublesInARow(){
 		return doublesInARow;
 	}
-	
-	public static int getTurnsTaken()
-	{
+
+	//get number of total turns taken
+	public static int getTurnsTaken(){
 		return turns;
 	}
 
+	//move player token to their new location
 	public static void movePlayerToken(){
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
-	
-    public static void passGo()
-    {
-        if (previousPlayerLocation + rollTotal > 39)
-        {
-            players[currentPlayer].takePayment(200);
-        }
-    }
 
 	public static void checkSpace(){
 		Space location = board.getSpace(currentPlayerLocation);
@@ -184,6 +165,7 @@ public class GameDriver
 					if ( (propLoction.getOwner().checkForMonopoly(propLoction.getMonoColor())) && (propLoction.getNumHouses() == 0) ){
 						players[currentPlayer].makePayment(2*propLoction.getRent());
 						propLoction.getOwner().takePayment(2*propLoction.getRent());
+
 					}
 					else{
 						players[currentPlayer].makePayment(propLoction.getRent());
@@ -229,8 +211,7 @@ public class GameDriver
 		}
 		return info;
 	}
-	
-	
+  
 	public static int getRentOwned(Deed space){
 		int rent;
 		if (space instanceof Railroad){
@@ -275,15 +256,17 @@ public class GameDriver
             //endTime = System.currentTimeMillis() + (GameDriver.timeLimit*60)*1000;
 	}
 
-
+	//return the current player
 	public static Player getCurrentPlayer(){
 		return players[currentPlayer];
 	}
-	
+
+	//return list of players
 	public static Player[] getPlayers(){
 		return players;
 	}
 
+	//return the current X coordinate of the player
 	public static int getXCoordinate(Player p){
 		//return board.getSpace(currentPlayerLocation).getX();
 		int x = 0;
@@ -294,6 +277,7 @@ public class GameDriver
 		return x;
 	}
 
+	//return the current Y Coordiate of the player
 	public static int getYCoordinate(Player p){
 		//return board.getSpace(currentPlayerLocation).getY();
 		int y = 0;
@@ -303,33 +287,40 @@ public class GameDriver
 		}
 		return y;
 	}
-	
-	public static void setWinnerList()
-	{
+
+	//set the Winner list at the end of the Game
+	//winner(s) = player(s) with most money
+	public static void setWinnerList(){
 		ArrayList<Player> winners = new ArrayList<>();
         Player winner = players[0];
         winner.calculateTotalWorth();
         // Cycle through players and determine who has the most money
-        for (int i = 1; i < players.length; i++)
-        {
+        for (int i = 1; i < players.length; i++){
         	players[i].calculateTotalWorth();
-            if (players[i].getTotalWorth() > winner.getTotalWorth())
-            {
+            if (players[i].getTotalWorth() > winner.getTotalWorth()){
                 winner = players[i];
             }
         }
         winners.add(winner);
-        for (int j = 0; j < players.length; j++)
-        {
-            if (!players[j].getName().equals(winner.getName()))
-            {
-                if (players[j].getTotalWorth() == winner.getTotalWorth())
-                {
+        for (int j = 0; j < players.length; j++){
+            if (!players[j].getName().equals(winner.getName())){
+                if (players[j].getTotalWorth() == winner.getTotalWorth()){
                     winners.add(players[j]);
                 }
             }
         }
-        
         ImagePanel.getInstance().declareWinner(winners);
+	}
+
+	//set the board and token based on theme user picked
+	//use GameStyleFactory to set board and tokens
+	//set theme in ImagePanel
+	public static void setBoardandTokens(String type){
+		GameStyleFactory factory = new GameStyleFactory();
+		GameStyle style = factory.getStyle(type);
+
+		board = style.createBoard();
+		tokens = style.createTokens();
+		ImagePanel.setType(type);
 	}
 }

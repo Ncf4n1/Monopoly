@@ -48,6 +48,14 @@ public class Player {
 		return jailed;
 	}
 
+	public boolean checkForJailCard(){
+		if(chanceGetOutOfJailCard || comChestGetOutOfJailCard){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	//gets the current money total of the player
 	public int getMoneyTotal(){
 		return money;
@@ -75,24 +83,17 @@ public class Player {
 		chanceGetOutOfJailCard = true;
 	}
 	
-	public void useChanceGetOutOfJailCard(){
-		chanceGetOutOfJailCard = false;
+	public void setComChestGetOutOfJailCard(){
+		comChestGetOutOfJailCard = true;
 	}
 	
-	public void getComChestGetOutOfJailCard(){
-		chanceGetOutOfJailCard = true;
-	}
-	
-	public void useComChestGetOutOfJailCard(){
-		chanceGetOutOfJailCard = false;
-	}
-	
-	public boolean checkForGetOutOfJailCard(){
-		if (chanceGetOutOfJailCard){
-			return true;
+	public void useJailCard(){
+		if (chanceGetOutOfJailCard == true){
+			chanceGetOutOfJailCard = false;
+			return;
 		}
 		else{
-			return false;
+			comChestGetOutOfJailCard = false;
 		}
 	}
 	
@@ -134,6 +135,7 @@ public class Player {
 		if (doublesInARow < GameDriver.getDoublesInARow()){
 			setJailedStat(false);
 			GameDriver.movePlayerToken();
+			turnsInJail = 0;
 		}
 		//else iterates turns in jail or forces payment
 		else{

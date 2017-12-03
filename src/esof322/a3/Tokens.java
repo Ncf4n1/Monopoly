@@ -1,16 +1,15 @@
 package esof322.a3;
-
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Tokens
 {
-  protected ImageIcon tokenImage;
-  protected String tokenName;
+  public String name;   //name of token
+  public Image image;   //image for token
 
-  public static void setTokenImage(String name){
-    tokenImage = new ImageIcon(this.getClass().getResource(name)).getImage();
-  }
-  public static void setTokenName(String name){
-    tokenName = name;
+  //create new token with a name and image
+  public Tokens(Image i, String n){
+    name = n;
+    image = i;
   }
 }

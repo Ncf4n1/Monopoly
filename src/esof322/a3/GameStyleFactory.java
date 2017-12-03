@@ -1,11 +1,25 @@
 package esof322.a3;
-import java.lang.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
-public interface GameStyleFactory {
-   public void createBoard(){
+public class GameStyleFactory
+{
+  //Factory for implementing a game style
 
-   }
-   public void createTokens(){
-
-   }
+  //method to find the style to implement
+  //return the GameStyle
+  public GameStyle getStyle(String style){
+    //create new instance of Normal if style is normal
+    if(style.equalsIgnoreCase("Normal")){
+      return new Normal();
+    }
+    //create new instance of HarryPotter if style is harry potter
+    else if(style.equalsIgnoreCase("Harry Potter")){
+      return new HarryPotter();
+    }
+    //else return null
+    else{
+      return null;
+    }
+  }
 }
