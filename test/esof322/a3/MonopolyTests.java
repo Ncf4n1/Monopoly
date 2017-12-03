@@ -663,16 +663,16 @@ public class MonopolyTests {
 		player.buyProperty(prop);
 		player.buyProperty(prop2);
 		
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
 		
-		prop.buildHotel();
+		player.buildHouse(prop);//prop.buildHotel();
 		
 		assertEquals("Check for Properties with hotels", 1, player.getPropsWithHotels().size());
 	
@@ -768,6 +768,80 @@ public class MonopolyTests {
 		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
 	}
 	
+	@Test
+	public void testGetTotalWorthInit()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for initial worth of player", 0, play.getTotalWorth());
+	}
+	
+	@Test
+	public void testGetTotalWorthPost()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		play.buyProperty(prop);
+		
+		play.calculateTotalWorth();
+		assertEquals("Check for initial worth of player", 1500, play.getTotalWorth());
+	}
+	
+	@Test
+	public void testGetNumHouses()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for num of houses", 0, play.getnumHouses());
+	}
+	
+	@Test
+	public void testGetNumHotels()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for num of hotels", 0, play.getnumHotels());
+	}
+	
+	@Test
+	public void testPlayerChanceGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setChanceGetOutOfJailCard();
+		
+		assertTrue("Check for chance get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerComChestGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setComChestGetOutOfJailCard();
+		
+		assertTrue("Check for com chest get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerUseChanceGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setChanceGetOutOfJailCard();
+		play.useJailCard();
+		
+		assertFalse("Check for us of chance get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerUseComChestGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setComChestGetOutOfJailCard();
+		play.useJailCard();
+		
+		assertFalse("Check for use of com chest get out of jail card", play.checkForJailCard());
+	}
+	
 	//Die
 	
 	@Test
@@ -811,5 +885,13 @@ public class MonopolyTests {
 	public void testCardBonus()
 	{
 		assertEquals("Check card name", 20, card.getBonusAmount());
+	}
+	
+	//GameDriver
+	
+	@Test
+	public void testGameDriverTurnsTaken()
+	{
+		assertEquals("Get the num of turns taken", 0, GameDriver.getTurnsTaken());
 	}
 }
