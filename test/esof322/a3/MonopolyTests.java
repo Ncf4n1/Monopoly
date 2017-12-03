@@ -687,13 +687,44 @@ public class MonopolyTests {
 	@Test
 	public void testAddingTurnsInJail()
 	{
-		Player play = new Player("TestPlayerName", "TestToken")
-		player.setJailedStat(true);
+		Player play = new Player("TestPlayerName", "TestToken");
+		Player play2 = new Player("TestPlayerName2", "TestToken2");
+		Player [] players = new Player [2];
+		players[0] = play; players[1] = play2;
+		GameDriver.setPlayers(players);
+		
+		play.setJailedStat(true);
+		play.setLocation(10);
 		play.rollToGetOutOfJail();
 		
-		if(play.getJailedStat()) {
-			assertEquals("Check if turns incremented when still in jail", 1, player.getTurnsInJail());
-		
+		if(play.getJailedStat()) 
+		{
+			assertEquals("Check if turns incremented when still in jail", 1, play.getTurnsInJail());
+			play.rollToGetOutOfJail();
+			if(play.getJailedStat())
+			{
+				assertEquals("Check if turns incremented when still in jail", 2, play.getTurnsInJail());
+				play.rollToGetOutOfJail();
+				if(play.getJailedStat())
+				{
+					assertEquals("Check if turns incremented when still in jail", 3, play.getTurnsInJail());
+					play.payToLeaveJail();
+					assertEquals("Check to make sure player left jail", 0, play.getTurnsInJail());
+					assertEquals("Check player paid to leave jail", 1450, play.getMoneyTotal());
+				}
+				else
+				{
+					assertEquals("Check if player left jail", 0, play.getTurnsInJail());
+				}
+			}
+			else
+			{
+				assertEquals("Check if player left jail", 0, play.getTurnsInJail());
+			}
+		}
+		else
+		{
+			assertEquals("Check if player left jail", 0, play.getTurnsInJail());
 		}
 	}
 	
