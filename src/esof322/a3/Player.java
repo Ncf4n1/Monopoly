@@ -133,6 +133,7 @@ public class Player {
 		if (doublesInARow < GameDriver.getDoublesInARow()){
 			setJailedStat(false);
 			GameDriver.movePlayerToken();
+			turnsInJail = 0;
 		}
 		//else iterates turns in jail or forces payment
 		else{
@@ -140,7 +141,6 @@ public class Player {
 				turnsInJail++;
 			}
 		}
-		turnsInJail = 0;
 	}
 
 	//pay to leave jail
