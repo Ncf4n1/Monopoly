@@ -24,14 +24,13 @@ class SelectionPanel extends JPanel implements ActionListener{
     private final JButton start;
     private final JLabel playerLabel;
     private final JLabel chooseTurnLimit, styleLabel;
-    public boolean initialized = false;
 
     private Player[] players;
 
     public SelectionPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        styleLabel = new JLable("Choose Game Theme");
+        styleLabel = new JLabel("Choose Game Theme");
         playerLabel = new JLabel("Choose Number of Players");
         chooseTurnLimit = new JLabel("Choose a Turn Limit");
         start = new JButton("Start");
@@ -62,12 +61,12 @@ class SelectionPanel extends JPanel implements ActionListener{
         turnLimit.setAlignmentX(CENTER_ALIGNMENT);
         start.setAlignmentX(CENTER_ALIGNMENT);
 
-        add(styleLabel);
-        add(style);
         add(playerLabel);
         add(playerNum);
         add(chooseTurnLimit);
         add(turnLimit);
+        add(styleLabel);
+        add(style);
         add(start);
     }
 

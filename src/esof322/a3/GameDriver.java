@@ -280,18 +280,18 @@ public class GameDriver
         ImagePanel.getInstance().declareWinner(winners);
 	}
 
-	public void setBoardandTokens(String type){
+	public static void setBoardandTokens(String type){
 		GameStyleFactory factory = new GameStyleFactory();
 		GameStyle style = factory.getStyle(type);
 
 		board = style.createBoard();
 		tokens = style.createTokens();
 		if(type.equalsIgnoreCase("Normal")){
-			ImagePanel.getInstance().setType(type);
+			ImagePanel.setType(type);
 
 		}
 		else if(type.equalsIgnoreCase("Harry Potter")){
-			ImagePanel.getInstance().setType(type);
+			ImagePanel.setType(type);
 		}
 		boardImage = board.getBoardImage();
 	}

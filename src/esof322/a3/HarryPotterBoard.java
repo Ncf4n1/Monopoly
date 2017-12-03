@@ -57,6 +57,7 @@ public class HarryPotterBoard
   public static Space[] getBoard(){
     return harryPotterBoard;
   }
+
   public static Image getImage(){
     return hpboardImage;
   }
