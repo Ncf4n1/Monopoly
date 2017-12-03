@@ -12,12 +12,14 @@ public class Board
 
 	public Board(String type){
 		if(type.equalsIgnoreCase("normal")){
-			board = NormalBoard.getBoard();
-			boardImage = NormalBoard.getImage();
+			NormalBoard nb = new NormalBoard();
+			board = nb.getBoard();
+			boardImage = nb.getImage();
 		}
 		else{
-			board = HarryPotterBoard.getBoard();
-			boardImage = HarryPotterBoard.getImage();
+			HarryPotterBoard hpb = new HarryPotterBoard();
+			board = hpb.getBoard();
+			boardImage = hpb.getImage();
 		}
 	}
 
