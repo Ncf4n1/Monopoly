@@ -108,7 +108,7 @@ public class ButtonPanel extends JPanel implements ActionListener
                     GameDriver.movePlayerToken();
                     ImagePanel.getInstance().repaint();
                     GameDriver.passGo();
-                    GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+                    GameDriver.checkSpace();
                     PlayerInfoPanel.getInstance().updateInfo();
                 }
                 else
