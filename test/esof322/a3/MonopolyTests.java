@@ -86,6 +86,47 @@ public class MonopolyTests {
 		assertEquals("Check for initialization of utilities", "ElectricCompany", board.getSpace(12).getName());
 	}
 	
+	//LuxuryTax
+	
+	@Test
+	public void testLuxuryTax ()
+	{
+		Player player = new Player("TestPlayerName", "TestToken");
+		
+		LuxuryTax tax = new LuxuryTax(200, 0, 0);
+		
+		tax.payLuxuryTax(player);
+		
+		assertEquals("Check if player paid tax", 1300, player.getMoneyTotal());
+	}
+	
+	//IncomeTax
+	
+		@Test
+		public void testIncomeTax ()
+		{
+			Player player = new Player("TestPlayerName", "TestToken");
+			
+			IncomeTax tax = new IncomeTax(100, 0, 0);
+			
+			tax.payIncomeTax(player);
+			
+			assertEquals("Check income tax amount", 100, tax.getTaxAmount());
+			assertEquals("Check if player paid tax", 1400, player.getMoneyTotal());
+		}
+	
+	//GoToJail
+	
+	@Test
+	public void testGoToJail()
+	{
+		Player player = new Player("TestPlayerName", "TestToken");
+		
+		GoToJail.sendToJail(player);
+		
+		assertTrue("Check if payer is sent to jail", player.getJailedStat());
+	}
+	
 	//DEED
 	
 	Deed deed = new Deed ("TestName", 500, 250, 10, 20);
@@ -159,6 +200,12 @@ public class MonopolyTests {
 	public void testPropertyPrice ()
 	{
 		assertEquals("check for correct intialization of property", 60, prop.getPrice());
+	}
+	
+	@Test
+	public void testPropertyMortVal ()
+	{
+		assertEquals("Check for getting mortgage value", 30, prop.getMortgageValue());
 	}
 	
 	@Test
@@ -315,12 +362,24 @@ public class MonopolyTests {
 	
 	//SPACE
 	
+	Space space = new Space ("Test", 0, 0);
+	
 	@Test
 	public void testSpace ()
-	{
-		Space space = new Space ("Test", 0, 0);
-		
+	{	
 		assertEquals("check for correct initialization of space", "Test" , space.getName());
+	}
+	
+	@Test
+	public void testGetX ()
+	{	
+		assertEquals("check for correct initialization of space", 0 , space.getX());
+	}
+	
+	@Test
+	public void testGetY ()
+	{	
+		assertEquals("check for correct initialization of space", 0 , space.getY());
 	}
 	
 	//UTILITY
@@ -334,6 +393,18 @@ public class MonopolyTests {
 	
 	//PLAYER
 	Player player = new Player("TestPlayerName", "TestToken");
+	
+	@Test
+	public void testPlayerTypes()
+	{
+		Computer comp = new Computer("TestCompName", "TestToken");
+		
+		assertEquals ("Check init of comp player", "TestCompName", comp.getName());
+		
+		Human hum = new Human("TestHumanName", "TestToken");
+		
+		assertEquals ("Check init of Human player", "TestHumanName", hum.getName());
+	}
 	
 	@Test 
 	public void testPlayerName ()
@@ -607,6 +678,25 @@ public class MonopolyTests {
 		Bank.testHotel(12);
 	}
 	
+	@Test
+	public void testTurnsInJailEqual0 ()
+	{
+		assertEquals("Check turns in jail when not in jail", 0, player.getTurnsInJail());
+	}
+	
+	@Test
+	public void testAddingTurnsInJail()
+	{
+		Player play = new Player("TestPlayerName", "TestToken")
+		player.setJailedStat(true);
+		play.rollToGetOutOfJail();
+		
+		if(play.getJailedStat()) {
+			assertEquals("Check if turns incremented when still in jail", 1, player.getTurnsInJail());
+		
+		}
+	}
+	
 	//Die
 	
 	@Test
@@ -618,5 +708,37 @@ public class MonopolyTests {
 		if (die.getDie() >= 1 && die.getDie() <= 6)
 			rolled = true;
 		assertTrue("Check to make sure rolled values are between 1 and 6, inclusively", rolled);
+	}
+	
+	//Card
+	
+	Card card = new Card("TestName", 1, 10, 20, 20);
+	
+	@Test
+	public void testCardName()
+	{
+		assertEquals("Check card name", "TestName", card.getTitle());
+	}
+	
+	@Test
+	public void testCardType()
+	{
+		assertEquals("Check card name", 1, card.getType());
+	}
+	
+	@Test
+	public void testCardIndex()
+	{
+		assertEquals("Check card name", 10, card.getNewIndex());
+	}
+	@Test
+	public void testCardBill()
+	{
+		assertEquals("Check card name", 20, card.getBillAmount());
+	}
+	@Test
+	public void testCardBonus()
+	{
+		assertEquals("Check card name", 20, card.getBonusAmount());
 	}
 }
