@@ -8,7 +8,7 @@ public class HarryPotterBoard
 	//Property Parameters: name, buy price, rent rates, house cost, mortgage value, first second or third part of a monopoly, x coordinate on the board, y coordinate on the board, monopoly color, properties in monopoly
 	//Railroad Parameters: Name, x coordinate, y coordinate
 	//Utility Parameters: Name, x coordinate, y coordinate
-  public static Image hpboardImage;
+  public static Image hpboardImage;   //image of the harry potter monopoly board
 
   public HarryPotterBoard(){
     harryPotterBoard[0] = new Go(1400, 1400);
@@ -54,10 +54,12 @@ public class HarryPotterBoard
 
     hpboardImage = new ImageIcon(this.getClass().getResource("HPBoard.png")).getImage();
   }
+  //return harry potter board array of spaces
   public Space[] getBoard(){
     return harryPotterBoard;
   }
 
+  //return the harry potter board image
   public Image getImage(){
     return hpboardImage;
   }

@@ -15,10 +15,10 @@ public class ImagePanel extends JPanel {
     private static ImagePanel instance;
     private final PlayerInfoPanel infoPanel;
     private final ButtonPanel buttonPanel;
-    private static Image boardImage;
-    private static Image[] tokens;
-    private static String[] tokenNames;
-    private final Player[] players;
+    private static Image boardImage;    //image of the board
+    private static Image[] tokens;      //images of the tokens
+    private static String[] tokenNames; //names of the tokens
+    private final Player[] players;     //array of players
 
     public ImagePanel()
     {
@@ -43,6 +43,8 @@ public class ImagePanel extends JPanel {
         players = GameDriver.getPlayers();
     }
 
+    //set theme of the Game
+    //called from the GameDriver
     public static void setType(String type){
       if(type.equalsIgnoreCase("Normal")){
         tokens = NormalTokens.normalTokenImages;
@@ -56,6 +58,7 @@ public class ImagePanel extends JPanel {
       }
     }
 
+    //return static instance of ImagePanel
     public static ImagePanel getInstance()
     {
         if (instance == null)
@@ -75,6 +78,7 @@ public class ImagePanel extends JPanel {
          revalidate();
     }
 
+    //draw all player tokens on correct locations
     public void drawTokens(Graphics g)
     {
         int x = 0;
@@ -92,12 +96,14 @@ public class ImagePanel extends JPanel {
         }
     }
 
+    //display list of winners at end of game
     public void declareWinner(ArrayList<Player> winners)
     {
     	JOptionPane.showMessageDialog(this, "Winner(s):\n" + getWinnerString(winners), "Winners", JOptionPane.CLOSED_OPTION);
     	System.exit(0);
     }
 
+    //get string of winners at the end of the game to display
     public String getWinnerString(ArrayList<Player> winners)
     {
     	String winnerList = "";

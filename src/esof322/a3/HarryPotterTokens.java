@@ -4,9 +4,9 @@ import javax.swing.ImageIcon;
 
 public class HarryPotterTokens
 {
-  private Tokens[] harryPotterTokens = new Tokens[4];
-  public static Image[] harryPotterTokenImages;
-  public static String[] harryPotterTokenNames;
+  private Tokens[] harryPotterTokens = new Tokens[4];   //array of harry potter themed tokens
+  public static Image[] harryPotterTokenImages;         //array of images for harry potter tokens
+  public static String[] harryPotterTokenNames;         //array of names for harry potter tokens
 
   public HarryPotterTokens(){
     harryPotterTokenImages = new Image[] {new ImageIcon(this.getClass().getResource("Owl.png")).getImage(),
@@ -19,6 +19,7 @@ public class HarryPotterTokens
       harryPotterTokens[i] = new Tokens(harryPotterTokenImages[i], harryPotterTokenNames[i]);
     }
   }
+  //return type Tokens[]
   public Tokens[] getTokens(){
     return harryPotterTokens;
   }

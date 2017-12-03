@@ -4,9 +4,9 @@ import javax.swing.ImageIcon;
 
 public class NormalTokens
 {
-  private Tokens[] normalTokens = new Tokens[4];
-  public static Image[] normalTokenImages;
-  public static String[] normalTokenNames;
+  private Tokens[] normalTokens = new Tokens[4];        //array of normal themed tokens
+  public static Image[] normalTokenImages;              //array of images for normal tokens
+  public static String[] normalTokenNames;              //array of names for normal tokens
 
   public NormalTokens(){
     normalTokenImages = new Image[] {new ImageIcon(this.getClass().getResource("Scottish Terrier.png")).getImage(),
@@ -19,7 +19,7 @@ public class NormalTokens
       normalTokens[i] = new Tokens(normalTokenImages[i], normalTokenNames[i]);
     }
   }
-
+  //return type Tokens[]
   public Tokens[] getTokens(){
     return normalTokens;
   }

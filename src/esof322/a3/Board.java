@@ -11,6 +11,7 @@ public class Board
   private static Image boardImage;
 
 	// Determines which board style is being used
+	//create correct style of board
 	public Board(String type){
 		if(type.equalsIgnoreCase("normal")){
 			NormalBoard nb = new NormalBoard();
@@ -24,10 +25,12 @@ public class Board
 		}
 	}
 
+	//return the image for the board
 	public Image getBoardImage(){
 		return boardImage;
 	}
 
+	//return the Space at a location
 	public Space getSpace(int location){
 		return board[location];
 	}
