@@ -44,7 +44,7 @@ class SelectionPanel extends JPanel implements ActionListener{
         style.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         playerNum.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         turnLimit.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
-        style.setMaximumSize(new Dimension(100, 100));
+        style.setMaximumSize(new Dimension(150, 100));
         playerNum.setMaximumSize(new Dimension(100, 100));
         turnLimit.setMaximumSize(new Dimension(100, 100));
 

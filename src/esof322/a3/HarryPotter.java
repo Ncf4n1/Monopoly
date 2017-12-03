@@ -4,18 +4,16 @@ import javax.swing.ImageIcon;
 
 public class HarryPotter implements GameStyle
 {
-  public Board board;
-  public HarryPotterTokens tokens;
 
   @Override
   public Board createBoard(){
-      board = new Board("Harry Potter");
+      Board board = new Board("Harry Potter");
       return board;
   }
 
   @Override
   public Tokens[] createTokens(){
-    tokens = new HarryPotterTokens();
+    HarryPotterTokens tokens = new HarryPotterTokens();
     return tokens.getTokens();
   }
 }

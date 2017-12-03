@@ -54,11 +54,11 @@ public class HarryPotterBoard
 
     hpboardImage = new ImageIcon(this.getClass().getResource("HPBoard.png")).getImage();
   }
-  public static Space[] getBoard(){
+  public Space[] getBoard(){
     return harryPotterBoard;
   }
 
-  public static Image getImage(){
+  public Image getImage(){
     return hpboardImage;
   }
 }

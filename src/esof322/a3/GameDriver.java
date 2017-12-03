@@ -12,11 +12,10 @@ public class GameDriver
 	private static String[] playernames;		// List of the names for each player
 	private static Player[] players;			// List of players playing the game
 	private static int turnLimit;				// Time limit for the game
-	//private static long endTime;
-	private static Tokens[] tokens;
+	private static Tokens[] tokens;		//players tokens
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
-	private static Board board;
-	private static Image boardImage;
+	private static Board board;							//game board
+	private static Image boardImage;				//board image
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -27,25 +26,23 @@ public class GameDriver
 	private static Property currentLandedProperty = null;	// Placeholder for a property if the player lands on it
 	private static Railroad currentLandedRailroad = null;	// Placeholder for railroad if the player lands on it
 	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
-    private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
-    private static int turns = 0;
-    private static ChanceDeck chanceDeck = new ChanceDeck();
-//    private static CommunityChest communityDeck = new CommunityChest();
+  private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
+  private static int turns = 0;
+  private static ChanceDeck chanceDeck = new ChanceDeck();
+  //private static CommunityChest communityDeck = new CommunityChest();
 
 	public static void main(String[] args)
 	{
-            GuiFrame.getInstance();
-    }
+	   GuiFrame.getInstance();
+	}
 
-    public static String getSpaceName()
-    {
-        return board.getSpace(currentPlayerLocation).getName();
-    }
-
-//	public static void startTurn(){
-//		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
-//	}
-
+  public static String getSpaceName()
+  {
+    	return board.getSpace(currentPlayerLocation).getName();
+  }
+	//method to end a player's turn
+	//checks if the game is over and resets variables
+	//sets next player to be current player
 	public static void endTurn(){
 		if (currentPlayer == players.length -1)
 		{
@@ -63,11 +60,9 @@ public class GameDriver
 		}
 		doublesInARow = 0;
 		rollTotal = 0;
-//        currentLandedProperty = null;
-//        currentLandedRailroad = null;
-//        currentLandedUtility = null;
 	}
-
+	//method to roll rollDice
+	//returns roll total of 2 die
 	public static int rollDice(){
 		die1.rollDie();
 		die2.rollDie();
@@ -80,34 +75,36 @@ public class GameDriver
 			rollTotal = die1.getDie() + die2.getDie();
 			return rollTotal;
 	}
-//	public static int getDie1(){
-//		return die1.getDie();
-//	}
-//	public static int getDie2(){
-//		return die2.getDie();
-//	}
+
+	//return number of doubles that have been rolled in a row
 	public static int getDoublesInARow(){
 		return doublesInARow;
 	}
 
+	//get number of total turns taken
 	public static int getTurnsTaken()
 	{
 		return turns;
 	}
 
+	//move player token to their new location
 	public static void movePlayerToken(){
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
 
-    public static void passGo()
-    {
-        if (previousPlayerLocation + rollTotal > 39)
-        {
-            players[currentPlayer].takePayment(200);
-        }
-    }
+	//check if player passed go
+	//pay player $200 if they did pass go
+  public static void passGo()
+  {
+      if (previousPlayerLocation + rollTotal > 39)
+      {
+          players[currentPlayer].takePayment(200);
+      }
+  }
 
+	//check what kind of space the player landed on
+	//execute necessary action based on the space they landed on
 	public static void checkSpace(int Location){
 		JOptionPane.showMessageDialog(null, rollTotal + ", " +board.getSpace(Location).getName());
         currentLandedProperty = null;
@@ -192,25 +189,26 @@ public class GameDriver
 		}
 
 	}
-	public static void buyProperty(){
-            if (currentLandedProperty == null && currentLandedUtility == null)
-            {
-            	players[currentPlayer].buyProperty(currentLandedRailroad);
-            }
-            else if (currentLandedProperty == null && currentLandedRailroad == null)
-            {
-                players[currentPlayer].buyProperty(currentLandedUtility);
-            }
-            else if (currentLandedRailroad == null && currentLandedUtility == null)
-            {
-                players[currentPlayer].buyProperty(currentLandedProperty);
-            }
-            else
-            {
-            	System.out.println("Not bought");
-            }
-	}
 
+	//method to buy a Property
+	public static void buyProperty(){
+      if (currentLandedProperty == null && currentLandedUtility == null)
+      {
+      	players[currentPlayer].buyProperty(currentLandedRailroad);
+      }
+      else if (currentLandedProperty == null && currentLandedRailroad == null)
+      {
+          players[currentPlayer].buyProperty(currentLandedUtility);
+      }
+      else if (currentLandedRailroad == null && currentLandedUtility == null)
+      {
+          players[currentPlayer].buyProperty(currentLandedProperty);
+      }
+      else
+      {
+      	System.out.println("Not bought");
+      }
+	}
 
 	// Function used by the GUI to get the number of players
 	public static void setPlayers(Player[] players)
@@ -226,14 +224,16 @@ public class GameDriver
             //endTime = System.currentTimeMillis() + (GameDriver.timeLimit*60)*1000;
 	}
 
-
+	//return the current player
 	public static Player getCurrentPlayer(){
 		return players[currentPlayer];
 	}
+	//return list of players
 	public static Player[] getPlayers(){
 		return players;
 	}
 
+	//return the current X coordinate of the player
 	public static int getXCoordinate(Player p){
 		//return board.getSpace(currentPlayerLocation).getX();
 		int x = 0;
@@ -244,6 +244,7 @@ public class GameDriver
 		return x;
 	}
 
+	//return the current Y Coordiate of the player
 	public static int getYCoordinate(Player p){
 		//return board.getSpace(currentPlayerLocation).getY();
 		int y = 0;
@@ -254,6 +255,8 @@ public class GameDriver
 		return y;
 	}
 
+	//set the Winner list at the end of the Game
+	//winner(s) = player(s) with most money
 	public static void setWinnerList()
 	{
 		ArrayList<Player> winners = new ArrayList<>();
@@ -283,19 +286,16 @@ public class GameDriver
         ImagePanel.getInstance().declareWinner(winners);
 	}
 
+	//set the board and token based on theme user picked
+	//use GameStyleFactory to set board and tokens
+	//set theme in ImagePanel
 	public static void setBoardandTokens(String type){
 		GameStyleFactory factory = new GameStyleFactory();
 		GameStyle style = factory.getStyle(type);
 
 		board = style.createBoard();
 		tokens = style.createTokens();
-		if(type.equalsIgnoreCase("Normal")){
-			ImagePanel.setType(type);
-
-		}
-		else if(type.equalsIgnoreCase("Harry Potter")){
-			ImagePanel.setType(type);
-		}
+		ImagePanel.setType(type);
 		boardImage = board.getBoardImage();
 	}
 }
