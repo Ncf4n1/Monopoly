@@ -22,16 +22,6 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel()
     {
-        /*tokens = new Image[4];
-        tokenNames = new String[4];
-        tokens[0] = new ImageIcon(this.getClass().getResource("Scottish Terrier.png")).getImage();
-        tokenNames[0] = "Scottish Terrier";
-        tokens[1] = new ImageIcon(this.getClass().getResource("BattleShip.png")).getImage();
-        tokenNames[1] = "BattleShip";
-        tokens[2] = new ImageIcon(this.getClass().getResource("Top Hat.png")).getImage();
-        tokenNames[2] = "Top Hat";
-        tokens[3] = new ImageIcon(this.getClass().getResource("Thimble.png")).getImage();
-        tokenNames[3] = "Thimble";  */
         GridLayout layout = new GridLayout(0,5);
         infoPanel = PlayerInfoPanel.getInstance();
         buttonPanel = ButtonPanel.getInstance();

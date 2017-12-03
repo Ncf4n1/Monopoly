@@ -55,10 +55,10 @@ public class NormalBoard
     normalboardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
 
   }
-  public static Space[] getBoard(){
+  public Space[] getBoard(){
     return normalBoard;
   }
-  public static Image getImage(){
+  public Image getImage(){
     return normalboardImage;
   }
 }

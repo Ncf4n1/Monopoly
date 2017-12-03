@@ -28,7 +28,7 @@ public class Board
 		return boardImage;
 	}
 
-	public static Space getSpace(int location){
+	public Space getSpace(int location){
 		return board[location];
 	}
 }
