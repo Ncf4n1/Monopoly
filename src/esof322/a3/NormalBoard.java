@@ -52,7 +52,7 @@ public class NormalBoard
     normalBoard[38] = new LuxuryTax(100, 1425, 1119);
     normalBoard[39] = new Property("Boardwalk", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 
-    normalboardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
+    normalboardImage = new ImageIcon(this.getClass().getResource("images/BoardResized.png")).getImage();
 
   }
   //return the normal board array of spaces

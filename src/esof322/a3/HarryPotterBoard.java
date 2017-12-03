@@ -52,7 +52,7 @@ public class HarryPotterBoard
     harryPotterBoard[38] = new LuxuryTax(75, 1425, 1119);
     harryPotterBoard[39] = new Property("GringottsWizardingBank", 400, new int[] {50, 200, 600, 1400, 1700, 2000}, 200, 200, 2, 1425, 1243, 7, 2);
 
-    hpboardImage = new ImageIcon(this.getClass().getResource("HPBoard.png")).getImage();
+    hpboardImage = new ImageIcon(this.getClass().getResource("images/HPBoard.png")).getImage();
   }
   //return harry potter board array of spaces
   public Space[] getBoard(){

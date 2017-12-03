@@ -9,10 +9,10 @@ public class HarryPotterTokens
   public static String[] harryPotterTokenNames;         //array of names for harry potter tokens
 
   public HarryPotterTokens(){
-    harryPotterTokenImages = new Image[] {new ImageIcon(this.getClass().getResource("Owl.png")).getImage(),
-                      new ImageIcon(this.getClass().getResource("Broom.png")).getImage(),
-                      new ImageIcon(this.getClass().getResource("Snitch.png")).getImage(),
-                      new ImageIcon(this.getClass().getResource("Hat.png")).getImage()};
+    harryPotterTokenImages = new Image[] {new ImageIcon(this.getClass().getResource("images/Owl.png")).getImage(),
+                      new ImageIcon(this.getClass().getResource("images/Broom.png")).getImage(),
+                      new ImageIcon(this.getClass().getResource("images/Snitch.png")).getImage(),
+                      new ImageIcon(this.getClass().getResource("images/Hat.png")).getImage()};
     harryPotterTokenNames = new String[] {"Owl", "Broom", "Snitch", "Hat" };
 
     for(int i = 0; i < 4; i++){
