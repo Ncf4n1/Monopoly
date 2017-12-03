@@ -26,16 +26,18 @@ public class GameDriver
 	private static Utility currentLandedUtility = null;	// Placeholder for utility if the player lands on it
     private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
     private static int turns = 0;
+    private static ChanceDeck chanceDeck = new ChanceDeck();
+//    private static CommunityChest communityDeck = new CommunityChest();
 
 	public static void main(String[] args)
 	{
             GuiFrame.getInstance();
     }
 
-        public static String getSpaceName()
-        {
-            return board.getSpace(currentPlayerLocation).getName();
-        }
+    public static String getSpaceName()
+    {
+        return board.getSpace(currentPlayerLocation).getName();
+    }
 
 //	public static void startTurn(){
 //		propertiesAvailableToBuild = (ArrayList) players[currentPlayer].propertiesAvailableToBuild();
@@ -58,9 +60,9 @@ public class GameDriver
 		}
 		doublesInARow = 0;
 		rollTotal = 0;
-        currentLandedProperty = null;
-        currentLandedRailroad = null;
-        currentLandedUtility = null;
+//        currentLandedProperty = null;
+//        currentLandedRailroad = null;
+//        currentLandedUtility = null;
 	}
 
 	public static int rollDice(){
@@ -95,22 +97,33 @@ public class GameDriver
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
 
-        public static void passGo()
+    public static void passGo()
+    {
+        if (previousPlayerLocation + rollTotal > 39)
         {
-            if (previousPlayerLocation + rollTotal > 39)
-            {
-                players[currentPlayer].takePayment(200);
-            }
+            players[currentPlayer].takePayment(200);
         }
+    }
 
 	public static void checkSpace(int Location){
+        currentLandedProperty = null;
+        currentLandedRailroad = null;
+        currentLandedUtility = null;
 		// Handle which type of the square the player landed on
 		switch (currentPlayerLocation)
 		{
-			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
-			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 33: case 36:
+			// Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
+			case 0: case 2:  case 10: case 17: case 20:  case 33:
 					break;
 
+			// Cases for Chance
+			case 7: case 22: case 36: chanceDeck.drawCard(players[currentPlayer], board);
+					break;
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> 9e84f791c3a54d1dd19ee7dd18a8ad79411814aa
 			case 30: players[currentPlayer].setJailedStat(true);
 					 break;
 
@@ -139,10 +152,12 @@ public class GameDriver
                                                 if (currentLandedUtility.getOwner().getUtilitysOwned() == 1)
                                                 {
                                                         players[currentPlayer].makePayment(4*rollTotal);
+                                                        currentLandedUtility.getOwner().takePayment(4*rollTotal);
                                                 }
                                                 else if (currentLandedUtility.getOwner().getUtilitysOwned() == 2)
                                                 {
                                                         players[currentPlayer].makePayment(10*rollTotal);
+                                                        currentLandedUtility.getOwner().takePayment(10*rollTotal);
                                                 }
                                         }
                                         else if (currentLandedUtility.getOwner() == null)
@@ -189,6 +204,10 @@ public class GameDriver
             else if (currentLandedRailroad == null && currentLandedUtility == null)
             {
                 players[currentPlayer].buyProperty(currentLandedProperty);
+            }
+            else
+            {
+            	System.out.println("Not bought");
             }
 	}
 
@@ -239,10 +258,12 @@ public class GameDriver
 	{
 		ArrayList<Player> winners = new ArrayList<>();
         Player winner = players[0];
+        winner.calculateTotalWorth();
         // Cycle through players and determine who has the most money
         for (int i = 1; i < players.length; i++)
         {
-            if (players[i].getMoneyTotal() > winner.getMoneyTotal())
+        	players[i].calculateTotalWorth();
+            if (players[i].getTotalWorth() > winner.getTotalWorth())
             {
                 winner = players[i];
             }
@@ -252,7 +273,7 @@ public class GameDriver
         {
             if (!players[j].getName().equals(winner.getName()))
             {
-                if (players[j].getMoneyTotal() == winner.getMoneyTotal())
+                if (players[j].getTotalWorth() == winner.getTotalWorth())
                 {
                     winners.add(players[j]);
                 }

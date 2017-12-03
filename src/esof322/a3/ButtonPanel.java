@@ -10,7 +10,7 @@ import java.awt.event.*;
 public class ButtonPanel extends JPanel implements ActionListener
 {
     private static ButtonPanel instance;
-    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, sellHouse, sellHotel, mortgage, payToLeaveJail, rollToLeaveJail;
+    private final JButton takeTurn, endTurn, buyProperty, buyHouse, buyHotel, sellHouse, sellHotel, mortgage, payToLeaveJail, rollToLeaveJail, useGetOutOfJailCard;
     private final JTextArea turnsTaken;
     
     public ButtonPanel()
@@ -27,6 +27,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         mortgage = new JButton("Mortgage");
         payToLeaveJail = new JButton("Pay to Leave Jail");
         rollToLeaveJail = new JButton("Roll to Leave Jail");
+        useGetOutOfJailCard = new JButton("Use Get Out Of Jail Free Card");
 
         endTurn.setEnabled(false);
         buyProperty.setEnabled(false);
@@ -37,6 +38,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         mortgage.setEnabled(false);
         payToLeaveJail.setEnabled(false);
         rollToLeaveJail.setEnabled(false);
+        useGetOutOfJailCard.setEnabled(false);
         
         takeTurn.setActionCommand("Take Turn");
         
@@ -50,6 +52,7 @@ public class ButtonPanel extends JPanel implements ActionListener
         setButton(mortgage);
         setButton(payToLeaveJail);
         setButton(rollToLeaveJail);
+        setButton(useGetOutOfJailCard);
         
         turnsTaken = new JTextArea("Rounds Completed: " + GameDriver.getTurnsTaken());
         turnsTaken.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -108,7 +111,13 @@ public class ButtonPanel extends JPanel implements ActionListener
                     GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
                     PlayerInfoPanel.getInstance().updateInfo();
                 }
-                if (GameDriver.getDoublesInARow() == 0)
+                else
+                {
+                	GameDriver.getCurrentPlayer().setJailedStat(true);
+                	GameDriver.getCurrentPlayer().setLocation(10);
+                }
+                
+                if ( (GameDriver.getDoublesInARow() == 0 || GameDriver.getDoublesInARow() == 3) || (GameDriver.getCurrentPlayer().getLocation() == 30) )
                 {
                     takeTurn.setEnabled(false);
                     endTurn.setEnabled(true);
@@ -137,11 +146,13 @@ public class ButtonPanel extends JPanel implements ActionListener
                 	{
                 		rollToLeaveJail.setEnabled(true);
                 		payToLeaveJail.setEnabled(true);
+                		useGetOutOfJailCard.setEnabled(GameDriver.getCurrentPlayer().checkForJailCard());
                 	}
                 	else
                 	{
                 		rollToLeaveJail.setEnabled(false);
                 		payToLeaveJail.setEnabled(true);
+                		useGetOutOfJailCard.setEnabled(GameDriver.getCurrentPlayer().checkForJailCard());
                 	}
                 }
                 else
@@ -195,15 +206,28 @@ public class ButtonPanel extends JPanel implements ActionListener
                 
             case "Pay to Leave Jail":
             	GameDriver.getCurrentPlayer().payToLeaveJail();
+            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
             	rollToLeaveJail.setEnabled(false);
             	payToLeaveJail.setEnabled(false);
+            	endTurn.setEnabled(true);
             	ImagePanel.getInstance().repaint();
             	break;
             	
             case "Roll to Leave Jail":
             	GameDriver.getCurrentPlayer().rollToGetOutOfJail();
+            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
             	rollToLeaveJail.setEnabled(false);
             	payToLeaveJail.setEnabled(false);
+            	endTurn.setEnabled(true);
+            	ImagePanel.getInstance().repaint();
+            	break;
+            	
+            case "Use Get Out Of Jail Card":
+            	GameDriver.getCurrentPlayer().useJailCard();
+            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+            	rollToLeaveJail.setEnabled(false);
+            	payToLeaveJail.setEnabled(false);
+            	endTurn.setEnabled(true);
             	ImagePanel.getInstance().repaint();
             	break;
                 
