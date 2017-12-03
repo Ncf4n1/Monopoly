@@ -206,7 +206,7 @@ public class ButtonPanel extends JPanel implements ActionListener
                 
             case "Pay to Leave Jail":
             	GameDriver.getCurrentPlayer().payToLeaveJail();
-            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+            	GameDriver.checkSpace();
             	rollToLeaveJail.setEnabled(false);
             	payToLeaveJail.setEnabled(false);
             	endTurn.setEnabled(true);
@@ -215,7 +215,7 @@ public class ButtonPanel extends JPanel implements ActionListener
             	
             case "Roll to Leave Jail":
             	GameDriver.getCurrentPlayer().rollToGetOutOfJail();
-            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+            	GameDriver.checkSpace();
             	rollToLeaveJail.setEnabled(false);
             	payToLeaveJail.setEnabled(false);
             	endTurn.setEnabled(true);
@@ -224,7 +224,7 @@ public class ButtonPanel extends JPanel implements ActionListener
             	
             case "Use Get Out Of Jail Card":
             	GameDriver.getCurrentPlayer().useJailCard();
-            	GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+            	GameDriver.checkSpace();
             	rollToLeaveJail.setEnabled(false);
             	payToLeaveJail.setEnabled(false);
             	endTurn.setEnabled(true);
