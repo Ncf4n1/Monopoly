@@ -1,16 +1,20 @@
 package esof322.a3;
-
+import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class Tokens
+public class Tokens implements GameStyleFactory
 {
-  protected ImageIcon tokenImage;
-  protected String tokenName;
+  String name;
+  Image image;
 
-  public static void setTokenImage(String name){
-    tokenImage = new ImageIcon(this.getClass().getResource(name)).getImage();
+  public Tokens(Image i, String n){
+    name = n;
+    image = i;
   }
-  public static void setTokenName(String name){
-    tokenName = name;
+
+  @Override
+  public Tokens createTokens(Image i, String n){
+    name = n;
+    image = i;
   }
 }

@@ -13,14 +13,17 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 
 class SelectionPanel extends JPanel implements ActionListener{
     private static SelectionPanel instance;
+    private final JComboBox<String> style;
     private final JComboBox<Integer> playerNum, turnLimit;
     private final JButton start;
     private final JLabel playerLabel;
-    private final JLabel chooseTurnLimit;
+    private final JLabel chooseTurnLimit, styleLable;
     public boolean initialized = false;
 
     private Player[] players;
@@ -28,29 +31,39 @@ class SelectionPanel extends JPanel implements ActionListener{
     public SelectionPanel()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        styleLable = new JLable("Choose Game Theme");
         playerLabel = new JLabel("Choose Number of Players");
         chooseTurnLimit = new JLabel("Choose a Turn Limit");
         start = new JButton("Start");
+        style = new JComboBox<>(new String[]{"Normal", "Harry Potter"});
         playerNum = new JComboBox<>(new Integer[]{2, 3, 4});
         turnLimit = new JComboBox<>(new Integer[]{5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60});
 
+        styleLable.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         playerLabel.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         chooseTurnLimit.setFont(new Font("Sans-Serif", Font.BOLD, 20));
+        style.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         playerNum.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
         turnLimit.setFont(new Font("Sans-Serif", Font.PLAIN, 20));
+        style.setMaximumSize(new Dimension(100, 100));
         playerNum.setMaximumSize(new Dimension(100, 100));
         turnLimit.setMaximumSize(new Dimension(100, 100));
 
+        style.addActionListener(this);
         playerNum.addActionListener(this);
         turnLimit.addActionListener(this);
         start.addActionListener(this);
 
+        styleLable.setAlignmentX(CENTER_ALIGNMENT);
+        style.setAlignmentX(CENTER_ALIGNMENT);
         playerLabel.setAlignmentX(CENTER_ALIGNMENT);
         playerNum.setAlignmentX(CENTER_ALIGNMENT);
         chooseTurnLimit.setAlignmentX(CENTER_ALIGNMENT);
         turnLimit.setAlignmentX(CENTER_ALIGNMENT);
         start.setAlignmentX(CENTER_ALIGNMENT);
 
+        add(styleLable);
+        add(style);
         add(playerLabel);
         add(playerNum);
         add(chooseTurnLimit);
@@ -67,13 +80,14 @@ class SelectionPanel extends JPanel implements ActionListener{
         return instance;
     }
 
-    
+
     @Override
     public void actionPerformed(ActionEvent ae)
     {
         String command = ae.getActionCommand();
         switch (command) {
-            case "Start": playerSetup();
+            case "Start": GameDriver.setBoardandTokens(style.getSelectedItem());
+                          playerSetup(style.getSelectedItem());
                           CardLayout cl = (CardLayout) MainPanel.getInstance().getLayout();
                           cl.next(MainPanel.getInstance());
                           PlayerInfoPanel.getInstance().infoSetup(players);
@@ -83,11 +97,18 @@ class SelectionPanel extends JPanel implements ActionListener{
         }
     }
 
-    public void playerSetup()
+    public void playerSetup(String type)
     {
+        String[] tnames;
+        if(type.equalsIgnoreCase("normal")){
+          tnames = NormalFactory.nNames;
+        }
+        else{
+          tnames = HarryPotterFactory.nNames;
+        }
         players = new Player[(int) playerNum.getSelectedItem()];
         String name = "";
-        ArrayList<String> tokens = new ArrayList<>(Arrays.asList("Scottish Terrier", "BattleShip", "Top Hat", "Thimble"));
+        ArrayList<String> tokens = new ArrayList<>(Arrays.asList(tnames));
         String lastTokenChosen = "";
         for (int i = 0; i < players.length; i++)
         {

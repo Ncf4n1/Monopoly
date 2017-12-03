@@ -9,8 +9,11 @@ public class GameDriver
 	private static Player[] players;			// List of players playing the game
 	private static int turnLimit;				// Time limit for the game
 	//private static long endTime;
+	private static Tokens[] tokens;
+	private static NormalFactory nfactory = new NormalFactory();
+	private static HarryPotterFactory hpfactory = new HarryPotterFactory();
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
-	private static Board board = new Board();
+	private static Board board;
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
@@ -43,7 +46,7 @@ public class GameDriver
 		{
 			currentPlayer = 0;
 	        turns++;
-	        
+
 	        if (turns >= turnLimit)
 	        {
 	        	setWinnerList();
@@ -81,7 +84,7 @@ public class GameDriver
 	public static int getDoublesInARow(){
 		return doublesInARow;
 	}
-	
+
 	public static int getTurnsTaken()
 	{
 		return turns;
@@ -107,7 +110,7 @@ public class GameDriver
 			// Cases for Chance, Community Chest, Free Parking, Go, and Both Jail Squares (Do Nothing)
 			case 0: case 2: case 7: case 10: case 17: case 20: case 22: case 33: case 36:
 					break;
-			 		
+
 			case 30: players[currentPlayer].setJailedStat(true);
 					 break;
 
@@ -231,7 +234,7 @@ public class GameDriver
 		}
 		return y;
 	}
-	
+
 	public static void setWinnerList()
 	{
 		ArrayList<Player> winners = new ArrayList<>();
@@ -255,7 +258,18 @@ public class GameDriver
                 }
             }
         }
-        
+
         ImagePanel.getInstance().declareWinner(winners);
+	}
+
+	public void setBoardandTokens(String type){
+		if(type.equalsIgnoreCase("NORMAL")){
+			board = nfactory.createBoard(type);
+			tokens = nfactory.createTokens();
+		}
+		else if(type.equalsIgnoreCase("HARRY POTTER")){
+			board = hpfactory.createBoard(type);
+			tokens = hpfactory.createTokens();
+		}
 	}
 }

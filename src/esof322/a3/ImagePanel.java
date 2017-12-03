@@ -22,7 +22,7 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel()
     {
-        boardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
+        /*boardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
         tokens = new Image[4];
         tokenNames = new String[4];
         tokens[0] = new ImageIcon(this.getClass().getResource("Scottish Terrier.png")).getImage();
@@ -32,7 +32,7 @@ public class ImagePanel extends JPanel {
         tokens[2] = new ImageIcon(this.getClass().getResource("Top Hat.png")).getImage();
         tokenNames[2] = "Top Hat";
         tokens[3] = new ImageIcon(this.getClass().getResource("Thimble.png")).getImage();
-        tokenNames[3] = "Thimble";
+        tokenNames[3] = "Thimble";  */
         GridLayout layout = new GridLayout(0,5);
         infoPanel = PlayerInfoPanel.getInstance();
         buttonPanel = ButtonPanel.getInstance();
@@ -89,13 +89,13 @@ public class ImagePanel extends JPanel {
              }
         }
     }
-    
+
     public void declareWinner(ArrayList<Player> winners)
     {
     	JOptionPane.showMessageDialog(this, "Winner(s):\n" + getWinnerString(winners), "Winners", JOptionPane.CLOSED_OPTION);
     	System.exit(0);
     }
-    
+
     public String getWinnerString(ArrayList<Player> winners)
     {
     	String winnerList = "";
@@ -103,7 +103,7 @@ public class ImagePanel extends JPanel {
     	{
     		winnerList += winner.getName() + "\n";
     	}
-    	
+
     	return winnerList;
     }
 }
