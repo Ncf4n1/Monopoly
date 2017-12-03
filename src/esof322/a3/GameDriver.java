@@ -85,7 +85,13 @@ public class GameDriver{
 		previousPlayerLocation = players[currentPlayer].getLocation();
 		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
 	}
-
+	
+	public static void passGo(){
+	      if (previousPlayerLocation + rollTotal > 39) {
+	          players[currentPlayer].takePayment(200);
+	      }
+	  }
+	
 	public static void checkSpace(){
 		Space location = board.getSpace(currentPlayerLocation);
 		String turnInfo = gitTurnInfo(location);
