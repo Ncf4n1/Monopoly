@@ -15,24 +15,13 @@ public class ImagePanel extends JPanel {
     private static ImagePanel instance;
     private final PlayerInfoPanel infoPanel;
     private final ButtonPanel buttonPanel;
-    private final Image boardImage;
-    private final Image[] tokens;
-    private final String[] tokenNames;
-    private final Player[] players;
+    private static Image boardImage;    //image of the board
+    private static Image[] tokens;      //images of the tokens
+    private static String[] tokenNames; //names of the tokens
+    private final Player[] players;     //array of players
 
     public ImagePanel()
     {
-        boardImage = new ImageIcon(this.getClass().getResource("BoardResized.png")).getImage();
-        tokens = new Image[4];
-        tokenNames = new String[4];
-        tokens[0] = new ImageIcon(this.getClass().getResource("Scottish Terrier.png")).getImage();
-        tokenNames[0] = "Scottish Terrier";
-        tokens[1] = new ImageIcon(this.getClass().getResource("BattleShip.png")).getImage();
-        tokenNames[1] = "BattleShip";
-        tokens[2] = new ImageIcon(this.getClass().getResource("Top Hat.png")).getImage();
-        tokenNames[2] = "Top Hat";
-        tokens[3] = new ImageIcon(this.getClass().getResource("Thimble.png")).getImage();
-        tokenNames[3] = "Thimble";
         GridLayout layout = new GridLayout(0,5);
         infoPanel = PlayerInfoPanel.getInstance();
         buttonPanel = ButtonPanel.getInstance();
@@ -54,6 +43,22 @@ public class ImagePanel extends JPanel {
         players = GameDriver.getPlayers();
     }
 
+    //set theme of the Game
+    //called from the GameDriver
+    public static void setType(String type){
+      if(type.equalsIgnoreCase("Normal")){
+        tokens = NormalTokens.normalTokenImages;
+        tokenNames = NormalTokens.normalTokenNames;
+        boardImage = NormalBoard.normalboardImage;
+      }
+      else if(type.equalsIgnoreCase("Harry Potter")){
+        tokens = HarryPotterTokens.harryPotterTokenImages;
+        tokenNames = HarryPotterTokens.harryPotterTokenNames;
+        boardImage = HarryPotterBoard.hpboardImage;
+      }
+    }
+
+    //return static instance of ImagePanel
     public static ImagePanel getInstance()
     {
         if (instance == null)
@@ -73,6 +78,7 @@ public class ImagePanel extends JPanel {
          revalidate();
     }
 
+    //draw all player tokens on correct locations
     public void drawTokens(Graphics g)
     {
         int x = 0;
@@ -89,13 +95,15 @@ public class ImagePanel extends JPanel {
              }
         }
     }
-    
+
+    //display list of winners at end of game
     public void declareWinner(ArrayList<Player> winners)
     {
     	JOptionPane.showMessageDialog(this, "Winner(s):\n" + getWinnerString(winners), "Winners", JOptionPane.CLOSED_OPTION);
     	System.exit(0);
     }
-    
+
+    //get string of winners at the end of the game to display
     public String getWinnerString(ArrayList<Player> winners)
     {
     	String winnerList = "";
@@ -103,7 +111,7 @@ public class ImagePanel extends JPanel {
     	{
     		winnerList += winner.getName() + "\n";
     	}
-    	
+
     	return winnerList;
     }
 }

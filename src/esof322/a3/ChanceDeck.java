@@ -3,6 +3,8 @@ package esof322.a3;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 
 public class ChanceDeck {	
 	static ArrayList<Card> deck = new ArrayList<Card>();
@@ -31,21 +33,21 @@ public class ChanceDeck {
 	public ChanceDeck(){
 						//(String title, int type, int newIndex, int billAmount, int bonusAmount)
 		deck.add(new Card ("Advance to go. Collect $200", 1, 0, 0, PASS_GO_BONUS));
-		deck.add(new Card ("Advance to Illinois Ave. If you pass Go, collect $200", 1, 24, 0, PASS_GO_BONUS));
-		deck.add(new Card ("Advance to St. Charles Place. If you pass Go, collect $200", 1, 11, 0, PASS_GO_BONUS));	
-		deck.add(new Card ("Take a trip to Reading Railroad. If you pass Go, collect $200", 1, 5, 0, PASS_GO_BONUS));
+		deck.add(new Card ("Advance to Illinois Ave. \n If you pass Go, collect $200", 1, 24, 0, PASS_GO_BONUS));
+		deck.add(new Card ("Advance to St. Charles Place.\n If you pass Go, collect $200", 1, 11, 0, PASS_GO_BONUS));	
+		deck.add(new Card ("Take a trip to Reading Railroad. \n If you pass Go, collect $200", 1, 5, 0, PASS_GO_BONUS));
 		deck.add(new Card ("Take a walk on the Boardwalk", 1, 39, 0, 0));
-		deck.add(new Card ("Go to Jail. Do not pass Go, do not collect $200", 1, 10, 0, 0));
-		deck.add(new Card ("Advance token to nearest Utility. If unowned, you may buy it from the Bank. If owned, throw dice and pay owner a total ten times the amount thrown", 2, 0, 0, PASS_GO_BONUS));		
-		deck.add(new Card ("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.", 3, 0, 0, PASS_GO_BONUS));
-		deck.add(new Card ("Advance token to the nearest Railroad and pay owner twice the rental to which he/she {he} is otherwise entitled. If Railroad is unowned, you may buy it from the Bank.", 3, 0, 0, PASS_GO_BONUS));	
+		deck.add(new Card ("Go to Jail. \n Do not pass Go, do not collect $200", 1, 10, 0, 0));
+		deck.add(new Card ("Advance token to nearest Utility. \n If unowned, you may buy it from the Bank. \n If owned, throw dice and pay owner a total ten times the amount thrown", 2, 0, 0, PASS_GO_BONUS));		
+		deck.add(new Card ("Advance token to the nearest Railroad \n and pay owner twice the rental to which \n he/she {he} is otherwise entitled. If Railroad is unowned, \n you may buy it from the Bank.", 3, 0, 0, PASS_GO_BONUS));
+		deck.add(new Card ("Advance token to the nearest Railroad \n and pay owner twice the rental to which \n he/she {he} is otherwise entitled. If Railroad is unowned, \n you may buy it from the Bank.", 3, 0, 0, PASS_GO_BONUS));	
 		deck.add(new Card ("Bank pays you dividend of $50", 4, 0, 0, 50));
 		deck.add(new Card ("Pay poor tax of $15", 5, 0, 15, 0));
 		deck.add(new Card ("Your building and loan matures, Collect $150", 4, 0, 0, 150));	
-		deck.add(new Card ("You have been elected Chairman of the Board. Pay each player $50", 8, 0, 50, 0));
+		deck.add(new Card ("You have been elected Chairman of the Board. \n Pay each player $50", 8, 0, 50, 0));
 		deck.add(new Card ("Go Back 3 Spaces", 6, 0, 0, 0));
-		deck.add(new Card ("Make general repairs on all your property.For each house pay $25 – For each hotel $100", 7, 0, 0, 0));
-		deck.add(new Card ("Get out of Jail Free. This card may be kept until needed.", 0, 0, 0, 0));
+		deck.add(new Card ("Make general repairs on all your property. \n For each house pay $25 – For each hotel $100", 7, 0, 0, 0));
+		deck.add(new Card ("Get out of Jail Free. \n This card may be kept until needed.", 0, 0, 0, 0));
 	}
 	
 	public void reShuffleCards(){
@@ -72,6 +74,7 @@ public class ChanceDeck {
 		int  randIndex = rand.nextInt(16);
 		card = deck.get(randIndex);
 		deck.remove(randIndex);
+		JOptionPane.showMessageDialog(null, card.getTitle());
 		cardResolution();
 	}	
 	
@@ -83,7 +86,7 @@ public class ChanceDeck {
 				newSpace = getNewSpace();
 				checkIfPassGo();
 				currentPlayer.setLocation(card.getNewIndex());
-				GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+				GameDriver.checkSpace();
 				break;
 				
 			case 2:		//Advance to nearest Utility
@@ -114,7 +117,7 @@ public class ChanceDeck {
 				newIndex = currentPlayer.getLocation() - numberStepsBack;
 				newSpace = board.getSpace(newIndex);
 				currentPlayer.setLocation(newIndex);
-				GameDriver.checkSpace(GameDriver.getCurrentPlayer().getLocation());
+				GameDriver.checkSpace();
 
 			case 7:
 				int houses = currentPlayer.getnumHouses();

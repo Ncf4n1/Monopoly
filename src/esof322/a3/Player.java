@@ -10,6 +10,8 @@ public class Player {
 	private Object[][] property = new Object[8][4];				// 2D array containing Objects of type booleans and property
 	private ArrayList<Railroad> railroads = new ArrayList<>();	// List of currently owned railroad
 	private ArrayList<Utility> utilities = new ArrayList<>();	// List of currently owned utilites
+	private final int SINGLE_UTILITY_MULTIPLYER = 4;
+	private final int DOUBLE_UTILITY_MULTIPLYER = 10;
 	private int location;										// Current location on the board
 	private boolean jailed;										// Jailed status of player (future implementation)
 	private int turnsInJail;									// Number of turns the player has been in jail
@@ -296,8 +298,12 @@ public class Player {
 	}
 
 	//returns the number of utilities owned
-	public int getUtilitysOwned(){
-		return utilities.size();
+	public int getUtilitysMultiplyer(){
+		if(utilities.size()==2)
+			return DOUBLE_UTILITY_MULTIPLYER;
+		else{
+			return SINGLE_UTILITY_MULTIPLYER;
+		}
 	}
 
 	//builds a house, unless there are 4, where it builds a hotel
