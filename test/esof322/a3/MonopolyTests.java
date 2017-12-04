@@ -81,11 +81,21 @@ public class MonopolyTests {
 	@Test
 	public void testBoard ()
 	{
-		Board board = new Board();
+		Board board = new Board("normal");
 		
 		assertEquals("Check for initialization of properties", "TennesseeAvenue", board.getSpace(18).getName());
 		assertEquals("Check for initialization of Railroads", "PennsylvaniaRailroad", board.getSpace(15).getName());
 		assertEquals("Check for initialization of utilities", "ElectricCompany", board.getSpace(12).getName());
+	}
+	
+	@Test
+	public void testBoardAlt ()
+	{
+		Board board = new Board("hp");
+		
+		assertEquals("Check for initialization of properties", "ShellCottage", board.getSpace(18).getName());
+		assertEquals("Check for initialization of Railroads", "DurmstrangShip", board.getSpace(15).getName());
+		assertEquals("Check for initialization of utilities", "OwlPost", board.getSpace(12).getName());
 	}
 	
 	//LuxuryTax
@@ -100,6 +110,14 @@ public class MonopolyTests {
 		tax.payLuxuryTax(player);
 		
 		assertEquals("Check if player paid tax", 1300, player.getMoneyTotal());
+	}
+	
+	@Test
+	public void testGetLuxury()
+	{
+		LuxuryTax tax = new LuxuryTax(200, 0, 0);
+		
+		assertEquals("Check if player paid tax", 200, tax.getTaxAmount());
 	}
 	
 	//IncomeTax
@@ -396,18 +414,6 @@ public class MonopolyTests {
 	//PLAYER
 	Player player = new Player("TestPlayerName", "TestToken");
 	
-	@Test
-	public void testPlayerTypes()
-	{
-		Computer comp = new Computer("TestCompName", "TestToken");
-		
-		assertEquals ("Check init of comp player", "TestCompName", comp.getName());
-		
-		Human hum = new Human("TestHumanName", "TestToken");
-		
-		assertEquals ("Check init of Human player", "TestHumanName", hum.getName());
-	}
-	
 	@Test 
 	public void testPlayerName ()
 	{
@@ -551,7 +557,7 @@ public class MonopolyTests {
 		Utility u = new Utility("ElectricCompany", 75, 1119);
 		player.buyProperty(u);
 		
-		assertEquals("check for correct values of player when buying utility", 1, player.getUtilitysOwned());
+		assertEquals("check for correct values of player when buying utility", 4, player.getUtilitysMultiplyer());
 		assertEquals("check for correct values of player when buying utility", 1350, player.getMoneyTotal());
 		assertEquals("check for correct values of utlility wwhen bought", player, u.getOwner());
 	}
@@ -632,7 +638,7 @@ public class MonopolyTests {
 		player.buyProperty(u1);
 		player.buyProperty(u2);
 		
-		assertEquals("check for correct values of player when owning multiple utilities", 2, player.getUtilitysOwned());
+		assertEquals("check for correct values of player when owning multiple utilities", 10, player.getUtilitysMultiplyer());
 	}
 	
 	@Test
@@ -663,16 +669,16 @@ public class MonopolyTests {
 		player.buyProperty(prop);
 		player.buyProperty(prop2);
 		
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
-		prop.buildHouse();
-		prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
+		player.buildHouse(prop);//prop.buildHouse();
+		player.buildHouse(prop2);//prop2.buildHouse();
 		
-		prop.buildHotel();
+		player.buildHouse(prop);//prop.buildHotel();
 		
 		assertEquals("Check for Properties with hotels", 1, player.getPropsWithHotels().size());
 	
@@ -750,7 +756,7 @@ public class MonopolyTests {
 		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
 	}
 	
-	@Test
+	/*@Test
 	public void testgetHotelBuildablePropsWithOneMonop()
 	{
 		Player play = new Player("TestPlayerName", "TestToken");
@@ -766,6 +772,84 @@ public class MonopolyTests {
 		HotelBuildableProperties.add(prop2);
 		
 		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
+	}*/
+	
+	@Test
+	public void testGetTotalWorthInit()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for initial worth of player", 0, play.getTotalWorth());
+	}
+	
+	@Test
+	public void testGetTotalWorthPost()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
+		play.buyProperty(prop);
+		
+		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
+		play.buyProperty(prop2);
+		play.mortgage(prop2);
+		
+		play.calculateTotalWorth();
+		assertEquals("Check for initial worth of player", 1500, play.getTotalWorth());
+	}
+	
+	@Test
+	public void testGetNumHouses()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for num of houses", 0, play.getnumHouses());
+	}
+	
+	@Test
+	public void testGetNumHotels()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		assertEquals("Check for num of hotels", 0, play.getnumHotels());
+	}
+	
+	@Test
+	public void testPlayerChanceGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setChanceGetOutOfJailCard();
+		
+		assertTrue("Check for chance get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerComChestGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setComChestGetOutOfJailCard();
+		
+		assertTrue("Check for com chest get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerUseChanceGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setChanceGetOutOfJailCard();
+		play.useJailCard();
+		
+		assertFalse("Check for us of chance get out of jail card", play.checkForJailCard());
+	}
+	
+	@Test
+	public void testPlayerUseComChestGOOJ()
+	{
+		Player play = new Player("TestPlayerName", "TestToken");
+		
+		play.setComChestGetOutOfJailCard();
+		play.useJailCard();
+		
+		assertFalse("Check for use of com chest get out of jail card", play.checkForJailCard());
 	}
 	
 	//Die
@@ -812,4 +896,84 @@ public class MonopolyTests {
 	{
 		assertEquals("Check card name", 20, card.getBonusAmount());
 	}
+	
+	//GameDriver
+	private Player play;
+	private Player play2;
+	
+	public Player[] createPlayers()
+	{
+		play = new Player("TestPlayerName", "TestToken");
+		play2 = new Player("TestPlayerName2", "TestToken2");
+		Player [] players = new Player [2];
+		players[0] = play; players[1] = play2;
+		GameDriver.setPlayers(players);
+		
+		return players;
+	}
+	
+	@Test
+	public void testGameDriverTurnsTaken()
+	{
+		assertEquals("Get the num of turns taken", 0, GameDriver.getTurnsTaken());
+	}
+	
+	@Test
+	public void testGameDriverPlayers() 
+	{
+		createPlayers();
+		
+		assertEquals("Check if game driver returns the list players", "TestPlayerName", GameDriver.getPlayers()[0].getName());
+	}
+	
+	@Test
+	public void testGameDriverCurrentPlayer()
+	{
+		createPlayers();
+		
+		assertEquals("Check if game driver will return current player", "TestPlayerName", GameDriver.getCurrentPlayer().getName());
+	}
+	/*
+	@Test
+	public void testGameDriverPosition()
+	{
+		createPlayers();
+		
+		assertEquals("Check x coordinate", 1400, GameDriver.getXCoordinate(play));
+		assertEquals("Check y coordinate", 1400, GameDriver.getYCoordinate(play));
+	}
+	*/
+	/*
+	@Test
+	public void testGameDriverSpaceName()
+	{
+		createPlayers();
+		
+		assertEquals("Check space name", "Go", GameDriver.getSpaceName());
+	}*/
+	
+	@Test
+	public void testGameDriverEndTurn()
+	{
+		createPlayers();
+		
+		GameDriver.endTurn();
+		
+		assertEquals("Check for current player to iterate", "TestPlayerName2", GameDriver.getCurrentPlayer().getName());
+	}
+	
+	@Test
+	public void testGameDriverNextRound()
+	{
+		createPlayers();
+		
+		GameDriver.setTurnLimit(10);
+		
+		GameDriver.endTurn();
+		GameDriver.endTurn();
+		
+		assertEquals("Check for current player to iterate", 1, GameDriver.getTurnsTaken());
+	}
+	
+	
 }
