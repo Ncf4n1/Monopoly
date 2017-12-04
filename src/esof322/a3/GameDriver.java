@@ -1,7 +1,6 @@
 package esof322.a3;
 
 import java.util.*;
-import java.awt.Image;
 import javax.swing.JOptionPane;
 
 public class GameDriver{
@@ -13,13 +12,11 @@ public class GameDriver{
 	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board;							//game board
 	private static int currentPlayer = 0;					// Index of the current player for the player array
-	private static int currentPlayerLocation = 0;			// Location of the current turn player after the dice roll
 	private static Die die1 = new Die();
 	private static Die die2 = new Die();
 	private static int doublesInARow = 0;					// Number of times doubles has been rolled in a row
 	private static int rollTotal = 0;						// Total for the dice roll
-	private static int previousPlayerLocation = 0;			// Location of the current turn player prior to the dice roll
-
+	private static int playersPreviousLocation = 0;			// Location of the current turn player prior to the dice roll
 	private static Property propLoction = null;	// Placeholder for a property if the player lands on it
 	private static Railroad rRLocation = null;	// Placeholder for railroad if the player lands on it
 	private static Utility utilLocation = null;	// Placeholder for utility if the player lands on it
@@ -27,14 +24,25 @@ public class GameDriver{
     private static int turns = 0;
     private static ChanceDeck chanceDeck = new ChanceDeck();
     private static CommunityChestDeck communityDeck = new CommunityChestDeck();
+    private final static int GO_BONUS = 200;
+    private final static int MAX_BOARD_INDEX = 39;
+
 
 	public static void main(String[] args){
 	   GuiFrame.getInstance();
 	}
 
-  public static String getSpaceName(){
-    	return board.getSpace(currentPlayerLocation).getName();
-  }
+	public static String getSpaceName(){
+		return board.getSpace(players[currentPlayer].getLocation()).getName();
+	}
+  
+	public static int getDie1(){
+		return die1.getDie();
+	}
+  
+	public static int getDie2(){
+		return die2.getDie();
+	}
   
 	//method to end a player's turn
 	//checks if the game is over and resets variables
@@ -82,25 +90,31 @@ public class GameDriver{
 
 	//move player token to their new location
 	public static void movePlayerToken(){
-		previousPlayerLocation = players[currentPlayer].getLocation();
-		currentPlayerLocation = players[currentPlayer].moveToken(rollTotal);
+		playersPreviousLocation = players[currentPlayer].getLocation();
+		players[currentPlayer].moveToken(rollTotal);
+	}
+	
+	public static void displayTurnInfo(){
+		String playerInfo = ("Player: " + players[currentPlayer].getName().toString() +"\n");
+		String turnInfo = getTurnInfo(board.getSpace(players[currentPlayer].getLocation()));
+		String rollInfo = ("Roll: "+ die1.getDie() + " and " + die2.getDie() + "\nMove " + rollTotal + " spaces to: ");
+		JOptionPane.showMessageDialog(null, playerInfo + rollInfo + turnInfo);
 	}
 	
 	public static void passGo(){
-	      if (previousPlayerLocation + rollTotal > 39) {
-	          players[currentPlayer].takePayment(200);
-	      }
-	  }
+	     if (playersPreviousLocation + rollTotal > MAX_BOARD_INDEX) {
+	    	 JOptionPane.showMessageDialog(null, "You passes Go, Collect" + GO_BONUS);
+	    	 players[currentPlayer].takePayment(GO_BONUS);
+	     }
+	}
 	
 	public static void checkSpace(){
-		Space location = board.getSpace(currentPlayerLocation);
-		String turnInfo = gitTurnInfo(location);
-		JOptionPane.showMessageDialog(null, die1.getDie() + " & " + die2.getDie() + ", " + location.getName());
+		Space location = board.getSpace(players[currentPlayer].getLocation());
 		propLoction = null;
         rRLocation = null;
         utilLocation = null;
 		// Handle which type of the square the player landed on
-		switch (currentPlayerLocation){
+		switch (players[currentPlayer].getLocation()){
 			 // Go Space	
 			case 0:		
 				break;
@@ -186,20 +200,24 @@ public class GameDriver{
 		
 	}
 	
-	public static String gitTurnInfo(Space location){
-		String info = ("You have landed on: " + location.getName() + ".\n");
+	public static String getTurnInfo(Space location){
+		String info = (location.getName() + ".\n");
 		if (location instanceof Deed){	
 			Deed spaceDeed = (Deed) location;
 			Player owner = null;
 			owner = spaceDeed.getOwner();
 			if(owner != null){
+				if(owner == players[currentPlayer]){
+					info = (info + "\nYou own this property.\n");
+					return info;
+				}
 				int rent = getRentOwned(spaceDeed);	
-				String rentInfo = ("You owe " + owner + "$"+ rent + ".\n");
+				String rentInfo = ("You owe " + owner.getName() + " $"+ rent + ".\n");
 				info = (info + rentInfo);
 			}
 			else{
 				int price = spaceDeed.getPrice();
-				String priceInfo = ("This is unowned. You may buy it for $"+ price + ".\n");
+				String priceInfo = ("Property is Unowned. \nYou may buy it for $"+ price + ".\n");
 				info = (info + priceInfo);
 			}
 		}
@@ -208,12 +226,13 @@ public class GameDriver{
 			if(location instanceof LuxuryTax){
 				LuxuryTax taxSpace = (LuxuryTax) location;
 				tax = taxSpace.getTaxAmount();
+				info = (info + "You are being taxed $" + tax + ".");
 			}
 			if(location instanceof IncomeTax){
 				IncomeTax taxSpace = (IncomeTax) location;
 				tax = taxSpace.getTaxAmount();
-			}
-			info = (info + "You are being taxed $" + tax + ".");
+				info = (info + "You are being taxed $" + tax + ".");
+			}		
 		}
 		return info;
 	}
@@ -274,7 +293,7 @@ public class GameDriver{
 
 	//return the current X coordinate of the player
 	public static int getXCoordinate(Player p){
-		//return board.getSpace(currentPlayerLocation).getX();
+		//return board.getSpace(playersCurrentLocation).getX();
 		int x = 0;
 		for(int i = 0; i < players.length; i++){
 			if (players[i] == p)
@@ -285,7 +304,7 @@ public class GameDriver{
 
 	//return the current Y Coordiate of the player
 	public static int getYCoordinate(Player p){
-		//return board.getSpace(currentPlayerLocation).getY();
+		//return board.getSpace(playersCurrentLocation).getY();
 		int y = 0;
 		for(int i = 0; i < players.length; i++){
 			if (players[i] == p)
