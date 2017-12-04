@@ -1,13 +1,8 @@
 package esof322.a3;
 
-import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class CommunityChestDeck {
 	static ArrayList<Card> deck = new ArrayList<Card>();
@@ -82,20 +77,24 @@ public class CommunityChestDeck {
 				
 			case 2:		//bonus
 				giveBonus();
+				break;
 				
 			case 3:		//bill
 				payBill();
+				break;
 				
 			case 4:		//street repair
 				int houses = currentPlayer.getnumHouses();
 				int hotels = currentPlayer.getnumHotels();
 				currentPlayer.makePayment((houses * HOUSE_REPAIR) + (hotels * HOTEL_REPAIR));
+				break;
 				
 			case 5:
 				currentPlayer.takePayment(OPERA_SEAT * GameDriver.getPlayers().length);
 				for(Player x: GameDriver.getPlayers()){
 					x.makePayment(OPERA_SEAT);
 				}		
+				break;
 			default: 			
 				currentPlayer.setChanceGetOutOfJailCard();
 				getOutOfJailCard =false;

@@ -3,6 +3,8 @@ package esof322.a3;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Player {
 	public String playerName;									// Name of the player
 	public String token;										// Token the player is using
@@ -130,7 +132,6 @@ public class Player {
 	//roll to leave jail
 	public void rollToGetOutOfJail(){
 		int doublesInARow = GameDriver.getDoublesInARow();
-		int rollTotal = GameDriver.rollDice();
 		//checks if the die are doubles
 		if (doublesInARow < GameDriver.getDoublesInARow()){
 			setJailedStat(false);
@@ -140,6 +141,7 @@ public class Player {
 		//else iterates turns in jail or forces payment
 		else{
 			if(turnsInJail < 3){
+				JOptionPane.showMessageDialog(null, "You rolled " + GameDriver.getDie1() + " and " + GameDriver.getDie2() + ", You have to stay in jail." );
 				turnsInJail++;
 			}
 		}
