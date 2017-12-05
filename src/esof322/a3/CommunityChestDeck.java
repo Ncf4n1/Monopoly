@@ -72,6 +72,7 @@ public class CommunityChestDeck {
 		switch(funcType){
 			case 1: 	//move
 				currentPlayer.setLocation(card.getNewIndex());
+				ImagePanel.getInstance().repaint();
 				giveBonus();
 				break;
 				
