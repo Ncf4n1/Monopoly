@@ -131,10 +131,11 @@ public class Player {
 
 	//roll to leave jail
 	public void rollToGetOutOfJail(){
-		int doublesInARow = GameDriver.getDoublesInARow();
+		GameDriver.rollDice();
 		//checks if the die are doubles
-		if (doublesInARow < GameDriver.getDoublesInARow()){
+		if (GameDriver.getDie1() == GameDriver.getDie2()){
 			setJailedStat(false);
+			JOptionPane.showMessageDialog(null, "You rolled " + GameDriver.getDie1() + " and " + GameDriver.getDie2() + ", You may leave jail." );
 			GameDriver.movePlayerToken();
 			turnsInJail = 0;
 		}
@@ -152,7 +153,7 @@ public class Player {
 		makePayment(50);
 		setJailedStat(false);
 		turnsInJail = 0;
-		int rollTotal = GameDriver.rollDice();
+		GameDriver.rollDice();
 		GameDriver.movePlayerToken();
 	}
 
