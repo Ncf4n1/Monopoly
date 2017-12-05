@@ -13,9 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-
 
 class SelectionPanel extends JPanel implements ActionListener{
     private static SelectionPanel instance;

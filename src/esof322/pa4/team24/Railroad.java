@@ -1,15 +1,10 @@
 package esof322.pa4.team24;
 
-public class Railroad extends Deed
-{
-	private String name;
-	private int price;
-	private Player owner;
+public class Railroad extends Deed{
+
 	private int[] rentRates;
-	private int mortgageVal;
 	
-	public Railroad(String name, int x, int y)
-	{
+	public Railroad(String name, int x, int y){
 		super(name, 200, 100, x, y);
 		this.name = name;
 		price = 200;
