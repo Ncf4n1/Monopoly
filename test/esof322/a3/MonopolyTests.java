@@ -703,15 +703,18 @@ public class MonopolyTests {
 		
 		play.setJailedStat(true);
 		play.setLocation(10);
+		GameDriver.rollDice();
 		play.rollToGetOutOfJail(); // turns in jail = 1
 		
 		if(play.getJailedStat()) //check if still in jail
 		{
 			assertEquals("Check if turns incremented when still in jail", 1, play.getTurnsInJail());
+			GameDriver.rollDice();
 			play.rollToGetOutOfJail(); // turns in jail = 2
 			if(play.getJailedStat()) //check if still in jail
 			{
 				assertEquals("Check if turns incremented when still in jail", 2, play.getTurnsInJail());
+				GameDriver.rollDice();
 				play.rollToGetOutOfJail(); //turns in jail = 3
 				if(play.getJailedStat()) //check if still in jail
 				{
@@ -755,24 +758,6 @@ public class MonopolyTests {
 		
 		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
 	}
-	
-	/*@Test
-	public void testgetHotelBuildablePropsWithOneMonop()
-	{
-		Player play = new Player("TestPlayerName", "TestToken");
-		Property prop = new Property("MediterraneanAvenue", 60, new int[] {2, 10, 30, 90, 160, 250}, 50, 30, 1, 1243, 1425, 0, 2);
-		Property prop2 =  new Property("BalticAvenue", 60, new int[] {4, 20, 60, 180, 320, 450}, 50, 30, 2, 994, 1425, 0, 2);
-		
-		play.buyProperty(prop);
-		play.buyProperty(prop2);
-		
-		ArrayList<Property> HotelBuildableProperties = new ArrayList<>();
-		
-		HotelBuildableProperties.add(prop);
-		HotelBuildableProperties.add(prop2);
-		
-		assertEquals("Check to make sure nothing is buidable", HotelBuildableProperties, play.getHotelBuildableProps());
-	}*/
 	
 	@Test
 	public void testGetTotalWorthInit()
@@ -933,24 +918,27 @@ public class MonopolyTests {
 		
 		assertEquals("Check if game driver will return current player", "TestPlayerName", GameDriver.getCurrentPlayer().getName());
 	}
-	/*
+	
 	@Test
 	public void testGameDriverPosition()
 	{
 		createPlayers();
 		
+		GameDriver.setBoardandTokens("normal");
+		
 		assertEquals("Check x coordinate", 1400, GameDriver.getXCoordinate(play));
 		assertEquals("Check y coordinate", 1400, GameDriver.getYCoordinate(play));
 	}
-	*/
-	/*
+	
 	@Test
 	public void testGameDriverSpaceName()
 	{
 		createPlayers();
 		
+		GameDriver.setBoardandTokens("normal");
+		
 		assertEquals("Check space name", "Go", GameDriver.getSpaceName());
-	}*/
+	}
 	
 	@Test
 	public void testGameDriverEndTurn()
@@ -974,6 +962,5 @@ public class MonopolyTests {
 		
 		assertEquals("Check for current player to iterate", 1, GameDriver.getTurnsTaken());
 	}
-	
 	
 }
