@@ -962,5 +962,4 @@ public class MonopolyTests {
 		
 		assertEquals("Check for current player to iterate", 1, GameDriver.getTurnsTaken());
 	}
-	
 }
