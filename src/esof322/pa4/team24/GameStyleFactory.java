@@ -1,6 +1,4 @@
 package esof322.pa4.team24;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
 public class GameStyleFactory
 {

@@ -5,11 +5,9 @@ import javax.swing.JOptionPane;
 
 public class GameDriver{
 	private static int numPlayers;				// Number of Players playing the game (2-4)
-	private static String[] playernames;		// List of the names for each player
 	private static Player[] players;			// List of players playing the game
 	private static int turnLimit;				// Time limit for the game
 	private static Tokens[] tokens;		//players tokens
-	private static boolean buyProperty = true;	// Determines if the player wants to buy a property
 	private static Board board;							//game board
 	private static int currentPlayer = 0;					// Index of the current player for the player array
 	private static Die die1 = new Die();
@@ -20,7 +18,6 @@ public class GameDriver{
 	private static Property propLoction = null;	// Placeholder for a property if the player lands on it
 	private static Railroad rRLocation = null;	// Placeholder for railroad if the player lands on it
 	private static Utility utilLocation = null;	// Placeholder for utility if the player lands on it
-    private static ArrayList<Property> propertiesAvailableToBuild = new ArrayList<>();
     private static int turns = 0;
     private static ChanceDeck chanceDeck = new ChanceDeck();
     private static CommunityChestDeck communityDeck = new CommunityChestDeck();
